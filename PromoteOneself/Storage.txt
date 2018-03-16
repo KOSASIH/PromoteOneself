@@ -1,0 +1,137 @@
+Layout settings portion of the 'CheckPlayers' class: 
+
+		else if (args[1].equalsIgnoreCase("target")) {
+			if (args.length == 6 && (args[3].equalsIgnoreCase("aims") || args[3].equalsIgnoreCase("commands") || args[3].equalsIgnoreCase("leadsTo"))) {
+				configPlace = "targets." + args[2]; 
+				if (plugin.getConfig().contains(configPlace) == true) {
+					configPlace += "." + args[3]; 
+					if (args[3].equalsIgnoreCase("aims")) {
+						if (args[4].equalsIgnoreCase("add")) {
+							if (plugin.getConfig().contains("aims." + args[5]) == true)  {
+								List<String> aims = plugin.getConfig().getStringList(configPlace); 
+								//logger.info("custom", aims.toString()); 
+								plugin.getConfig().set(configPlace, null); 
+								//plugin.saveConfig(); 
+								aims.add(args[5]); 
+								//logger.info("custom", aims.toString()); 
+								plugin.getConfig().set(configPlace, aims); 
+								//plugin.saveConfig(); 
+							}
+							else {
+								sender.sendMessage(ChatColor.RED + "There is no aim with the name " + args[5] + " "); 
+							}
+						}
+						else if (args[4].equalsIgnoreCase("remove")) {
+							List<String> aims = plugin.getConfig().getStringList(configPlace); 
+							logger.info("custom", aims.toString()); 
+							plugin.getConfig().set(configPlace, null); 
+							plugin.saveConfig(); 
+							logger.info("custom", plugin.getConfig().getString(configPlace)); 
+							for (String i : aims) {
+								if (i.equalsIgnoreCase(args[5])) {
+									logger.info("custom", "remove"); 
+									aims.remove(i); 
+									logger.info("custom", "removed"); 
+									logger.info("custom", String.valueOf(aims.isEmpty())); 
+									logger.info("custom", String.valueOf(aims.size())); 
+								}
+							}
+							logger.info("custom", aims.toString()); 
+							plugin.getConfig().set(configPlace, aims); 
+							plugin.saveConfig(); 
+						}
+						else {
+							sender.sendMessage(ChatColor.RED + "The allowed sub-settings for the specified settings are: 'add' and 'remove' "); 
+						}
+						rc.reloadTheConfiguration(); 
+					}
+					else if (args[3].equalsIgnoreCase("leadsTo")) {
+						if (args[4].equalsIgnoreCase("add")) {
+							if (plugin.getConfig().contains("targets." + args[5])) {
+								List<String> targets = plugin.getConfig().getStringList(configPlace); 
+								plugin.getConfig().set(configPlace, null); 
+								targets.add(args[5]); 
+								plugin.getConfig().set(configPlace, targets); 
+							}
+							else {
+								sender.sendMessage(ChatColor.RED + "There is no target with the name " + args[5] + " "); 
+							}
+						}
+						else if (args[4].equalsIgnoreCase("remove")) {
+							List<String> targets = plugin.getConfig().getStringList(configPlace); 
+							if (targets.size() > 1) {
+								plugin.getConfig().set(configPlace, null); 
+								for (String i : targets) {
+									if (i.equalsIgnoreCase(args[5])) {
+										targets.remove(i); 
+									}
+								}
+								plugin.getConfig().set(configPlace, targets); 
+							}
+							else {
+								sender.sendMessage(ChatColor.RED + "Each target must have at least one aim "); 
+								sender.sendMessage(ChatColor.RED + "Running this command could make a target have no aims "); 
+							}
+						}
+						else if (args[4].equalsIgnoreCase("nullify")) {
+							plugin.getConfig().set(configPlace, null); 
+						}
+						else {
+							sender.sendMessage(ChatColor.RED + "The allowed sub-settings for the specified settings are: 'add', 'remove' and 'nullify' "); 
+						}
+					}
+					else {
+						sender.sendMessage(ChatColor.RED + "For the 'target' setting type, only the settings 'aims', 'defaultNextTarget' and 'leadsTo' may be altered "); 
+					}
+				}
+			}
+			else if (args.length == 5 && args[3].equalsIgnoreCase("defaultNextTarget")) {
+				configPlace = "targets." + args[2]; 
+				if (plugin.getConfig().contains(configPlace)) {
+					if (plugin.getConfig().contains("targets." + args[4])) {
+						configPlace += "." + args[3]; 
+						plugin.getConfig().set(configPlace, args[4]); 
+					}
+					else {
+						sender.sendMessage(ChatColor.RED + "There is no target with the name " + args[4] + " "); 
+					}
+				}
+				else {
+					sender.sendMessage(ChatColor.RED + "There is no target with the name " + args[2] + " "); 
+				}
+			}
+			else {
+				sender.sendMessage(ChatColor.RED + "Only setting types 'aims' and 'leadsTo' (not 'defaultNextTarget') for the 'target' setting type require sub-settings "); 
+			}
+		}
+		
+Additional methods portion of the 'YamlFiles' class: 
+
+	public Boolean contains(String path) {
+		if (configuration.contains(path) == true) {
+			return true; 
+		}
+		else {
+			return false; 
+		}
+	}
+	public void set (String path, Object value) {
+		configuration.set(path, value); 
+	}
+	public void createSection(String path) {
+		configuration.createSection(path); 
+	}
+		public String getString(String path) {
+		return configuration.getString(path); 
+	}
+	public List<String> getStringList(String path) {
+		return configuration.getStringList(path); 
+	}
+	public Boolean getBoolean(String path) {
+		return configuration.getBoolean(path); 
+	}
+	public int getInt(String path) {
+		return configuration.getInt(path); 
+	}
+
+

@@ -1,0 +1,62 @@
+Configuration file for the 'PromoteOneself' plugin 
+Plugin version: Development_10.2.0.0; Configuration version: Development_5.0.0.0 
+
+'none' is a reserved word in this file and as such cannot be used as the name of something 
+
+There must be at least one aim and one target, even if every field in the aim is 'none' and every field except aim in target is 'none' 
+The achieve filed of an aim can only be 'none' if the type field is also 'none' 
+If the 'type' field of an aim is 'none', the 'achieve' files can be used to detail what a player needs to do to get an operator to assign it the aim 
+The string in the field 'defaultNextTarget' must also be part of the list in 'leadsTo' 
+No aim or target can be called 'none' 
+'permission' aim types must have the name of the target that the player needs the permission to achieve in their achieve filed 
+There should never be more 'permission' type aims than targets 
+ 
+The aim types are: none, xp, xpl, item, password, points, playerpoints, kills, economy, group, pgroup, permission 
+ 
+ 
+Example layout 
+detectKills: true
+watchCommands: true 
+allowSigns: true
+resetPointsAfterEachPromotion: true
+updateUsernames: true 
+startInPromotionTree: true 
+lowestRankThatCanManuallyApproveAims: admin
+defaultPoints: 0
+
+commands:
+- command1 arg1 arg2 arg3
+- command2 arg1
+- etc
+defaulTarget: target1 
+aims: 
+  aim1:
+    type:
+    achieve: 
+  aim2: 
+    type: 
+    achieve: 
+  etc: 
+targets:
+  target1: 
+    aims:
+      - aim1 
+      - aim2 
+    commands: 
+      - completion_command_1 
+      - completion_command_2  
+    defaultNextTarget: etc2 
+    leadsTo: 
+      - target2 
+      - etc1 
+  target2:
+    aims: 
+      - aim2 
+      - etc 
+    commands:
+      - completion_command_3 
+    defaultNextTarget: none 
+    leadsTo: none 
+  etc1: 
+  etc2: 
+ 

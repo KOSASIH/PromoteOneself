@@ -1,0 +1,148 @@
+Commands: 
+/promoteoneself - Get the help menu 
+/prom update [target [player [aim]]] ||| 
+/prom check [<player|target|aim> <name>] 
+/prom password <get [player] <aim>|set [player] <password> <aim>> 
+/prom help <command name> 
+/posset exempt <player> <true|temp|add|join> ---true: set exemption status to true; add: set exemption status to add; join: make the player join the promotion tree now--- 
+/posset save 
+/posset reload [check|nocheck] 
+/posset player <add|remove|delete> [name] !!! /prom update \\\for new players\\\ = /posset player add \\\new player\\\ 
+/posset set <player|target|aim|setting> <name> [setting] [sub-setting] <value> 
+
+
+Permissions: 
+pos.* 
+pos.update.add  
+pos.update.add.others 
+pos.update
+pos.update.others
+pos.update.target
+pos.update.target.others 
+pos.update.aim
+pos.update.aim.others
+pos.update.* 
+pos.password.get
+pos.password.get.others
+pos.password.set
+pos.password.set.others (the same as pos.set.player.password)
+pos.password.* 
+pos.save 
+pos.reload.check
+pos.reload.nocheck
+pos.reload.*  
+pos.check
+pos.check.others 
+pos.check.targets 
+pos.check.aims 
+pos.check.*
+pos.exempt.true 
+pos.exempt.add 
+pos.exempt.join
+pos.exempt.* 
+pos.player.remove
+pos.player.remove.others 
+pos.player.reset
+pos.player.reset.others
+pos.player.* (also gives pos.update.add and pos.update.add.others) 
+pos.set.player.aim 
+pos.set.player.finished 
+pos.set.player.target 
+pos.set.player.password (the same as pos.password.set.others)
+pos.set.player.points
+pos.set.player.kills
+pos.set.player.player 
+pos.set.player.*
+pos.set.aim.type 
+pos.set.aim.achieve 
+pos.set.aim.*
+pos.set.target.aims 
+pos.set.target.leadsto
+pos.set.target.defaultnexttarget
+pos.set.target.* 
+pos.set.setting.detectkills
+pos.set.setting.allowsigns 
+pos.set.setting.watchcommands
+pos.set.setting.defaulttarget
+pos.set.setting.resetpointsaftereachpromotion
+pos.set.setting.lowestrankthatcanmanuallyapproveaims
+pos.set.setting.startinpromotiontree
+pos.set.setting.updateusernames
+pos.set.setting.* 
+pos.set.*
+pos.promote.<group> 
+pos.promote.* 
+pos.sign.update.use 
+pos.sign.update.create
+pos.sign.update.delete
+pos.sign.update.*
+pos.sign.points.use
+pos.sign.points.create
+pos.sign.points.delete
+pos.sign.points.*
+pos.sign.target.use
+pos.sign.target.create
+pos.sign.target.delete
+pos.sign.target.*
+pos.sign.sign.use
+pos.sign.sign.create
+pos.sign.sign.delete
+pos.sign.sign.* 
+pos.sign.*
+
+aim types: 
+xp 
+xpl 
+item
+points
+kills
+economy (vault dependent) 
+group (vault dependent) 
+pgroup (vault dependent) 
+permission (permission -pos.promote.<group> or pos.promote.*- dependent) 
+sign  
+password 
+command 
+
+on time (OnTime dependent) 
+
+none 
+
+signs:
+update:
+[pos]
+update
+[target name] 
+[sign id]
+
+points:
+[pos]
+points
+[amount to add] 
+[sign id]
+
+target:
+[pos]
+target
+[target name] 
+[sign id]
+
+sign:
+[pos]
+sign
+[aim name] 
+[sign id]
+
+To do: 
+Type1 (must do): 
+
+Type2 (should learn to do):  
+
+Type 3 (could think about doing): 
+Make the plugin work for offline players too - checked main class and player properties class 
+
+Type4 (could do on a whim) 
+More comprehensive sign permissions - Permissions for id groups too or exempt from the limit of a certain id group or individual id limits for people or a permission to use all signs and another to create all signs etc - make sign permissions independent of command permissions    
+
+
+
