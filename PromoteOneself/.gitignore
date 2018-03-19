@@ -1,0 +1,6 @@
+# Ignore compiled files 
+/bin/ 
+*.classpath 
+
+# Ignore the temporary storage file 
+/storage.txt
