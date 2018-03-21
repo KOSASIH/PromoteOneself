@@ -7,4 +7,16 @@ This plugin has a number of commands, permissions and config files.
 
 This plugin is under a MIT license (see the LICENSE file). 
 
+Commands: 
+ - prom 
+ - posset 
+ 
+Permissions: 
+ - promoteoneself.* 
+
+Config files: 
+ - config.yml 
+ - signs.yml 
+ - targets.yml 
+
 

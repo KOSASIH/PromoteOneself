@@ -60,8 +60,15 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 	
 	private void registerExtraPermissions(PluginManager pm) {
 		org.bukkit.permissions.Permission p = null; 
-		Set<String> targets = yc.configuration.getConfigurationSection("targets").getKeys(false); 
-		if (targets.isEmpty() == false) {
+		Set<String> targets = null; 
+		try {
+			targets = yc.configuration.getConfigurationSection("targets").getKeys(false); 
+		}
+		catch (NullPointerException e) {
+			logger.info("custom", "No targets were loaded "); 
+		}
+		if (targets != null && targets.isEmpty() == false) {
+			logger.info("custom", "Additional permissions for targets loaded "); 
 			for (String i : targets) {
 				p = new org.bukkit.permissions.Permission("pos.promote." + i); 
 				pm.addPermission(p); 
