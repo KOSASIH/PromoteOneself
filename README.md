@@ -17,6 +17,6 @@ Permissions:
 Config files: 
  - config.yml 
  - signs.yml 
- - targets.yml 
+ - players.yml 
 
 

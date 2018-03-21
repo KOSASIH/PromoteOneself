@@ -26,6 +26,9 @@ public class YamlFiles {
 	public YamlFiles(PromoteOneselfMainClass instance, LoggingClass log, String outFileName, String inFileName) {
 		plugin = instance; 
 		logger = log; 
+		if (plugin.getDataFolder().exists() == false) {
+			plugin.getDataFolder().mkdir(); 
+		}
 		theOutFile = new File(plugin.getDataFolder(), outFileName); 
 		theInFile = inFileName; 
 		configuration = loadFiles(); 
@@ -229,15 +232,17 @@ public class YamlFiles {
 	
 	public YamlConfiguration loadFiles() {
 		YamlConfiguration theConfiguration = null; 
+		logger.info("custom", "Attempting to load the configuration file " + theOutFile.getName()); 
 		if (theOutFile.exists() != true) {
 			try {
 				copy(plugin.getResource(theInFile), new FileOutputStream(theOutFile)); 
+				logger.info("custom", "Configuration file " + theOutFile.getName() + " created "); 
 			} catch (FileNotFoundException e) {
 				logger.exception("Unable to create a configuration file", e); 
 			} catch (IOException e) {
 				logger.exception("Unable to create a configuration file", e); 
 			} 
-			theConfiguration =  loadAConfiguration(theOutFile); 
+			theConfiguration = loadAConfiguration(theOutFile); 
 			fileHeaders(theConfiguration); 
 		}
 		else {

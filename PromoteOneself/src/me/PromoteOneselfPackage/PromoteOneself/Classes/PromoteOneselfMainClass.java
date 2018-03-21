@@ -101,10 +101,10 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 	}
 	
 	private void setupPlayerPoints(PluginManager pm) {
-		Plugin playerPoints = pm.getPlugin("playerPoints"); 
+		Plugin playerPoints = pm.getPlugin("PlayerPoints"); 
 		if (playerPoints == null) {
 			playerPointsExists = false; 
-			logger.info("custom", "Cannot hook in to PlayePoints "); 
+			logger.info("custom", "Cannot hook in to PlayerPoints "); 
 		}
 		else {
 			playerPointsExists = true; 
