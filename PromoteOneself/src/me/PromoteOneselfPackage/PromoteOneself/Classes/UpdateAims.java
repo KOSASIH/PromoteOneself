@@ -45,11 +45,16 @@ public class UpdateAims {
 			}
 		}
 		plugin.yd.configuration.set("players." + spId + ".data.commands", commandAims); 
-		Set<String> rawSigns = plugin.ys.configuration.getConfigurationSection("signs").getKeys(false); 
-		List<String> signs = new ArrayList<String>(rawSigns); 
 		plugin.yd.configuration.createSection("players." +  spId + ".data.signs"); 
-		for (String j : signs) {
-			plugin.yd.configuration.set("players." + spId + ".data.signs." + j, 0); 
+		try {
+			Set<String> rawSigns = plugin.ys.configuration.getConfigurationSection("signs").getKeys(false); 
+			List<String> signs = new ArrayList<String>(rawSigns); 
+			for (String j : signs) {
+				plugin.yd.configuration.set("players." + spId + ".data.signs." + j, 0); 
+			}
+		}
+		catch (NullPointerException e) {
+			// No action required 
 		}
 		Bukkit.getPlayer(rpId).sendMessage("Your target is now " + target); 
 		plugin.saveFiles(); 

@@ -3,6 +3,7 @@ package me.PromoteOneselfPackage.PromoteOneself.Classes;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -53,10 +54,10 @@ public class LoggingClass {
 			logger.warning(nameFormat + "There is no information stored about " + message + " "); 
 		}
 		else if (type.equalsIgnoreCase("reload")) {
-			logger.warning("An error occured whilst reloading the configuration files that prevented them from being reloaded properly " + message + " "); 
+			logger.warning(nameFormat + "An error occured whilst reloading the configuration files that prevented them from being reloaded properly " + message + " "); 
 		}
 		else if (type.equalsIgnoreCase("missingkey")) {
-			logger.warning("The following key is missing from the following config file: " + message); 
+			logger.warning(nameFormat + "The following key is missing from the following config file: " + message); 
 		}
 		else {
 			unrecognisedLogType(type, "warning"); 
@@ -107,6 +108,13 @@ public class LoggingClass {
 		else {
 			unrecognisedLogType(type, "a command sender message"); 
 		}
+	}
+	public void broadcastMessageServer(CommandSender sender, String message) {
+		sender.sendMessage(message); 
+		info("custom", message); 
+	}
+	public void broadcastMessageBukkit(String message) {
+		Bukkit.broadcastMessage(nameFormat + message); 
 	}
 	public String getName() {
 		return descriptionFile.getName(); 

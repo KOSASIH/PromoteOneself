@@ -37,9 +37,9 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 	public Boolean permsExist = false; 
 	public PlayerPoints playerPointsPlugin = null; 
 	public Boolean playerPointsExists = false; 
-	public int num = 0; 
-	public int num2 = 0; 
-	public int num3 = 0; 
+	//public int num = 0; 
+	//public int num2 = 0; 
+	//public int num3 = 0; 
 	
 	@Override 
 	public void onDisable() {
@@ -233,7 +233,7 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 							yd.configuration = YamlFiles.loadAConfiguration(yd.theOutFile); 
 							ys.configuration = YamlFiles.loadAConfiguration(ys.theOutFile); 
 							MyPlayerListener.updateCommandsList(); 
-							Bukkit.broadcastMessage("CT configuration reloaded "); 
+							logger.broadcastMessageServer(sender, "The PromoteOneself config has been reloaded "); 
 						}
 						else {
 							logger.messageSender(sender, "nopermission", null); 
@@ -252,7 +252,7 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 			else if (args[0].equalsIgnoreCase("save")) {
 				if (sender.hasPermission("pos.save")) {
 					saveFiles(); 
-					Bukkit.broadcastMessage("CT configuration saved "); 
+					logger.broadcastMessageServer(sender, "The PromoteOneself config has been saved "); 
 				}
 				else {
 					logger.messageSender(sender, "nopermission", null); 
@@ -311,26 +311,6 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 				}
 			}
 			*/
-			else if (args[0].equalsIgnoreCase("getlistenerif")) {
-				if (args.length == 2) {
-					if (args[1].equalsIgnoreCase("num1")) {
-						logger.info("custom", Integer.toString(num)); 
-					}
-					else if (args[1].equalsIgnoreCase("num2")) {
-						logger.info("custom", Integer.toString(num2)); 
-					}
-					else if (args[1].equalsIgnoreCase("num3")) {
-						logger.info("custom", Integer.toString(num3)); 
-					}
-					else {
-						logger.info("custom", "Unknown variable name "); 
-						return false; 
-					}
-				}
-				else {
-					return false; 
-				}
-			}
 			else if (args[0].equalsIgnoreCase("set")) {
 				if (args.length != 3) {
 					return false; 

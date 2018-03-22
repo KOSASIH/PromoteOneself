@@ -30,11 +30,8 @@ public class MySignListener implements Listener {
 	
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.NORMAL) 
 	public void onSignChange(SignChangeEvent event) {
-		plugin.num3 = 1; 
 		if (plugin.yc.configuration.getBoolean("allowSigns") == true) {
-			plugin.num3 = 2; 
 			if (event.getLine(0).equalsIgnoreCase("[pos]")) {
-				plugin.num3 = 3; 
 				if (event.getLine(1).equalsIgnoreCase("update")) {
 					if (event.getPlayer().hasPermission("pos.sign.update.create")) {
 					}
@@ -57,17 +54,13 @@ public class MySignListener implements Listener {
 					}
 				}
 				else if (event.getLine(1).equalsIgnoreCase("sign")) {
-					plugin.num3 = 4; 
 					if (event.getPlayer().hasPermission("pos.sign.sign.create")) {
-						plugin.num3 = 5; 
 					}
 					else {
-						plugin.num3 = 6; 
 						event.setCancelled(true); 
 					}
 				}
 				else {
-					plugin.num3 = 7; 
 					logger.messageSender(event.getPlayer(), "sign", null); 
 					event.setCancelled(true); 
 				}
