@@ -4,11 +4,11 @@ Plugin version: Development_10.2.0.0; Configuration version: Development_5.0.0.0
 'none' is a reserved word in this file and as such cannot be used as the name of something 
 
 There must be at least one aim and one target, even if every field in the aim is 'none' and every field except aim in target is 'none' 
-The achieve filed of an aim can only be 'none' if the type field is also 'none' 
-If the 'type' field of an aim is 'none', the 'achieve' files can be used to detail what a player needs to do to get an operator to assign it the aim 
+The achieve field of an aim can only be 'none' if the type field is also 'none' 
+If the 'type' field of an aim is 'none', the 'achieve' field can be used to detail what a player needs to do to get an operator to assign it the aim 
 The string in the field 'defaultNextTarget' must also be part of the list in 'leadsTo' 
 No aim or target can be called 'none' 
-'permission' aim types must have the name of the target that the player needs the permission to achieve in their achieve filed 
+'permission' aim types must have the name of the target that the player needs the permission to achieve in their achieve field 
 There should never be more 'permission' type aims than targets 
  
 The aim types are: none, xp, xpl, item, password, points, playerpoints, kills, economy, group, pgroup, permission 

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -30,19 +29,19 @@ public class MyPlayerListener implements Listener{
 	}
 	@EventHandler (ignoreCancelled = true, priority = EventPriority.MONITOR) 
 	public void onPlayerJoin(PlayerJoinEvent event) {
+		UUID rpId = event.getPlayer().getUniqueId(); 
+		String spId = rpId.toString(); 
 		if (plugin.yc.configuration.getBoolean("startInPromotionTree") == true) {
-			UUID rpId = event.getPlayer().getUniqueId(); 
-			String spId = rpId.toString(); 
 			if ((plugin.yd.configuration.contains("exempt." + spId + ".exempt") == true) && (plugin.yd.configuration.getString("exempt." + spId + ".exempt").equalsIgnoreCase("true")) && (plugin.yc.configuration.getBoolean("updateUsernames") == false)) {
 			}
 			else if ((plugin.yd.configuration.contains("exempt." + spId + ".exempt") == true) && (plugin.yd.configuration.getString("exempt." + spId + ".exempt").equalsIgnoreCase("true")) && (plugin.yc.configuration.getBoolean("updateUsernames") == true)) {
-				plugin.yd.configuration.set("exempt." + spId + ".lastUsername", Bukkit.getPlayer(rpId).getName()); 
+				plugin.yd.configuration.set("exempt." + spId + ".lastUsername", event.getPlayer().getName()); 
 				plugin.yd.save(); 
 			}
 			else if ((plugin.yd.configuration.contains("players." + spId + ".finished") == true) && (plugin.yc.configuration.getBoolean("updateUsernames") == false)) {
 			}
 			else if ((plugin.yd.configuration.contains("players." + spId + ".finished") == true) && (plugin.yc.configuration.getBoolean("updateUsernames") == true)) { 
-				plugin.yd.configuration.set("players." + spId + ".lastUsername", Bukkit.getPlayer(rpId).getName()); 
+				plugin.yd.configuration.set("players." + spId + ".lastUsername", event.getPlayer().getName()); 
 				plugin.yd.save(); 
 			}
 			else {
@@ -51,6 +50,14 @@ public class MyPlayerListener implements Listener{
 					plugin.yd.configuration.set("exempt." + spId, null); 
 					plugin.saveFiles(); 
 				}
+			}
+		}
+		else if (plugin.yc.configuration.getBoolean("updateUsernames") == true) {
+			if (plugin.yd.configuration.contains("exempt." + spId) == true) {
+				plugin.yd.configuration.set("exempt." + spId + ".lastUsername", event.getPlayer().getName()); 
+			}
+			else if (plugin.yd.configuration.contains("players." + spId) == true) {
+				plugin.yd.configuration.set("players." + spId + ".lastUsername", event.getPlayer().getName()); 
 			}
 		}
 	}

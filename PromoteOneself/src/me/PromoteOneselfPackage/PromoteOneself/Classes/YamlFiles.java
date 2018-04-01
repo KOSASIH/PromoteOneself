@@ -37,17 +37,11 @@ public class YamlFiles {
 	}
 	
 	public static void reloadTheConfiguration(YamlFiles configuration, YamlFiles players, YamlFiles signs) {
-		logger.info("custom", "0"); 
 		configuration.configuration = loadAConfiguration(configuration.theOutFile); 
-		logger.info("custom", "1"); 
 		players.configuration = loadAConfiguration(players.theOutFile); 
 		signs.configuration = loadAConfiguration(signs.theOutFile); 
-		logger.info("custom", "2"); 
 		try {
-			logger.info("custom", "noe"); 
 			Set<String> pcf = players.configuration.getConfigurationSection("players").getKeys(false); 
-			logger.info("custom", "3"); 
-			logger.info("custom", pcf.toString() + "word"); 
 			if (pcf.isEmpty() == false) {
 				for (String i : pcf) {
 					updatePlayerTargets(i, configuration, players, signs); 
@@ -65,14 +59,13 @@ public class YamlFiles {
 		configuration.configuration = loadAConfiguration(configuration.theOutFile); 
 		players.configuration = loadAConfiguration(players.theOutFile); 
 		signs.configuration = loadAConfiguration(signs.theOutFile); 
-		Bukkit.broadcastMessage("CT configuration reloaded, checked and saved "); 
+		Bukkit.broadcastMessage(plugin.getDescription().getName() + " configuration reloaded, checked and saved "); 
 	}
 	public static void updatePlayerTargets(String i, YamlFiles configuration, YamlFiles players, YamlFiles signs) {
 		Set<String> rawPlayerAims = players.configuration.getConfigurationSection("players." + i + ".aims").getKeys(false); 
 		List<String> playerAims = new ArrayList<String>(rawPlayerAims); 
 		List<String> targetAims = configuration.configuration.getStringList("targets." + players.configuration.getString("players." + i + ".target") + ".aims"); 
 		if (targetAims != playerAims) {
-			logger.info("custom", "notequal"); 
 			for (String j : playerAims) {
 				if (targetAims.contains(j) == true) {
 					
@@ -88,12 +81,9 @@ public class YamlFiles {
 					players.configuration.set("players." + i + ".aims." + k, false); 
 				}
 			}
-			logger.info("custom", targetAims.toString()); 
-			logger.info("custom", playerAims.toString()); 
-			logger.info("custom", newPlayerAims.toString()); 
-		}
-		else {
-			logger.info("custom", "equal"); 
+			//logger.info("custom", targetAims.toString()); 
+			//logger.info("custom", playerAims.toString()); 
+			//logger.info("custom", newPlayerAims.toString()); 
 		}
 		Set<String> rawPasswordAndCommandPlayerAims = players.configuration.getConfigurationSection("players." + i + ".aims").getKeys(false); 
 		List<String> playerPasswordAndCommandAims = new ArrayList<String>(rawPasswordAndCommandPlayerAims); 
@@ -122,7 +112,7 @@ public class YamlFiles {
 			}
 		}
 		catch (NullPointerException e) {
-			
+			logger.warning("custom", "The config file may have malformed information "); 
 		}
 		List<String> playerCommandAims = new ArrayList<String>(); 
 		for (String n : playerPasswordAndCommandAims) {
@@ -146,7 +136,7 @@ public class YamlFiles {
 		}
 		catch (NullPointerException e2) {
 			runSigns = false; 
-			logger.info("custom", "exception e2 "); 
+			logger.warning("custom", "The signs file could not have its section keys loaded "); 
 		}
 		try {
 			Set<String> rawPlayerSigns = players.configuration.getConfigurationSection("players." + i + ".data.signs").getKeys(false); 
@@ -154,7 +144,7 @@ public class YamlFiles {
 		}
 		catch (NullPointerException e3) {
 			runPlayerSigns = false; 
-			logger.info("custom", "exception e3 "); 
+			logger.warning("custom", "Some player sign information could not be found "); 
 		}
 		if (runSigns == true) {
 			if (runPlayerSigns == true) {
@@ -176,29 +166,23 @@ public class YamlFiles {
 			}
 			catch (NullPointerException e4) {
 				runNewPlayerSigns = false; 
-				logger.info("custom", "exception e4 "); 
+				logger.warning("custom", "Player sign information could not be updated properly "); 
 			}
 			if (runNewPlayerSigns == true) {
 				for (String p : Signs) {
 					if (newPlayerSigns.contains(p) == false) {
-						logger.info("custom", "loop p: " + p); 
-						logger.info("custom", "Adding a sign "); 
 						players.configuration.set("players." + i + ".data.signs." + p, 0); 
-					}
-					else {
-						logger.info("custom", "loop o false if: " + p); 
 					}
 				}
 			}
 			else {
 				for (String q : Signs) {
-					logger.info("custom", "loop q: " + q); 
 					players.configuration.set("players." + i + ".data.signs." + q, 0); 
 				}
 			}
 		}
-		logger.info("custom", Signs.toString()); 
-		logger.info("custom", playerSigns.toString()); 
+		//logger.info("custom", Signs.toString()); 
+		//logger.info("custom", playerSigns.toString()); 
 	}
 	public static YamlConfiguration loadAConfiguration(File file) {
 		new YamlConfiguration(); 

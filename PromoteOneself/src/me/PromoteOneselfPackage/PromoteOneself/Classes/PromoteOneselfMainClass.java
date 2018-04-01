@@ -2,10 +2,10 @@ package me.PromoteOneselfPackage.PromoteOneself.Classes;
 
 import java.util.Set;
 
-import org.bukkit.Bukkit;
+//import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+//import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -264,6 +264,7 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 			}
 		}
 		//Debug commands below 
+		/*
 		else if (commandLabel.equalsIgnoreCase("playerexp")) {
 			if (sender instanceof Player) {
 				Player player = (Player) sender; 
@@ -292,7 +293,7 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 					sender.sendMessage("three "); 
 				}
 			}
-			/*
+			*//*
 			else if (args[0].equalsIgnoreCase("list")) {
 				if (args.length != 2 && args.length != 3) {
 					return false; 
@@ -310,7 +311,7 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 					sender.sendMessage(part); 
 				}
 			}
-			*/
+			*//*
 			else if (args[0].equalsIgnoreCase("set")) {
 				if (args.length != 3) {
 					return false; 
@@ -341,7 +342,7 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 				return false; 
 			}
 		}
-		if (commandLabel.equalsIgnoreCase("asdf")) {
+		else if (commandLabel.equalsIgnoreCase("asdf")) {
 			if (sender instanceof Player) {
 				Player player = (Player) sender; 
 				player.sendMessage("Hello "); 
@@ -350,6 +351,7 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 				sender.sendMessage("Not a player "); 
 			}
 		}
+		*/
 		return true;
 	}
 }
