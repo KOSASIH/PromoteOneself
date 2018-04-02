@@ -129,11 +129,9 @@ public class MySignListener implements Listener {
 								if (event.getPlayer().hasPermission("pos.sign.update.use")) {
 									if (signId == null || signId.equalsIgnoreCase("") || player.hasPermission("pos.sign.limitexempt")) {
 										ua.updatePlayer(player, new String[] {"update", sign.getLine(2)}); 
-										logger.info("custom", "sign id is null"); 
 									}
 									else if (listedSignIds.contains(signId)) {
 										try {
-											logger.info("custom", signId); 
 											int playerUsage = plugin.yd.configuration.getInt("players." + spId + ".data.signs." + signId); 
 											if (playerUsage < plugin.ys.configuration.getInt("signs." + signId + ".usage") || plugin.ys.configuration.getInt("signs." + signId + ".usage") == -1) {
 												ua.updatePlayer(player, new String[] {"update", sign.getLine(2)}); 

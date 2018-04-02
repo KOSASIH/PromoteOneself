@@ -9,7 +9,7 @@ signs:
   SignId2:
     usage: 0
   SignId3:
-    usage:1
+    usage: 1
   SignId4:
     usage: 10
   etc:

@@ -15,18 +15,18 @@ commands:
   posset:
     description: Mostly operator commands 
     uasage: /posset <arguments> 
-  playerexp:
-    description: Get your own experience amount counting towards the next level as a decimal 
-    usage: /playerexp 
-  sender:
-    description: Get the command sender 
-    usage: /sender
-  asdf:
-    description: Say 'hello'  
-    usage: /asdf 
-  ct:
-    description: debug commands 
-    usage: /ct <something> 
+  #playerexp:
+  #  description: Get your own experience amount counting towards the next level as a decimal 
+  #  usage: /playerexp 
+  #sender:
+  #  description: Get the command sender 
+  #  usage: /sender
+  #asdf:
+  #  description: Say 'hello'  
+  #  usage: /asdf 
+  #ct:
+  #  description: debug commands 
+  #  usage: /ct <something> 
 permissions:
   pos.*:
     description: Use all commands concerning the PromoteOneself plugin 
