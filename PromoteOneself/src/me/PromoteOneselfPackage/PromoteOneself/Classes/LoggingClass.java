@@ -100,7 +100,7 @@ public class LoggingClass {
 			sender.sendMessage(ChatColor.RED + "This is not a valid " + descriptionFile.getName() + " sign configuration "); 
 		}
 		else if (type.equalsIgnoreCase("help")) {
-			sender.sendMessage(ChatColor.RED + "Incorrect Command Layout: For help type in " + ChatColor.AQUA + "/prom help"); 
+			sender.sendMessage(ChatColor.RED + "Incorrect Command Layout: for help type in " + ChatColor.AQUA + "/prom help"); 
 		}
 		else if (type.equalsIgnoreCase("offline")) {
 			sender.sendMessage(ChatColor.RED + "The player could not be obtained" + message + " "); 

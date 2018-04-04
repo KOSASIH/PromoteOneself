@@ -24,7 +24,8 @@ Each aim can have one of any of the following types:
  - none - The aim must be given to a player by a server administrator 
  - xp - The player requires a certain amount of xp 
  - xpl - The player requires a certain number of levels of xp 
- - item - The player needs to possess a certain amount of a certain item 
+ - item - The player needs to possess a certain amount of a certain item (where the tiem is specified by its name in the appropriate enum https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html) 
+ - itemid - The player needs to posees a certain amount of a certain item (where the item is specified by its id) 
  - password - The player needs to enter a password 
  - points - The player needs to have gathered a certain number of points 
  - playerpoints - The player needs to have gathered a certain number of points, where points are from the 'PlayerPoints' plugin (this requires the 'PlayerPoints' plugin to be installed)
@@ -33,15 +34,27 @@ Each aim can have one of any of the following types:
  - group - The player needs to be in a certain permissions group (this requires the 'Vault' plugin to be installed)
  - pgroup - The player needs to have a certain permissions group as its primary permissions group (this requires the 'Vault' plugin to be installed)
  - permission - The player needs to have the permission to get to the next target (e.g. pos.promote.target1, where 'target1' is the name of a target defined in the config.yml file) 
- - command - The aim must be given to a player by a server administrator (??) 
+ - command - The player must enter a certain command with a certain set of arguments 
  - sign - The player must achieve the aim by clicking on a sign 
 Each above aim type can also be given to a player manually by a server administrator with the correct permission. 
 
 ## Commands: 
+This plugin contains the following commands: 
+ - /promoteoneself
  - /prom <arguments> 
  - /posset <arguments> 
- - /promoteoneself
- 
+
+The */promoteoneself* command shows the help page. 
+The */prom help* command shows the help page. 
+The */prom help <command> <first argument>* command shows more detailed information about the */<command> <first argument>* command. 
+The */prom help set <second argument>* command shows more detailed information about the */posset set <second argument>* command. 
+The */prom update [target [player-username [aim]]]* command checks a player's completion status for a target or an aim of a target. 
+The */prom check [<player|target|aim> <name>]* command gives information about a player, target or aim. 
+The */prom password <get [player] <aim>|set [player] <password> <aim>>* command enables a player to get or set a player's password guess attempts. 
+The */posset exempt <player> <true|temp|add|join>* command sets the exemption status of a player (true: make exempt and delete data; temp: make exempt and keep data; add: lose exemption at next login; join: lose exemption now). 
+The */posset save* command saves the config files. 
+The */posset reload [check|nocheck]* command reloads the confoguration files (adding nothing or 'check' makes it checks each players' aims with the aims each target specifies the player should have; specifying 'nocheck' makes it jut reload the files). 
+
 ## Permissions: 
 All permissions for this plugin default to being ops only. This plugin has the following permissions: 
  - pos.* - The root permission for the plugin 
@@ -78,17 +91,19 @@ This plugin uses the following config files:
  - players.yml 
 
 ### The config.yml File: 
-The config.yml defines aims and targets, as well as the following plugin settings:
+The config.yml file defines aims and targets, as well as the following plugin settings:
  - detectKills - Whether the plugin should listen for player kills or not (true: the plugin listens for kills; false: the plugin doesn't listen for kills) 
- - watchCommands - 
+ - watchCommands - This specifies whether the plugin should listen to commands for other plugins when checking 'command' type aims or not (true: the plugin watched commands; false: the plugin doesn;t watch commands) 
  - allowSigns - Whether the plugin should allow signs or not (true: the plugin allows signs; false: the plugin ignores all signs) 
  - resetPointsAfterEachPromotion - Whether the plugin should automatically reset the player's point count for point type aims after each promotion or not (this has no effect on the points system of the 'PlayerPoints plugin') (true: the points total is reset; false: the points total is carried on after each target is completed) 
  - updateUsernames - Whether the plugin should update the usernames listed under UUIDs or not (true: usernames are updated; false: usernames are not updated) 
  - startInPromotionTree - Whether players should start off with a target or not (true: players start off with a target; false: players start off with no target) 
  - lowestRankThatCanManuallyApproveAims - This is a string that is used only in plugin player messages that states the name of the lowest rank that server operators have decided can approve aims manually 
  - defaultPoints - The integer number of points that players start off with (this has nothing to do with 'PlayerPoints' plugin points) 
+ - commands - This is a list of commands with arguments that the plugin will watch for when dealing with 'command' type aims 
+ - defaultTarget - This is the default target that players start on when they first join the promotion tree 
 
-Aims are defined in this file in the section called 'aims'. An example aim is shown below: 
+Aims are defined in this file in the section called 'aims'. An example 'aims' section is shown below: 
 ```yaml
 aims: 
   aim1:
@@ -96,17 +111,183 @@ aims:
     achieve: none 
   aim2:
     type: points
-	achieve: 200
+    achieve: 200
+  aim3:
+    type: command
+    achieve: rules
+  aim4:
+    type: command
+    achieve: rules 2
+  aim5:
+    type: playerpoints
+    achieve: 1000
+  aim6:
+    type: xp
+    achieve: 500
+  aim7:
+    type: xpl
+    achieve: 8
+  aim8:
+    type: item
+    achieve: 2;ANVIL
+  aim9:
+    type: itemid
+    achieve: 64;27
+  aim10:
+    type: password
+    achieve: P@ss50r$
+  aim11:
+    type: password
+    achieve: P@ss50r$2
+  aim12:
+    type: kills
+	achieve: 30
+  aim13:
+    type: economy
+    achieve: 4000
+  aim14:
+    type: group
+    achieve: player_group_name_here
+  aim15:
+    type: pgroup
+    achieve: player_group_name_here
+  aim16:
+    type: permission
+    achieve: target_name_here
+  aim17:
+    type: sign
+    achieve: none
+  aim18:
+    type: sign
+    achieve: none
+  aim19:
+    type: sign
+    achieve: none
+  aim20:
+    type: sign
+    achieve: none
 ```
 Each section heading within the 'aims' section is the name of an aim. The two aim data fields are explained below: 
  - type - The type of the aim 
- - achieve - The value that needs to be achieved to achieve the aim (for example, the number of points or the amount of xp) 
+ - achieve - The value that needs to be achieved to achieve the aim (for example, the number of points or the amount of xp; 'sign' and 'none' type aims require 'none' as the value for this field as they are awarded upon an action rather than when a player runs the command to check its target progress) 
 
-Targets are defined in this file in the section called 'targets'. 
+Targets are defined in this file in the section called 'targets'. An example 'targets' section is given below: 
+```yaml
+targets:
+  target1: 
+    aims:
+      - aim1
+      - aim2
+    commands: 
+      - this is an example command
+      - completion_command_2 
+    defaultNextTarget: target3
+    leadsTo: 
+      - target2 
+      - target3
+  target2:
+    aims: 
+      - aim2
+      - aim9
+    commands:
+      - completion_command_3 
+    defaultNextTarget: none 
+    leadsTo: none
+  target3:
+    aims:
+      - aim3
+      - aim4
+      - aim5
+      - aim6
+      - aim7
+      - aim8
+      - aim10
+      - aim11
+      - aim17
+      - aim18
+      - aim19
+      - aim20
+    commands:
+      - completion_command_4
+    defaultNextTarget: none
+    leadsTo: none
+```
+Each section within the 'targets' section is the name of a target. The fields for each target are explained below: 
+ - aims - The list of aims that a player must achieve in order to complete a target 
+ - commands - The commands that will be run when the player completes the target 
+ - defaultNextTarget - The name of the default target that will be the next target for the player to work towards 
+ - leadsTo - The names of the targets that the player can progress on to after completing this target 
 
 ### The players.yml File: 
+The players.yml file defines information for player which are either exempt from being in the promotion tree or in the promotion tree. An example players.yml file is given below: 
+```yaml
+exempt:
+  UUID1:
+    lastUsername: username
+    exempt: true
+players: 
+  UUID1: 
+    lastUsername: username
+    target: target3
+    finished: false
+    data:
+      password: 
+        aim10: none
+		aim11: P@ss50r$2
+      commands:
+      - aim3
+      - aim4
+      points: 0
+      kills: 0
+      signs:
+        id1: 1
+        id2: 0
+        id3: 1
+        id4: 5
+    aims: 
+      aim3: true 
+      aim4: false
+      aim5: false
+      aim6: true
+      aim7: true
+      aim8: true
+      aim10: false
+      aim11: true
+      aim17: false
+      aim18: false
+      aim19: true
+      aim20: false
+```
+Within the 'exempt' section, each section heading represents a player UUID. The two data fields within each UUID section are explained below: 
+ - lastUsername - The last known username of the player 
+ - exempt - Whether the player is actually exempt or not (true: the player is exempt; false: the player is not exempt) 
+Within the 'players' section, each section heading represents a player UUID. The fields and sections within each UUID section are explained below: 
+ - lastUsername - The last known username of the player 
+ - target - The target that the player is working towards 
+ - finished - Whether the player has achieved the final target in the promotion tree or not (a 'final taget' is a target with 'none' as the value of the 'defaultNextTarget' and 'leadsTo' fields) 
+ - data - Data used by the plugin when determing whether a player has achieved an aim or not (the fields within this section are explained lower down) 
+ - aims - The aims that the player needs to complete in order to achieve the target; a 'true' value means that the player has finished the aim and a 'false' value means that the player has not completed the aim 
+The fields within the 'data' section are explained below: 
+ - password - The player's current guesses at the password for 'password' type aims 
+ - commands - The aims that require the player to enter a command (the 'command' type aims) 
+ - points - The points the player currently has for 'points' type aims 
+ - kills - The number of players that the player has killed 
+ - signs - The number of times the player has used a sign with one of the listed ids 
 
 ### The signs.yml File: 
+An example signs.yml file is given below: 
+```yaml
+signs:
+  SignId1:
+    usage: -1
+  SignId2:
+    usage: 0
+  SignId3:
+    usage: 1
+  SignId4:
+    usage: 10
+```
+The only section directly within the file is the 'signs' section. Each subsection of this section is the 'id' of a sign; each sign with an id specifies its id by writing the id on its fourth line. Each sign id within the file has a 'usage' field, which specifies the maximum number of times a player can use the sign. A usage of '-1' means that each player can use the sign an unlimited number of times and a usage of '0' means that a player can only use the sign if it has the *pos.sign.limitexempt* permission. A player with the permission *pos.set.player.sign* can use the command */posset set player <username> sign <sign-id> <player-usage>* to change the usage numbers. 
 
 ## Signs: 
 Signs are written in the form: 

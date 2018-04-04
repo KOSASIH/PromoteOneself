@@ -66,7 +66,7 @@ public class CheckPlayers {
 			else if (args[2].equalsIgnoreCase("join")) {
 				if (plugin.yd.configuration.contains("exempt." + spId + ".exempt")) {
 					if (sender.hasPermission("pos.exempt.join")) {
-						if (plugin.yd.configuration.contains("players." + spId + ".finished")) {
+						if (plugin.yd.configuration.contains("players." + spId)) {
 						}
 						else {
 							ua.addPlayer(plugin.yc.configuration.getString("defaultTarget"), spId, rpId, true); 
@@ -98,7 +98,7 @@ public class CheckPlayers {
 						Player player = (Player) sender; 
 						UUID rpId = player.getUniqueId(); 
 						String spId = rpId.toString(); 
-						if (plugin.yd.configuration.contains("players." + spId + ".finished")) {
+						if (plugin.yd.configuration.contains("players." + spId)) {
 							ua.addPlayer(plugin.yc.configuration.getString("defaultTarget"), spId, rpId, false); 
 						}
 						else {
@@ -126,7 +126,7 @@ public class CheckPlayers {
 					if (player != null) {
 						UUID rpId = player.getUniqueId(); 
 						String spId = rpId.toString(); 
-						if (plugin.yd.configuration.contains("players." + spId + ".finished")) {
+						if (plugin.yd.configuration.contains("players." + spId)) {
 							ua.addPlayer(plugin.yc.configuration.getString("defaultTarget"), spId, rpId, false); 
 						}
 						else {
@@ -199,7 +199,7 @@ public class CheckPlayers {
 						Player player = (Player) sender; 
 						UUID rpId = player.getUniqueId(); 
 						String spId = rpId.toString(); 
-						if (plugin.yd.configuration.contains("players." + spId + ".finished")) {
+						if (plugin.yd.configuration.contains("players." + spId)) {
 							sender.sendMessage(ChatColor.RED + "There are already data stored about this player ");
 						}
 						else {
@@ -221,7 +221,7 @@ public class CheckPlayers {
 					if (player != null) {
 						UUID rpId = player.getUniqueId(); 
 						String spId = rpId.toString(); 
-						if (plugin.yd.configuration.contains("players." + spId + ".finished")) {
+						if (plugin.yd.configuration.contains("players." + spId)) {
 							sender.sendMessage(ChatColor.RED + "There are already data stored about this player ");
 						}
 						else {
@@ -256,8 +256,8 @@ public class CheckPlayers {
 				UUID rpId = player.getUniqueId(); 
 				String spId = rpId.toString(); 
 				configPlace = "players." + spId; 
-				if (plugin.yd.configuration.contains(configPlace + ".finished") == true) {
-					if ((args.length == 6) && ((args[3].equalsIgnoreCase("aims")) || (args[3].equalsIgnoreCase("password")) || (args[3].equalsIgnoreCase("points")))) {
+				if (plugin.yd.configuration.contains(configPlace) == true) {
+					if ((args.length == 6) && ((args[3].equalsIgnoreCase("aims")) || (args[3].equalsIgnoreCase("password")) || (args[3].equalsIgnoreCase("points")) || (args[3].equalsIgnoreCase("sign")))) {
 						if (args[3].equalsIgnoreCase("aims")) {
 							configPlace += "." + args[3]; 
 							if (sender.hasPermission("pos.set.player.aim")) {
@@ -307,7 +307,6 @@ public class CheckPlayers {
 								int value = 0; 
 								try {
 									value = Integer.parseInt(args[5]); 
-									success= true; 
 								}
 								catch (NumberFormatException e) {
 									success = false; 
@@ -337,6 +336,27 @@ public class CheckPlayers {
 							}
 							else {
 								logger.messageSender(sender, "nopermission", null); 
+							}
+						}
+						else if (args[3].equalsIgnoreCase("sign")) {
+							if (plugin.ys.configuration.contains("signs." + args[4] + ".usage")) {
+								configPlace += ".data.signs." + args[4]; 
+								Boolean success = true; 
+								int value = 0; 
+								try {
+									value = Integer.parseInt(args[5]); 
+								}
+								catch (NumberFormatException e) {
+									success = false; 
+									sender.sendMessage(ChatColor.RED + "The sign usage count must be an integer "); 
+								}
+								if (success == true) {
+									plugin.yd.configuration.set(configPlace, value); 
+									sender.sendMessage(args[2] + " has now used the sign with the id " + args[4] + " " + args[5] + " times "); 
+								}
+							}
+							else {
+								sender.sendMessage(ChatColor.RED + "The sign-id specified does not exist in the sign.yml file "); 
 							}
 						}
 						else {

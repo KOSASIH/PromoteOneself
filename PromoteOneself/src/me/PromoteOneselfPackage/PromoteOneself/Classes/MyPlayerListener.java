@@ -31,34 +31,31 @@ public class MyPlayerListener implements Listener{
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		UUID rpId = event.getPlayer().getUniqueId(); 
 		String spId = rpId.toString(); 
-		if (plugin.yc.configuration.getBoolean("startInPromotionTree") == true) {
-			if ((plugin.yd.configuration.contains("exempt." + spId + ".exempt") == true) && (plugin.yd.configuration.getString("exempt." + spId + ".exempt").equalsIgnoreCase("true")) && (plugin.yc.configuration.getBoolean("updateUsernames") == false)) {
-			}
-			else if ((plugin.yd.configuration.contains("exempt." + spId + ".exempt") == true) && (plugin.yd.configuration.getString("exempt." + spId + ".exempt").equalsIgnoreCase("true")) && (plugin.yc.configuration.getBoolean("updateUsernames") == true)) {
-				plugin.yd.configuration.set("exempt." + spId + ".lastUsername", event.getPlayer().getName()); 
-				plugin.yd.save(); 
-			}
-			else if ((plugin.yd.configuration.contains("players." + spId + ".finished") == true) && (plugin.yc.configuration.getBoolean("updateUsernames") == false)) {
-			}
-			else if ((plugin.yd.configuration.contains("players." + spId + ".finished") == true) && (plugin.yc.configuration.getBoolean("updateUsernames") == true)) { 
-				plugin.yd.configuration.set("players." + spId + ".lastUsername", event.getPlayer().getName()); 
-				plugin.yd.save(); 
-			}
-			else {
-				ua.addPlayer(plugin.yc.configuration.getString("defaultTarget"), spId, rpId, false); 
-				if ((plugin.yd.configuration.contains("exempt." + spId + ".exempt") == true) && (plugin.yd.configuration.getString("exempt." + spId + ".exempt").equalsIgnoreCase("add"))) {
-					plugin.yd.configuration.set("exempt." + spId, null); 
-					plugin.saveFiles(); 
+		Boolean updateUsername = plugin.yc.configuration.getBoolean("updateUsernames"); 
+		String defaultFirstTarget = plugin.yc.configuration.getString("defaultTarget"); 
+		if (plugin.yd.configuration.contains("exempt." + spId) == true) {
+			if (plugin.yd.configuration.getString("exempt." + spId + ".exempt").equalsIgnoreCase("true")) {
+				if (updateUsername == true) {
+					plugin.yd.configuration.set("exempt." + spId + ".lastUsername", event.getPlayer().getName()); 
+					plugin.yd.save(); 
 				}
 			}
+			else {
+				plugin.yd.configuration.set("exempt." + spId, null); 
+				if (plugin.yd.configuration.contains("players." + spId) == false) {
+					ua.addPlayer(defaultFirstTarget, spId, rpId, true); 
+				}
+				plugin.yd.save(); 
+			}
 		}
-		else if (plugin.yc.configuration.getBoolean("updateUsernames") == true) {
-			if (plugin.yd.configuration.contains("exempt." + spId) == true) {
-				plugin.yd.configuration.set("exempt." + spId + ".lastUsername", event.getPlayer().getName()); 
-			}
-			else if (plugin.yd.configuration.contains("players." + spId) == true) {
+		if (plugin.yd.configuration.contains("players." + spId)) {
+			if (updateUsername == true) {
 				plugin.yd.configuration.set("players." + spId + ".lastUsername", event.getPlayer().getName()); 
+				plugin.yd.save(); 
 			}
+		}
+		else if (plugin.yc.configuration.getBoolean("startInPromotionTree") == true) {
+			ua.addPlayer(defaultFirstTarget, spId, rpId, true); 
 		}
 	}
 	@EventHandler (ignoreCancelled = true, priority = EventPriority.MONITOR) 
@@ -67,7 +64,7 @@ public class MyPlayerListener implements Listener{
 			try {
 				UUID rpId = event.getEntity().getKiller().getUniqueId(); 
 				String spId = rpId.toString(); 
-				if ((plugin.yd.configuration.contains("players." + spId + ".finished")) && (event.getEntity().getKiller() instanceof Player)) {
+				if ((plugin.yd.configuration.contains("players." + spId)) && (event.getEntity().getKiller() instanceof Player)) {
 					int kills = plugin.yd.configuration.getInt("players." + spId + ".data.kills"); 
 					kills += 1; 
 					plugin.yd.configuration.set("players." + spId + ".data.kills", kills); 
@@ -75,7 +72,7 @@ public class MyPlayerListener implements Listener{
 				}
 			}
 			catch (Exception e) {
-				plugin.logger.warning("custom", "Play death error: " + e.toString()); 
+				plugin.logger.warning("custom", "Player death error: " + e.toString()); 
 				plugin.logger.exception("death of player error: ", e); 
 			}
 		}
@@ -85,8 +82,8 @@ public class MyPlayerListener implements Listener{
 		if (plugin.yc.configuration.getBoolean("watchCommands") == true) {
 			if ((commands.isEmpty() == false) || ((commands.size() > 0) && (!(commands.get(0).equalsIgnoreCase("none"))))) {
 				for (String i : commands) {
-					plugin.logger.info("custom", "Event message: " + event.getMessage()); 
-					plugin.logger.info("custom", "command message: " + i); 
+					//plugin.logger.info("custom", "Event message: " + event.getMessage()); 
+					//plugin.logger.info("custom", "command message: " + i); 
 					if ((event.getMessage().startsWith("/" + i) == true) || (event.getMessage().startsWith(i) == true)) {
 						UUID rpId = event.getPlayer().getUniqueId(); 
 						String spId = rpId.toString(); 

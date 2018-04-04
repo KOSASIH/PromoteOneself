@@ -178,7 +178,7 @@ public class UpdateAims {
 				if (plugin.yd.configuration.contains("exempt." + spId + ".exempt")) {
 					logger.messageSender(sender, "exemptplayer", null); 
 				}
-				else if (plugin.yd.configuration.contains("players." + spId + ".finished") != true) { 
+				else if (plugin.yd.configuration.contains("players." + spId) != true) { 
 					if (plugin.yc.configuration.getBoolean("startInPromotionTree") == true) {
 						sender.sendMessage(ChatColor.RED + "There are no data stored about you "); 
 						logger.warning("noPlayer", player.getName()); 
@@ -221,7 +221,7 @@ public class UpdateAims {
 				if (plugin.yd.configuration.contains("exempt." + spId + ".exempt")) {
 					logger.messageSender(sender, "exemptplayer", null); 
 				}
-				else if (plugin.yd.configuration.contains("players." + spId + ".finished") != true) {
+				else if (plugin.yd.configuration.contains("players." + spId) != true) {
 					if (plugin.yc.configuration.getBoolean("startInPromotionTree") == true) {
 						sender.sendMessage(ChatColor.RED + "There are no data stored about you "); 
 						logger.warning("noPlayer", player.getName()); 
@@ -267,7 +267,7 @@ public class UpdateAims {
 				if (plugin.yd.configuration.contains("exempt." + spId + ".exempt")) {
 					logger.messageSender(sender, "exemptplayer", null); 
 				}
-				else if (plugin.yd.configuration.contains("players." + spId + ".finished") != true) {
+				else if (plugin.yd.configuration.contains("players." + spId) != true) {
 					if (plugin.yc.configuration.getBoolean("startInPromotionTree") == true) {
 						sender.sendMessage(ChatColor.RED + "There are no data stored about the specified player "); 
 						logger.warning("noPlayer", player.getName()); 
@@ -325,7 +325,7 @@ public class UpdateAims {
 				if (plugin.yd.configuration.contains("exempt." + spId + ".exempt")) {
 					logger.messageSender(sender, "exemptplayer", null); 
 				}
-				else if (plugin.yd.configuration.contains("players." + spId+ ".finished") != true) {
+				else if (plugin.yd.configuration.contains("players." + spId) != true) {
 					if (plugin.yc.configuration.getBoolean("startInPromotionTree") == true) {
 						sender.sendMessage(ChatColor.RED + "There is no data stored about the specified player "); 
 					}
@@ -396,6 +396,7 @@ public class UpdateAims {
 			return false; 
 		}
 	}
+	@SuppressWarnings("deprecation")
 	private Boolean checkPlayerAims(String aimType, String aim, Player player, String spId) {
 		Boolean changed = false; 
 		if (aimType.equalsIgnoreCase("none")) {
@@ -414,28 +415,39 @@ public class UpdateAims {
 				plugin.yd.configuration.set("players." + spId + ".aims." + aim, changed); 
 			}
 		}
-		else if (aimType.equalsIgnoreCase("item")) {
-			logger.info("custom", "item"); 
+		else if (aimType.equalsIgnoreCase("item") || aimType.equalsIgnoreCase("itemid")) {
 			String itemAndAmount = plugin.yc.configuration.getString("aims." + aim + ".achieve"); 
 			String[] itemAmountArray = itemAndAmount.split(";"); 
 			if (itemAmountArray.length == 2) {
-				Material material = Material.getMaterial(itemAmountArray[1]); 
-				logger.info("custom", material.toString()); 
-				ItemStack item = new ItemStack(material); 
+				Material material = null; 
 				Boolean success = true; 
+				if (aimType.equalsIgnoreCase("item")) {
+					Material.getMaterial(itemAmountArray[1]); 
+				}
+				else {
+					int id = 0; 
+					try {
+						id = Integer.parseInt(itemAmountArray[1]); 
+					}
+					catch (NumberFormatException e) {
+						success = false; 
+						logger.warning("custom", aim + " is an 'itemid' type aim that uses a string to specify the item instead of a number "); 
+					}
+					if (success == true) {
+						Material.getMaterial(id); 
+					}
+				}
 				int amount = 1; 
 				try {
 					amount = Integer.parseInt(itemAmountArray[0]); 
-					success = true; 
-					logger.info("custom", String.valueOf(amount)); 
 				}
 				catch (NumberFormatException e) {
 					success = false; 
 					logger.warning("custom", aim + " is an 'item' type aim that uses a string to specify the number of items required rather than a number "); 
 				}
 				if (success == true) {
+					ItemStack item = new ItemStack(material); 
 					Boolean isThere = props.getInventoryItem(item, amount, player); 
-					logger.info("custom", String.valueOf(isThere)); 
 					if (isThere == true) {
 						changed = true; 
 						plugin.yd.configuration.set("players." + spId + ".aims." + aim, changed); 

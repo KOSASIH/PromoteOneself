@@ -199,6 +199,7 @@ permissions:
       pos.set.player.aim: true
       pos.set.player.finished: true
       pos.set.player.target: true
+      pos.set.player.sign: true
       pos.set.player.password: true
       pos.set.player.points: true
       pos.set.player.kills: true
@@ -211,6 +212,9 @@ permissions:
     default: op
   pos.set.player.target: 
     description: Set a player's target 
+    default: op
+  pos.set.player.sign:
+    description: Set the number of times the player has used a sign 
     default: op
   pos.set.player.password:
     description: Set the password that a player will use as a guess to an aim 

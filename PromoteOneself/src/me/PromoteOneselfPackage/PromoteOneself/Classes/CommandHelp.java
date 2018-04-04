@@ -71,7 +71,7 @@ public class CommandHelp {
 		}
 		else if (command.equalsIgnoreCase("posset") && firstArgument.equalsIgnoreCase("set")) {
 			helpCommandHeading(sender, command, firstArgument); 
-			sender.sendMessage(ChatColor.AQUA + "/set <player|target|aim|setting> <name> [setting] [sub-setting] <value> "); 
+			sender.sendMessage(ChatColor.AQUA + "/posset set <player|target|aim|setting> <name> [setting] [sub-setting] <value> "); 
 			sender.sendMessage("Set various properties for the plugin "); 
 			sender.sendMessage(ChatColor.AQUA + "/prom help set <player|target|aim|setting>" + ChatColor.WHITE + "-" + ChatColor.AQUA + "gives you more help with the /posset set command "); 
 		}
@@ -80,6 +80,7 @@ public class CommandHelp {
 			sender.sendMessage(ChatColor.AQUA + "/posset set player <player-username> aims <aim-name> <true|false>" + ChatColor.WHITE + " - set a player's aim completion statuc "); 
 			sender.sendMessage(ChatColor.AQUA + "/posset set player <player-username> password <aim-name> <password>" + ChatColor.WHITE + " - set a password for a player's aim "); 
 			sender.sendMessage(ChatColor.AQUA + "/posset set player <player-username> points <set|add|remove> <amount>" + ChatColor.WHITE + " - change the amount of points that a player has "); 
+			sender.sendMessage(ChatColor.AQUA + "/posset set player <player-username> sign <sign-id> <player-usage>" + ChatColor.WHITE + " - change the number of times a player has used a sign "); 
 			sender.sendMessage(ChatColor.AQUA + "/posset set player <player-username> finished <true|false>" + ChatColor.WHITE + " - set whether a player has finished the promotion tree or not "); 
 			sender.sendMessage(ChatColor.AQUA + "/posset set player <player-username> target <target-name>" + ChatColor.WHITE + " - set a player's target and update its aims automatically "); 
 			sender.sendMessage(ChatColor.AQUA + "/posset set player <player-username> kills <amount>" + ChatColor.WHITE + " - set how many recorded kills a player has "); 
@@ -93,7 +94,7 @@ public class CommandHelp {
 		}
 		else if (command.equalsIgnoreCase("set")  && firstArgument.equalsIgnoreCase("aim")) {
 			helpCommandHeading(sender, command, firstArgument); 
-			sender.sendMessage(ChatColor.RED + "Command type aims cannot be altered with this command "); 
+			sender.sendMessage(ChatColor.RED + "Aims of type 'command' cannot be altered with this command "); 
 			sender.sendMessage(ChatColor.AQUA + "/posset set aim <aim-name> type <aim-type>" + ChatColor.WHITE + " - set the type of an aim "); 
 			sender.sendMessage(ChatColor.AQUA + "/posset set aim <aim-name> achieve <aim-goal>" + ChatColor.WHITE + " - set the goal of an aim "); 
 		}
