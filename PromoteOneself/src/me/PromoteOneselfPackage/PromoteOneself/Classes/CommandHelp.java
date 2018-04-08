@@ -71,16 +71,16 @@ public class CommandHelp {
 		}
 		else if (command.equalsIgnoreCase("posset") && firstArgument.equalsIgnoreCase("set")) {
 			helpCommandHeading(sender, command, firstArgument); 
-			sender.sendMessage(ChatColor.AQUA + "/posset set <player|target|aim|setting> <name> [setting] [sub-setting] <value> "); 
+			sender.sendMessage(ChatColor.AQUA + "/posset set <player|target|aim|setting|sign> <name> [setting] [sub-setting] <value> "); 
 			sender.sendMessage("Set various properties for the plugin "); 
-			sender.sendMessage(ChatColor.AQUA + "/prom help set <player|target|aim|setting>" + ChatColor.WHITE + "-" + ChatColor.AQUA + "gives you more help with the /posset set command "); 
+			sender.sendMessage(ChatColor.AQUA + "/prom help set <player|target|aim|setting|sign>" + ChatColor.WHITE + " - " + ChatColor.AQUA + "gives you more help with the /posset set command "); 
 		}
 		else if (command.equalsIgnoreCase("set") && firstArgument.equalsIgnoreCase("player"))  {
 			helpCommandHeading(sender, command, firstArgument); 
-			sender.sendMessage(ChatColor.AQUA + "/posset set player <player-username> aims <aim-name> <true|false>" + ChatColor.WHITE + " - set a player's aim completion statuc "); 
+			sender.sendMessage(ChatColor.AQUA + "/posset set player <player-username> aims <aim-name> <true|false>" + ChatColor.WHITE + " - set a player's aim completion status "); 
 			sender.sendMessage(ChatColor.AQUA + "/posset set player <player-username> password <aim-name> <password>" + ChatColor.WHITE + " - set a password for a player's aim "); 
 			sender.sendMessage(ChatColor.AQUA + "/posset set player <player-username> points <set|add|remove> <amount>" + ChatColor.WHITE + " - change the amount of points that a player has "); 
-			sender.sendMessage(ChatColor.AQUA + "/posset set player <player-username> sign <sign-id> <player-usage>" + ChatColor.WHITE + " - change the number of times a player has used a sign "); 
+			sender.sendMessage(ChatColor.AQUA + "/posset set player <player-username> sign <sign-id> <player-usage>" + ChatColor.WHITE + " - change the recorded sign usage of a player "); 
 			sender.sendMessage(ChatColor.AQUA + "/posset set player <player-username> finished <true|false>" + ChatColor.WHITE + " - set whether a player has finished the promotion tree or not "); 
 			sender.sendMessage(ChatColor.AQUA + "/posset set player <player-username> target <target-name>" + ChatColor.WHITE + " - set a player's target and update its aims automatically "); 
 			sender.sendMessage(ChatColor.AQUA + "/posset set player <player-username> kills <amount>" + ChatColor.WHITE + " - set how many recorded kills a player has "); 
@@ -98,7 +98,7 @@ public class CommandHelp {
 			sender.sendMessage(ChatColor.AQUA + "/posset set aim <aim-name> type <aim-type>" + ChatColor.WHITE + " - set the type of an aim "); 
 			sender.sendMessage(ChatColor.AQUA + "/posset set aim <aim-name> achieve <aim-goal>" + ChatColor.WHITE + " - set the goal of an aim "); 
 		}
-		else if (command.equalsIgnoreCase("setting")) {
+		else if (command.equalsIgnoreCase("set") && firstArgument.equalsIgnoreCase("setting")) {
 			helpCommandHeading(sender, command, firstArgument); 
 			sender.sendMessage(ChatColor.AQUA + "/posset set setting detectKills <true|false>" + ChatColor.WHITE + " - set whether the plugin should listen for player deaths or not "); 
 			sender.sendMessage(ChatColor.AQUA + "/posset set setting watchCommands <true|false>" + ChatColor.WHITE + " - set whether the plugin should detect players executing commands which might be aim goals or not "); 
@@ -108,6 +108,10 @@ public class CommandHelp {
 			sender.sendMessage(ChatColor.AQUA + "/posset set setting startInPromotionTree <true|false>" + ChatColor.WHITE + " - set whether a player hsould automatically be added to the promotion tree on its first join or not "); 
 			sender.sendMessage(ChatColor.AQUA + "/posset set setting resetPointsAfterEachPromotion <true|false>" + ChatColor.WHITE + " - set whether a player's points should return to 0 after each promotion it gets or not "); 
 			sender.sendMessage(ChatColor.AQUA + "/posset set setting updateUsernames <true|false>" + ChatColor.WHITE + " - set whether the plugin should automatically update a player's recorded username after each login or not "); 
+		}
+		else if (command.equalsIgnoreCase("set") && firstArgument.equalsIgnoreCase("sign")) {
+			helpCommandHeading(sender, command, firstArgument); 
+			sender.sendMessage(ChatColor.AQUA + "/posset set sign <sign-id> usage <number>" + ChatColor.WHITE + " - set the maximum number of times a player can use a sign with the given sign id "); 
 		}
 		else {
 			sender.sendMessage(ChatColor.RED + "That is not a recognised command; for help type in " + ChatColor.AQUA + "/prom help"); 

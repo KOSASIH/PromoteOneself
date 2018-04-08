@@ -259,28 +259,33 @@ public class CheckPlayers {
 				if (plugin.yd.configuration.contains(configPlace) == true) {
 					if ((args.length == 6) && ((args[3].equalsIgnoreCase("aims")) || (args[3].equalsIgnoreCase("password")) || (args[3].equalsIgnoreCase("points")) || (args[3].equalsIgnoreCase("sign")))) {
 						if (args[3].equalsIgnoreCase("aims")) {
-							configPlace += "." + args[3]; 
-							if (sender.hasPermission("pos.set.player.aim")) {
-								if (plugin.yd.configuration.contains(configPlace + "." + args[4]) == true) {
-									configPlace += "." + args[4]; 
-									if (args[5].equalsIgnoreCase("true")) {
-										plugin.yd.configuration.set(configPlace, true); 
-										sender.sendMessage(args[4] + " is now " + args[5] + " "); 
-									}
-									else if (args[5].equalsIgnoreCase("false")) {
-										plugin.yd.configuration.set(configPlace, false); 
-										sender.sendMessage(args[4] + " is now " + args[5] + " "); 
+							if (plugin.yc.configuration.contains("aims." + args[4])) {
+								configPlace += "." + args[3]; 
+								if ((sender.hasPermission("pos.set.player.aim")) || (sender.hasPermission("pos.set.player.aim.none") && plugin.yc.configuration.getString("aims." + args[4] + ".type").equalsIgnoreCase("none"))) {
+									if (plugin.yd.configuration.contains(configPlace + "." + args[4]) == true) {
+										configPlace += "." + args[4]; 
+										if (args[5].equalsIgnoreCase("true")) {
+											plugin.yd.configuration.set(configPlace, true); 
+											sender.sendMessage(args[4] + " is now " + args[5] + " "); 
+										}
+										else if (args[5].equalsIgnoreCase("false")) {
+											plugin.yd.configuration.set(configPlace, false); 
+											sender.sendMessage(args[4] + " is now " + args[5] + " "); 
+										}
+										else {
+											sender.sendMessage(ChatColor.RED + "A player's aim completion status must be either 'true' or 'false' "); 
+										}
 									}
 									else {
-										sender.sendMessage(ChatColor.RED + "A player's aim completion status must be either 'true' or 'false' "); 
+										sender.sendMessage(ChatColor.RED + "The specified aim is not an aim of the target that the player currently is on "); 
 									}
 								}
 								else {
-									sender.sendMessage(ChatColor.RED + "The specified aim is not an aim of the target that the player currently is on "); 
+									logger.messageSender(sender, "nopermission", null); 
 								}
 							}
 							else {
-								logger.messageSender(sender, "nopermission", null); 
+								sender.sendMessage(ChatColor.RED + "The aim specified does not exist in the config.yml file "); 
 							}
 						}
 						else if (args[3].equalsIgnoreCase("password")) {

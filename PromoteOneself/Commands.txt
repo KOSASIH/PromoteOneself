@@ -1,112 +1,415 @@
 Commands: 
-/promoteoneself - Get the help menu 
-/prom update [target [player [aim]]] ||| 
-/prom check [<player|target|aim> <name>] 
-/prom password <get [player] <aim>|set [player] <password> <aim>> 
-/prom help <command name> 
-/posset exempt <player> <true|temp|add|join> ---true: set exemption status to true; add: set exemption status to add; join: make the player join the promotion tree now--- 
-/posset save 
-/posset reload [check|nocheck] 
-/posset player <add|remove|delete> [name] !!! /prom update \\\for new players\\\ = /posset player add \\\new player\\\ 
-/posset set <player|target|aim|setting> <name> [setting] [sub-setting] <value> 
+The */promoteoneself* command shows the help page. 
+The */prom help* command shows the help page. 
+The */prom help <command> <first argument>* command shows more detailed information about the */<command> <first argument> <all-remaining-arguments>* commands. 
+The */prom help set <second argument>* command shows more detailed information about the */posset set <second argument> <all-remaining arguments>* commands. 
+The */prom update [target [player-username [aim]]]* command checks a player's completion status for a target or an aim of a target. 
+The */prom check [<player|target|aim> <name>]* command gives information about a player, target or aim. 
+The */prom password <get [player] <aim>|set [player] <password> <aim>>* command enables a player to get or set a player's password guess attempts. 
+The */posset exempt <player> <true|temp|add|join>* command sets the exemption status of a player (true: make exempt and delete data; temp: make exempt and keep data; add: lose exemption at next login; join: lose exemption now). 
+The */posset save* command saves the config files. 
+The */posset reload [check|nocheck]* command reloads the configuration files (adding nothing or 'check' makes it checks each players' aims with the aims each target specifies the player should have; specifying 'nocheck' makes it jut reload the files). 
+The */posset player <add|remove|delete> [name]* command provides the ability to add or remove a player to/from the promotion tree or to reset a player in the promotion tree. 
+The */posset set player <player-username> aims <aim-name> <true|false>* command sets a player's aim completetion status. 
+The */posset set player <player-username> password <aim-name> <password>* command sets a player's password guess for an aim. 
+The */posset set player <player-username> points <set|add|remove> <amount>* command changes the amount of points a player has. 
+The */posset set player <player-username> sign <sign-id> <player-usage>* command sets a player's recorded sign usage. 
+The */posset set player <player-username> finished <true|false>* command sets the promotion tree completion status of a player. 
+The */posset set player <player-username> target <target-name>* command changes a player's target and updates the player's aims. 
+The */posset set player <player-username> kills <amount>* command changes a player's recorded kill number. 
+The */posset set player <player-username> lastusername* command makes the plugin update the player's recorded last username in the config files. 
+The */posset set target <target-name> aims <add|remove> <aim-name>* command adds or removes an aim to/from a target. 
+The */posset set target <target-name> leadsTo <nullify|add <target-name>|remove <target-name>>* command sets which targets lead on from the specified target. 
+The */posset set target <target-name> defaultNextTarget <target-name>* command sets the default next target of the specified target. 
+The */posset set aim <aim-name> type <aim-type>* command sets the type of an aim (this command does not work for 'command' type aims). 
+The */posset set aim <aim-name> achieve <aim-goal>* command sets the goal of an aim (this command does not worm for 'command' type aims). 
+The */posset set setting detectKills <true|false>* command sets whether the plugin should listen for player deaths for 'kills' type aims or not. 
+The */posset set setting watchCommands <true|false>* command sets whether the plugin should listen for player commands for 'command' type aims or not. 
+The */posset set setting allowSigns <true|false>* command sets whether the plugin should allow the use of signs or not. 
+The */posset set setting defaultTarget <targetName>* command sets the default first target when a player first joins the promotion tree. 
+The */posset set setting lowestRankThatCanManuallyApproveAims <rank>* command sets the informational value in the config file used in error messages stating the lowest required rank that can manually approve aims. 
+The */posset set setting startInPromotionTree <true|false>* command sets whether players should automatically start in the promotion tree or not. 
+The */posset set setting resetPointsAfterEachPromotion <true|false>* command sets whether a player's points should be reset after each promotion or not. 
+The */posset set setting updateUsernames <true|false>* command sets whether the plugin should update the username recorded for the player in the config files each time the player logs in or not. 
 
 
 Permissions: 
-pos.* 
-pos.update.add  
-pos.update.add.others 
-pos.update
-pos.update.others
-pos.update.target
-pos.update.target.others 
-pos.update.aim
-pos.update.aim.others
-pos.update.* 
-pos.password.get
-pos.password.get.others
-pos.password.set
-pos.password.set.others (the same as pos.set.player.password)
-pos.password.* 
-pos.save 
-pos.reload.check
-pos.reload.nocheck
-pos.reload.*  
-pos.check
-pos.check.others 
-pos.check.targets 
-pos.check.aims 
-pos.check.*
-pos.exempt.true 
-pos.exempt.add 
-pos.exempt.join
-pos.exempt.* 
-pos.player.remove
-pos.player.remove.others 
-pos.player.reset
-pos.player.reset.others
-pos.player.* (also gives pos.update.add and pos.update.add.others) 
-pos.set.player.aim 
-pos.set.player.finished 
-pos.set.player.target 
-pos.set.player.password (the same as pos.password.set.others)
-pos.set.player.points
-pos.set.player.kills
-pos.set.player.player 
-pos.set.player.*
-pos.set.aim.type 
-pos.set.aim.achieve 
-pos.set.aim.*
-pos.set.target.aims 
-pos.set.target.leadsto
-pos.set.target.defaultnexttarget
-pos.set.target.* 
-pos.set.setting.detectkills
-pos.set.setting.allowsigns 
-pos.set.setting.watchcommands
-pos.set.setting.defaulttarget
-pos.set.setting.resetpointsaftereachpromotion
-pos.set.setting.lowestrankthatcanmanuallyapproveaims
-pos.set.setting.startinpromotiontree
-pos.set.setting.updateusernames
-pos.set.setting.* 
-pos.set.*
-pos.promote.<group> 
-pos.promote.* 
-pos.sign.update.use 
-pos.sign.update.create
-pos.sign.update.delete
-pos.sign.update.*
-pos.sign.points.use
-pos.sign.points.create
-pos.sign.points.delete
-pos.sign.points.*
-pos.sign.target.use
-pos.sign.target.create
-pos.sign.target.delete
-pos.sign.target.*
-pos.sign.sign.use
-pos.sign.sign.create
-pos.sign.sign.delete
-pos.sign.sign.* 
-pos.sign.*
+permissions:
+  pos.*:
+    description: Use all commands concerning the PromoteOneself plugin 
+    default: op
+    children:
+      pos.save: true
+      pos.reload.*: true
+      pos.update.*: true
+      pos.password.*: true
+      pos.check.*: true
+      pos.exempt.*: true
+      pos.player.*: true
+      pos.set.*: true
+      pos.promote.*: true
+      pos.sign.*: true
+  pos.save:
+    description: The player can save the configuration 
+    default: op
+  pos.reload.*:
+    description: The player can reload the configuration 
+    default: op
+    children:
+      pos.reload.check: true
+      pos.reload.nocheck: true
+  pos.reload.check:
+    description: The player can reload the configuration and ensure that all player aims are correct 
+    default: op
+  pos.reload.nocheck:
+    description: The player can reload the configuration without ensuring that all player aims are correct 
+    default: op
+  pos.update.*:
+    description: Update players' aims 
+    default: op
+    children: 
+      pos.update.others: true
+      pos.update.add.others: true
+      pos.update.target.others: true
+      pos.update.aim.others: true
+  pos.update.others:
+    description: Update another player's aims 
+    default: op
+    children:
+      pos.update: true
+  pos.update:
+    description: Update ones own aims 
+    default: op
+  pos.update.add.others:
+    description: Add other people to the promotion tree
+    default: op
+    children:
+      pos.update.add: true
+  pos.update.add:
+    description: Add oneself to the promotion tree 
+    default: op
+  pos.update.target.others:
+    description: Update a player's aims and set which target it should advance to next 
+    default: op
+    children: 
+      pos.update.target: true
+  pos.update.target:
+    description: Update ones own aims and set which target oneself should advance to next 
+    default: op
+  pos.update.aim.others: 
+    description: Update an individual aim of a player without causing the player to advance 
+    default: op
+    children: 
+      pos.update.aim: true
+  pos.update.aim:
+    description: Update ones own aims without advancing to a new target 
+    default: op
+  pos.password.*:
+    description: Get someone set and get player's guesses at passwords for aims 
+    default: op 
+    children:
+      pos.password.get.others: true
+      pos.password.set.others: true
+  pos.password.get.others:
+    description: Get the password that a player has set as a guess to an aim 
+    default: op
+    children:
+      pos.password.get: true
+  pos.password.get:
+    description: Let a player get the password that it has set as the answer to an aim 
+    default: op
+  pos.password.set.others:
+    description: Set the password that a player will use as a guess to an aim 
+    default: op
+    children:
+      pos.password.set: true 
+  pos.password.set:
+    description: Let a player set the password that it will use as the answer to an aim 
+    default: op
+  pos.check.*: 
+    description: Can check all object types 
+    default: op
+    children: 
+      pos.check.others: true
+      pos.check.targets: true
+      pos.check.aims: true
+  pos.check.others:
+    description: Check a players' aims 
+    default: op
+    children:
+      pos.check: true
+  pos.check:
+    description: Check ones own aims 
+    default: op
+  pos.check.targets:
+    description: Check a target 
+    default: op
+  pos.check.aims:
+    description: Check an aim 
+    default: op
+  pos.exempt.*:
+    description: Set a player's exemption status 
+    default: op 
+    children:
+      pos.exempt.true: true
+      pos.exempt.temp: true
+      pos.exempt.add: true
+      pos.exempt.join: true
+  pos.exempt.true:
+    description: Make a player exempt 
+    default: op
+  pos.exempt.temp:
+    description: Temporarily make a player exempt 
+    default: op
+  pos.exempt.add:
+    description: Make a player loose exemption on its next join 
+    default: op
+  pos.exempt.join:
+    description: Instantly make a player loose exemption 
+    default: op
+  pos.player.*:
+    description: Have the ability to add, delete and reset all players 
+    default: op
+    children: 
+      pos.update.add.others: true
+      pos.player.remove.others: true
+      pos.player.reset.others: true
+  pos.player.remove.others:
+    description: Remove the information about a player 
+    default: op
+    children: 
+      pos.player.remove: true
+  pos.player.remove:
+    description: Remove the information about oneself 
+    default: op
+  pos.player.reset.others:
+    description: Reset the information about other players 
+    default: op
+    children:
+      pos.player.reset: true
+  pos.player.reset:
+    description: Reset the information about oneself 
+    default: op
+  pos.set.*:
+    description: Have the ability to set all settable information 
+    default: op
+    children:
+      pos.set.player.*: true
+      pos.set.target.*: true
+      pos.set.aim.*: true
+      pos.set.setting.*: true
+      pos.set.sign.*: true 
+  pos.set.player.*:
+    description: Set all settable information about any player 
+    default: op
+    children:
+      pos.set.player.aim: true
+      pos.set.player.finished: true
+      pos.set.player.target: true
+      pos.set.player.sign: true
+      pos.set.player.password: true
+      pos.set.player.points: true
+      pos.set.player.kills: true
+      pos.set.player.player: true
+  pos.set.player.aim:
+    description: Set the completion status of an aim of a player 
+    default: op
+    children:
+      pos.set.player.aim.none: true
+  pos.set.player.aim.none:
+    description: Set the completion status of a 'none' type aim of a player 
+    default: op 
+  pos.set.player.finished: 
+    description: Set the completion status of a player's promotion tree 
+    default: op
+  pos.set.player.target: 
+    description: Set a player's target 
+    default: op
+  pos.set.player.sign:
+    description: Set the number of times the player has used a sign 
+    default: op
+  pos.set.player.password:
+    description: Set the password that a player will use as a guess to an aim 
+    default: op
+  pos.set.player.points:
+    description: Set a player's points 
+    default: op
+  pos.set.player.kills:
+    description: Set a player's kills 
+    default: op
+  pos.set.player.player:
+    description: Update a player's atored username 
+    default: op
+  pos.set.target.*:
+    description: Set all settable information about any target 
+    default: op
+    children:
+      pos.set.target.aims: true
+      pos.set.target.leadsto: true
+      pos.set.target.defaultnexttarget: true
+  pos.set.target.aims:
+    description: Set the aims of a target 
+    default: op
+  pos.set.target.leadsto:
+    description: Set which targets a target leads to 
+    default: op
+  pos.set.target.defaultnexttarget:
+    description: Set which target should be the default next target of a target 
+    default: op
+  pos.set.aim.*:
+    description: Set all settable information about aims 
+    default: op
+    children: 
+      pos.set.aim.type: true
+      pos.set.aim.achieve: true
+  pos.set.aim.type:
+    description: Set an aim's type 
+    default: op
+  pos.set.aim.achieve:
+    description: Set an aim's goal 
+    default: op
+  pos.set.setting.*:
+    description: Set the main settings about the PromoteOneself plugin 
+    default: op
+    children: 
+      pos.set.setting.defaulttarget: true
+      pos.set.setting.lowestrankthatcanmanuallyapproveaims: true
+      pos.set.setting.startinpromotiontree: true
+      pos.set.setting.updateusernames: true
+      pos.set.setting.detectkills: true
+      pos.set.setting.resetpointsaftereachpromotion: true
+      pos.set.setting.allowsigns: true
+      pos.set.setting.watchcommands: true
+  pos.set.setting.defaulttarget:
+    description: Set the default starting target 
+    default: op
+  pos.set.setting.lowestrankthatcanmanuallyapproveaims:
+    description: Tell the plugin which rank has the pos.set.player.aim permission 
+    default: op
+  pos.set.setting.startinpromotiontree:
+    description: Set whether or not all players should automatically start inside the promotion tree 
+    default: op
+  pos.set.setting.updateusernames:
+    description: Set whether or not players' usernames should be automatically updated 
+    default: op
+  pos.set.setting.detectkills:
+    description: Set whether this plugin should listen for player kills or not 
+    default: op
+  pos.set.setting.resetpointsaftereachpromotion:  
+    description: Set whether this plugin should resets players' points after each promotion or not 
+    default: op
+  pos.set.setting.allowsigns:
+    description: Set whether this plugin listens to signs or not 
+    default: op
+  pos.set.setting.watchcommands:
+    description: Set whether 'command' type aims should work or not 
+    default: op
+  pos.set.sign.*:
+    description: Set all setable items about signs 
+    default: op
+    children:
+      pos.set.sign.usage: true
+  pos.set.sign.usage:
+    description: Set the usage limit for a sign id group 
+    default: op 
+  pos.promote.*:
+    description: Let the player be promoted to any group (only required for permission type aims) 
+    default: op
+  pos.sign.*:
+    description: Let the player create, delete and use all signs 
+    default: op
+    children:
+      pos.sign.update.*: true
+      pos.sign.points.*: true
+      pos.sign.target.*: true
+      pos.sign.sign.*: true
+      pos.sign.limitexempt: true
+  pos.sign.update.*:
+    description: Let the player create, delete and use update type signs 
+    default: op 
+    children:
+      pos.sign.update.use: true
+      pos.sign.update.create: true
+      pos.sign.update.delete: true
+  pos.sign.update.use:
+    description: Let the player use update type signs 
+    default: op
+  pos.sign.update.create:
+    description: Let the player create update type signs 
+    default: op
+  pos.sign.update.delete:
+    description: Let the player delete update type signs 
+    default: op
+  pos.sign.points.*:
+    description: Let the player create, delete and use points type signs 
+    default: op
+    children:
+      pos.sign.points.use: true
+      pos.sign.points.create: true
+      pos.sign.points.delete: true
+  pos.sign.points.use:
+    description: Let the player use points type signs 
+    default: op
+  pos.sign.points.create:
+    description: Let the player create points type signs 
+    default: op
+  pos.sign.points.delete:
+    description: Let the player delete points type signs 
+    default: op
+  pos.sign.target.*:
+    description: Let the player create, delete and use target type signs 
+    default: op 
+    children:
+      pos.sign.target.use: true
+      pos.sign.target.create: true
+      pos.sign.target.delete: true
+  pos.sign.target.use:
+    description: Let the player use target type signs 
+    default: op
+  pos.sign.target.create:
+    description: Let the player create target type signs 
+    default: op
+  pos.sign.target.delete:
+    description: Let the player delete target type signs 
+    default: op
+  pos.sign.sign.*:
+    description: Let the player create, delete and use sign type signs 
+    default: op
+    children:
+      pos.sign.sign.use: true
+      pos.sign.sign.create: true
+      pos.sign.sign.delete: true
+  pos.sign.sign.use:
+    description: Let the player use sign type signs 
+    default: op
+  pos.sign.sign.create: 
+    description: Let the player create sign type signs 
+    default: op
+  pos.sign.sign.delete:
+    description: Let the player delete sign type signs 
+    default: op 
+  pos.sign.limitexempt:
+    description: Be exempt from sign usage limits 
+    default: op 
+
 
 aim types: 
-xp 
-xpl 
-item
-points
-kills
-economy (vault dependent) 
-group (vault dependent) 
-pgroup (vault dependent) 
-permission (permission -pos.promote.<group> or pos.promote.*- dependent) 
-sign  
-password 
-command 
+ - none - The aim must be given to a player by a server administrator 
+ - xp - The player requires a certain amount of xp 
+ - xpl - The player requires a certain number of levels of xp 
+ - item - The player needs to possess a certain amount of a certain item (where the tiem is specified by its name in the appropriate enum https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html) 
+ - itemid - The player needs to posees a certain amount of a certain item (where the item is specified by its id) 
+ - password - The player needs to enter a password 
+ - points - The player needs to have gathered a certain number of points 
+ - playerpoints - The player needs to have gathered a certain number of points, where points are from the 'PlayerPoints' plugin (this requires the 'PlayerPoints' plugin to be installed)
+ - kills - The player needs a certain number of kills 
+ - economy - The player needs a certain balance (this requires the 'Vault' plugin to be installed) 
+ - group - The player needs to be in a certain permissions group (this requires the 'Vault' plugin to be installed)
+ - pgroup - The player needs to have a certain permissions group as its primary permissions group (this requires the 'Vault' plugin to be installed)
+ - permission - The player needs to have the permission to get to the next target (e.g. pos.promote.target1, where 'target1' is the name of a target defined in the config.yml file) 
+ - command - The player must enter a certain command with a certain set of arguments 
+ - sign - The player must achieve the aim by clicking on a sign 
 
-on time (OnTime dependent) 
-
-none 
 
 signs:
 update:
@@ -132,6 +435,7 @@ sign:
 sign
 [aim name] 
 [sign id]
+
 
 To do: 
 Type1 (must do): 

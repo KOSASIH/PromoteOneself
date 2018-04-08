@@ -140,7 +140,7 @@ public class MySignListener implements Listener {
 												plugin.yd.save(); 
 											}
 											else {
-												player.sendMessage(ChatColor.RED + "Could not update target: you have run out of moves "); 
+												player.sendMessage(ChatColor.RED + "Could not update target: you have run out of sign usage allowance for this sign "); 
 												event.setCancelled(true); 
 											}
 										}
@@ -150,6 +150,8 @@ public class MySignListener implements Listener {
 										}
 									}
 									else {
+										logger.warning("custom", "A sign of type update has an invalid id of: " + signId); 
+										player.sendMessage(ChatColor.RED + "The sign has an invalid sign id "); 
 										event.setCancelled(true); 
 									}
 								}
@@ -194,7 +196,7 @@ public class MySignListener implements Listener {
 												}
 											}
 											else {
-												player.sendMessage(ChatColor.RED + "Could not update points: you have run out of moves "); 
+												player.sendMessage(ChatColor.RED + "Could not update points: you have run out of sign usage allowance for this sign "); 
 												event.setCancelled(true); 
 											}
 										}
@@ -204,6 +206,8 @@ public class MySignListener implements Listener {
 										}
 									}
 									else {
+										logger.warning("custom", "A sign of type points has an invalid id of: " + signId); 
+										player.sendMessage(ChatColor.RED + "The sign has an invalid sign id "); 
 										event.setCancelled(true); 
 									}
 								}
@@ -236,7 +240,7 @@ public class MySignListener implements Listener {
 													plugin.saveFiles(); 
 												}
 												else {
-													player.sendMessage(ChatColor.RED + "Could not update target: you have run out of moves "); 
+													player.sendMessage(ChatColor.RED + "Could not update target: you have run out of sign usage allowance for this sign "); 
 													event.setCancelled(true); 
 												}
 											}
@@ -246,6 +250,8 @@ public class MySignListener implements Listener {
 											}
 										}
 										else {
+											logger.warning("custom", "A sign of type target has an invalid id of: " + signId); 
+											player.sendMessage(ChatColor.RED + "The sign has an invalid sign id "); 
 											event.setCancelled(true); 
 										}
 									}
@@ -282,7 +288,7 @@ public class MySignListener implements Listener {
 														plugin.yd.configuration.set("players." + spId + ".data.signs." + signId, playerUsage); 
 													}
 													else {
-														player.sendMessage(ChatColor.RED + "Could not update aim: you have run out of moves "); 
+														player.sendMessage(ChatColor.RED + "Could not update aim: you have run out of sign usage allowance for this sign "); 
 														event.setCancelled(true); 
 													}
 												}
@@ -292,6 +298,8 @@ public class MySignListener implements Listener {
 												}
 											}
 											else {
+												logger.warning("custom", "A sign of type sign has an invalid id of: " + signId); 
+												player.sendMessage(ChatColor.RED + "The sign has an invalid sign id "); 
 												event.setCancelled(true); 
 											}
 										}

@@ -2,12 +2,10 @@
 ## Description: 
 The PromoteOneself plugin is built for Minecraft Spigot versions 1.8/1.12. This plugin enables server administrators to set a series of targets for player to achieve in order to gain rewards, such as rank-ups; the plugin is configured so that, when a player meets a target, the plugin can runs a set of commands as defined in the config.yml file. Targets are composed of aims; a player achieves a target upon completing all aims that are part of the target. As players achieve more targets, they work their way up the 'promotion tree' until they achieve the last target. 
 
-This plugin also has integration with the 'Valut' plugin and the 'PlayerPoints' plugin. 
+This plugin is compatible with the 'Vault' plugin and the 'PlayerPoints' plugin. There are currently no known incompatibility issues. 
 
 ## Debug Information --- to be removed ---: 
 --- This plugin curuently contains a number of debug commands; these should be removed before the plugin is built as they are a security problem. This plugin is made using eclipse; the .classpath file is excluded from this repository so should should be recreated --- 
-
---- Extra information is currently in the PromoteOneself/commands.txt file, but it is outdated --- 
 
 ## License: 
 This plugin is under a MIT license (see the LICENSE file for the full license). 
@@ -44,19 +42,41 @@ This plugin contains the following commands:
  - /prom <arguments> 
  - /posset <arguments> 
 
-The */promoteoneself* command shows the help page. 
-The */prom help* command shows the help page. 
-The */prom help <command> <first argument>* command shows more detailed information about the */<command> <first argument>* command. 
-The */prom help set <second argument>* command shows more detailed information about the */posset set <second argument>* command. 
-The */prom update [target [player-username [aim]]]* command checks a player's completion status for a target or an aim of a target. 
-The */prom check [<player|target|aim> <name>]* command gives information about a player, target or aim. 
-The */prom password <get [player] <aim>|set [player] <password> <aim>>* command enables a player to get or set a player's password guess attempts. 
-The */posset exempt <player> <true|temp|add|join>* command sets the exemption status of a player (true: make exempt and delete data; temp: make exempt and keep data; add: lose exemption at next login; join: lose exemption now). 
-The */posset save* command saves the config files. 
-The */posset reload [check|nocheck]* command reloads the confoguration files (adding nothing or 'check' makes it checks each players' aims with the aims each target specifies the player should have; specifying 'nocheck' makes it jut reload the files). 
+The */promoteoneself* command shows the help page. \
+The */prom help* command shows the help page. \
+The */prom help <command> <first argument>* command shows more detailed information about the */<command> <first argument> <all-remaining-arguments>* commands. \
+The */prom help set <second argument>* command shows more detailed information about the */posset set <second argument> <all-remaining arguments>* commands. \
+The */prom update [target [player-username [aim]]]* command checks a player's completion status for a target or an aim of a target. \
+The */prom check [<player|target|aim> <name>]* command gives information about a player, target or aim. \
+The */prom password <get [player] <aim>|set [player] <password> <aim>>* command enables a player to get or set a player's password guess attempts. \
+The */posset exempt <player> <true|temp|add|join>* command sets the exemption status of a player (true: make exempt and delete data; temp: make exempt and keep data; add: lose exemption at next login; join: lose exemption now). \
+The */posset save* command saves the config files. \
+The */posset reload [check|nocheck]* command reloads the configuration files (adding nothing or 'check' makes it checks each players' aims with the aims each target specifies the player should have; specifying 'nocheck' makes it jut reload the files). \
+The */posset player <add|remove|delete> [name]* command provides the ability to add or remove a player to/from the promotion tree or to reset a player in the promotion tree. \
+The */posset set player <player-username> aims <aim-name> <true|false>* command sets a player's aim completetion status. \
+The */posset set player <player-username> password <aim-name> <password>* command sets a player's password guess for an aim. \
+The */posset set player <player-username> points <set|add|remove> <amount>* command changes the amount of points a player has. \
+The */posset set player <player-username> sign <sign-id> <player-usage>* command sets a player's recorded sign usage. \
+The */posset set player <player-username> finished <true|false>* command sets the promotion tree completion status of a player. \
+The */posset set player <player-username> target <target-name>* command changes a player's target and updates the player's aims. \
+The */posset set player <player-username> kills <amount>* command changes a player's recorded kill number. \
+The */posset set player <player-username> lastusername* command makes the plugin update the player's recorded last username in the config files. \
+The */posset set target <target-name> aims <add|remove> <aim-name>* command adds or removes an aim to/from a target. \
+The */posset set target <target-name> leadsTo <nullify|add <target-name>|remove <target-name>>* command sets which targets lead on from the specified target. \
+The */posset set target <target-name> defaultNextTarget <target-name>* command sets the default next target of the specified target. \
+The */posset set aim <aim-name> type <aim-type>* command sets the type of an aim (this command does not work for 'command' type aims). \
+The */posset set aim <aim-name> achieve <aim-goal>* command sets the goal of an aim (this command does not worm for 'command' type aims). \
+The */posset set setting detectKills <true|false>* command sets whether the plugin should listen for player deaths for 'kills' type aims or not. \
+The */posset set setting watchCommands <true|false>* command sets whether the plugin should listen for player commands for 'command' type aims or not. \
+The */posset set setting allowSigns <true|false>* command sets whether the plugin should allow the use of signs or not. \
+The */posset set setting defaultTarget <targetName>* command sets the default first target when a player first joins the promotion tree. \
+The */posset set setting lowestRankThatCanManuallyApproveAims <rank>* command sets the informational value in the config file used in error messages stating the lowest required rank that can manually approve aims. \
+The */posset set setting startInPromotionTree <true|false>* command sets whether players should automatically start in the promotion tree or not. \
+The */posset set setting resetPointsAfterEachPromotion <true|false>* command sets whether a player's points should be reset after each promotion or not. \
+The */posset set setting updateUsernames <true|false>* command sets whether the plugin should update the username recorded for the player in the config files each time the player logs in or not. \
 
 ## Permissions: 
-All permissions for this plugin default to being ops only. This plugin has the following permissions: 
+All permissions for this plugin default to being ops only. Any permission ending '.others' to refer to other players has, as a child permission, the permission referring to the player entering the command. This plugin has the following permissions: 
  - pos.* - The root permission for the plugin 
  - pos.save - The player can save the config files 
  - pos.reload.* - The root permission for the config reload commands 
@@ -68,7 +88,7 @@ All permissions for this plugin default to being ops only. This plugin has the f
  - pos.update.add.others - Add other players to the promotion tree 
  - pos.update.add - Add oneself to the promotion tree 
  - pos.update.target.others - Update a player's aims and set which target it should progress to next 
- - pos.update.target - Update one's own aims and set which target to progress to next 
+ - pos.update.target - Update one's own aims and set which target to progress to next /posset player <add|remove|delete> [name]
  - pos.update.aim.others - Update an individual aim of a player without causing the player to advance 
  - pos.update.aim - Update one's own aim without causing oneself to advance 
  - pos.password.* - The root permission for getting and setting people's attempts at 'password' type aims 
@@ -77,11 +97,69 @@ All permissions for this plugin default to being ops only. This plugin has the f
  - pos.password.set.others - Let a player set another player's passwords 
  - pos.password.set - Let a player set its own passwords 
  - pos.check.* - The root permission for checking players, targets and aims 
- - pos.check.others - Let a player get the information of another player 
+ - pos.check.others - Get the information of another player 
  - pos.check - Let a player view its own information 
- - pos.check.targets - Let a player get the information of a target 
+ - pos.check.targets - Get the information of a target 
  - pos.check.aims - Let a player check the information of an aim 
- - 
+ - pos.exempt.* - The root permission for setting a player's exemption status 
+ - pos.exempt.true - Make a player exempt 
+ - pos.exempt.temp - Make a player exempt, whilst keeping its data in the promotion tree 
+ - pos.exempt.add - Make another player lose its exemption at its next login 
+ - pos.exempt.join - Remove another player's exemption 
+ - pos.player.* - The root permission for removing and resetting player information (this also gives the pos.update.add.others permission and its child pos.update.add permission) 
+ - pos.player.remove.others - Remove the information about a player from the promotion tree 
+ - pos.player.remove - Remove one's own information from the promotion tree 
+ - pos.player.reset.others - Reset the information about a player in the promotion tree 
+ - pos.player.reset - Reset one's own information in the promotion tree 
+ - pos.set.* - The root permission for setting information 
+ - pos.set.player.* - The root permission for setting player information 
+ - pos.set.player.aim - Set a player's aim completion status (this has the pos.set.player.aim.none permission as a child permission) 
+ - pos.set.player.aim.none - Set a player's aim completion status if the aim type is none 
+ - pos.set.player.finished - Set a player's promotion tree completion status 
+ - pos.set.player.target - Set a player's current target and update the player's aims 
+ - pos.set.player.sign - Set the recorded number of times a player has used a sign 
+ - pos.set.player.password - Set a player's guess at a password for an aim 
+ - pos.set.player.points - Set a player's points 
+ - pos.set.player.kills - Set the number of recorded kills a player has 
+ - pos.set.player.player - Update a player's recorded username 
+ - pos.set.target.* - The root permission for setting target information 
+ - pos.set.target.aims - Set the aims of a target 
+ - pos.set.target.leadsto - Set what targets a target leads to 
+ - pos.set.target.defaultnexttarget - Set the default next target of a target 
+ - pos.set.aim.* - The root permission for setting aim information 
+ - pos.set.aim.type - Set the type of an aim 
+ - pos.set.aim.achieve - Set the goal of an aim 
+ - pos.set.setting.* - The root permission for setting configurable plugin values 
+ - pos.set.setting.defaulttarget - Set the default starting target 
+ - pos.set.setting.lowestrankthatcanmanuallyapproveaims - Set the name of the lowest rank that can manually approve aims (the rank with the pos.set.player.aim permission) 
+ - pos.set.setting.startinpromotiontree - Set whether players should start in the promotion tree or not 
+ - pos.set.setting.updateusernames - Set whether the plugin should update player's recorded usernames when they login or not 
+ - pos.set.setting.detectkills - Set whether the plugin should listen to player deaths for 'kills' type aims or not 
+ - pos.set.setting.resetpointsaftereachpromotion - Set whether players' points for 'points' type aims should be reset each time the player is promoted or not 
+ - pos.set.setting.allowsigns - Set whether the plugin allows the use of signs or not 
+ - pos.set.setting.watchcommands - Set whether the plugin should listen to player commands for 'command' type aims or not 
+ - pos.set.sign.* - The root permission for setting configurable sign information 
+ - pos.set.sign.usage - Set the maximum number of times a player can use a sign 
+ - pos.set.promote.* - Let the player be promoted to any target (only valid for 'permission' type aims) 
+ - pos.set.promote.<target-name> - Let the player be promoted to a specific target (only valid for 'permission' type aims) 
+ - pos.sign.* - The root permission for handling signs 
+ - pos.sign.update.* - The root permission for handling 'update' type signs 
+ - pos.sign.update.use - Use an 'update' type sign 
+ - pos.sign.update.create - Create an 'update' type sign 
+ - pos.sign.update.delete - Remove an 'update' type sign 
+ - pos.sign.points.* - The root permission for handling 'points' type signs 
+ - pos.sign.points.use - Use a 'points' type sign 
+ - pos.sign.points.create - Create a 'points' type sign 
+ - pos.sign.points.delete - Remove a 'points' type sign 
+ - pos.sign.target.* - The root permission for handling 'target' type signs 
+ - pos.sign.target.use - Use a 'target' type sign
+ - pos.sign.target.create - Create a 'target' type sign 
+ - pos.sign.target.delete - Remove a 'target' type sign 
+ - pos.sign.sign.* - The root permission for handling 'sign' type signs 
+ - pos.sign.sign.use - Use a 'sign' type sign 
+ - pos.sign.sign.create - Create a 'sign' type sign 
+ - pos.sign.sign.delete - Remove a 'sign' type sign 
+ - pos.sign.limitexempt - Be exempt from sign usage limits 
 
 ## Config Files: 
 ### The Config Files: 
@@ -141,7 +219,7 @@ aims:
     achieve: P@ss50r$2
   aim12:
     type: kills
-	achieve: 30
+    achieve: 30
   aim13:
     type: economy
     achieve: 4000
@@ -233,7 +311,7 @@ players:
     data:
       password: 
         aim10: none
-		aim11: P@ss50r$2
+        aim11: P@ss50r$2
       commands:
       - aim3
       - aim4
@@ -291,10 +369,10 @@ The only section directly within the file is the 'signs' section. Each subsectio
 
 ## Signs: 
 Signs are written in the form: 
-line 1: [pos]
-line2: <type>
-line3: <data>
-line4: <sign id as in signs.yml (optional)> 
+line 1: [pos] \
+line2: <type> \
+line3: <data> \
+line4: <sign id as in signs.yml taht is used to set the maximum number of times a player can use the sign (optional)> \
 
 Signs can have any of the following types: 
  - Update 
@@ -302,3 +380,10 @@ Signs can have any of the following types:
  - Target 
  - Sign 
 
+Signs with a type of 'update' have the same use as the */prom update [target]* command, where the third line of the sign is mandatory and represents the name of the target to progress to if the player has achieved all the necessary aims. 
+
+Signs with a type of 'points' have the same use as the */posset set player <player-name> points add <amount>* command, where the name of the player clicking the sign is the player-name and the third line of the sign is the amount of points to add. 
+
+Signs with a type of 'target' set the player's target to the one specified by the third line of the sign. 
+
+Signs with a type of 'sign' are used by aims with a type of 'sign': when a player clicks on one of these signs, the player completes the aim specified by the third line of the sign. 

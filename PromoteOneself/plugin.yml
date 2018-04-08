@@ -207,6 +207,11 @@ permissions:
   pos.set.player.aim:
     description: Set the completion status of an aim of a player 
     default: op
+    children:
+      pos.set.player.aim.none: true
+  pos.set.player.aim.none:
+    description: Set the completion status of a 'none' type aim of a player 
+    default: op 
   pos.set.player.finished: 
     description: Set the completion status of a player's promotion tree 
     default: op
