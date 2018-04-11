@@ -7,6 +7,8 @@ This plugin is compatible with the 'Vault' plugin and the 'PlayerPoints' plugin.
 ## Debug Information --- to be removed ---: 
 --- This plugin curuently contains a number of debug commands; these should be removed before the plugin is built as they are a security problem. This plugin is made using eclipse; the .classpath file is excluded from this repository so should should be recreated --- 
 
+In this file, text between < and > characters does not render, so some commands are incomplete. 
+
 ## License: 
 This plugin is under a MIT license (see the LICENSE file for the full license). 
 
