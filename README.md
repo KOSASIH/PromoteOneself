@@ -39,8 +39,8 @@ Each above aim type can also be given to a player manually by a server administr
 ## Commands: 
 This plugin contains the following commands: 
  - /promoteoneself
- - /prom <arguments> 
- - /posset <arguments> 
+ - /prom \<arguments\> 
+ - /posset \<arguments\> 
 
 The */promoteoneself* command shows the help page. \
 The */prom help* command shows the help page. \
