@@ -390,7 +390,7 @@ permissions:
     default: op 
   pos.sign.limitexempt:
     description: Be exempt from sign usage limits 
-    default: op 
+    default: op  
 
 
 aim types: 

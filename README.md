@@ -4,11 +4,6 @@ The PromoteOneself plugin is built for Minecraft Spigot versions 1.8/1.12. This 
 
 This plugin is compatible with the 'Vault' plugin and the 'PlayerPoints' plugin. There are currently no known incompatibility issues. 
 
-## Debug Information --- to be removed ---: 
---- This plugin curuently contains a number of debug commands; these should be removed before the plugin is built as they are a security problem. This plugin is made using eclipse; the .classpath file is excluded from this repository so should should be recreated --- 
-
-In this file, text between < and > characters does not render, so some commands are incomplete. 
-
 ## License: 
 This plugin is under a MIT license (see the LICENSE file for the full license). 
 
@@ -41,41 +36,41 @@ Each above aim type can also be given to a player manually by a server administr
 ## Commands: 
 This plugin contains the following commands: 
  - /promoteoneself
- - /prom \<arguments\> 
- - /posset \<arguments\> 
+ - /prom &lt;arguments&gt; 
+ - /posset &lt;arguments&gt; 
 
 The */promoteoneself* command shows the help page. \
 The */prom help* command shows the help page. \
-The */prom help <command> <first argument>* command shows more detailed information about the */<command> <first argument> <all-remaining-arguments>* commands. \
-The */prom help set <second argument>* command shows more detailed information about the */posset set <second argument> <all-remaining arguments>* commands. \
+The */prom help &lt;command&gt; &lt;first argument&gt;* command shows more detailed information about the */&lt;command&gt; &lt;first argument&gt; &lt;all-remaining-arguments&gt;* commands. \
+The */prom help set &lt;second argument&gt;* command shows more detailed information about the */posset set &lt;second argument&gt; &lt;all-remaining arguments&gt;* commands. \
 The */prom update [target [player-username [aim]]]* command checks a player's completion status for a target or an aim of a target. \
-The */prom check [<player|target|aim> <name>]* command gives information about a player, target or aim. \
-The */prom password <get [player] <aim>|set [player] <password> <aim>>* command enables a player to get or set a player's password guess attempts. \
-The */posset exempt <player> <true|temp|add|join>* command sets the exemption status of a player (true: make exempt and delete data; temp: make exempt and keep data; add: lose exemption at next login; join: lose exemption now). \
+The */prom check [&lt;player|target|aim&gt; &lt;name&gt;]* command gives information about a player, target or aim. \
+The */prom password &lt;get [player] &lt;aim&gt;|set [player] &lt;password&gt; &lt;aim&gt;&gt;* command enables a player to get or set a player's password guess attempts. \
+The */posset exempt &lt;player&gt; &lt;true|temp|add|join&gt;* command sets the exemption status of a player (true: make exempt and delete data; temp: make exempt and keep data; add: lose exemption at next login; join: lose exemption now). \
 The */posset save* command saves the config files. \
 The */posset reload [check|nocheck]* command reloads the configuration files (adding nothing or 'check' makes it checks each players' aims with the aims each target specifies the player should have; specifying 'nocheck' makes it jut reload the files). \
-The */posset player <add|remove|delete> [name]* command provides the ability to add or remove a player to/from the promotion tree or to reset a player in the promotion tree. \
-The */posset set player <player-username> aims <aim-name> <true|false>* command sets a player's aim completetion status. \
-The */posset set player <player-username> password <aim-name> <password>* command sets a player's password guess for an aim. \
-The */posset set player <player-username> points <set|add|remove> <amount>* command changes the amount of points a player has. \
-The */posset set player <player-username> sign <sign-id> <player-usage>* command sets a player's recorded sign usage. \
-The */posset set player <player-username> finished <true|false>* command sets the promotion tree completion status of a player. \
-The */posset set player <player-username> target <target-name>* command changes a player's target and updates the player's aims. \
-The */posset set player <player-username> kills <amount>* command changes a player's recorded kill number. \
-The */posset set player <player-username> lastusername* command makes the plugin update the player's recorded last username in the config files. \
-The */posset set target <target-name> aims <add|remove> <aim-name>* command adds or removes an aim to/from a target. \
-The */posset set target <target-name> leadsTo <nullify|add <target-name>|remove <target-name>>* command sets which targets lead on from the specified target. \
-The */posset set target <target-name> defaultNextTarget <target-name>* command sets the default next target of the specified target. \
-The */posset set aim <aim-name> type <aim-type>* command sets the type of an aim (this command does not work for 'command' type aims). \
-The */posset set aim <aim-name> achieve <aim-goal>* command sets the goal of an aim (this command does not worm for 'command' type aims). \
-The */posset set setting detectKills <true|false>* command sets whether the plugin should listen for player deaths for 'kills' type aims or not. \
-The */posset set setting watchCommands <true|false>* command sets whether the plugin should listen for player commands for 'command' type aims or not. \
-The */posset set setting allowSigns <true|false>* command sets whether the plugin should allow the use of signs or not. \
-The */posset set setting defaultTarget <targetName>* command sets the default first target when a player first joins the promotion tree. \
-The */posset set setting lowestRankThatCanManuallyApproveAims <rank>* command sets the informational value in the config file used in error messages stating the lowest required rank that can manually approve aims. \
-The */posset set setting startInPromotionTree <true|false>* command sets whether players should automatically start in the promotion tree or not. \
-The */posset set setting resetPointsAfterEachPromotion <true|false>* command sets whether a player's points should be reset after each promotion or not. \
-The */posset set setting updateUsernames <true|false>* command sets whether the plugin should update the username recorded for the player in the config files each time the player logs in or not. \
+The */posset player &lt;add|remove|delete&gt; [name]* command provides the ability to add or remove a player to/from the promotion tree or to reset a player in the promotion tree. \
+The */posset set player &lt;player-username&gt; aims &lt;aim-name&gt; &lt;true|false&gt;* command sets a player's aim completetion status. \
+The */posset set player &lt;player-username&gt; password &lt;aim-name&gt; &lt;password&gt;* command sets a player's password guess for an aim. \
+The */posset set player &lt;player-username&gt; points &lt;set|add|remove&gt; &lt;amount&gt;* command changes the amount of points a player has. \
+The */posset set player &lt;player-username&gt; sign &lt;sign-id&gt; &lt;player-usage&gt;* command sets a player's recorded sign usage. \
+The */posset set player &lt;player-username&gt; finished &lt;true|false&gt;* command sets the promotion tree completion status of a player. \
+The */posset set player &lt;player-username&gt; target &lt;target-name&gt;* command changes a player's target and updates the player's aims. \
+The */posset set player &lt;player-username&gt; kills &lt;amount&gt;* command changes a player's recorded kill number. \
+The */posset set player &lt;player-username&gt; lastusername* command makes the plugin update the player's recorded last username in the config files. \
+The */posset set target &lt;target-name&gt; aims &lt;add|remove&gt; &lt;aim-name&gt;* command adds or removes an aim to/from a target. \
+The */posset set target &lt;target-name&gt; leadsTo &lt;nullify|add &lt;target-name&gt;|remove &lt;target-name&gt;&gt;* command sets which targets lead on from the specified target. \
+The */posset set target &lt;target-name&gt; defaultNextTarget &lt;target-name&gt;* command sets the default next target of the specified target. \
+The */posset set aim &lt;aim-name&gt; type &lt;aim-type&gt;* command sets the type of an aim (this command does not work for 'command' type aims). \
+The */posset set aim &lt;aim-name&gt; achieve &lt;aim-goal&gt;* command sets the goal of an aim (this command does not worm for 'command' type aims). \
+The */posset set setting detectKills &lt;true|false&gt;* command sets whether the plugin should listen for player deaths for 'kills' type aims or not. \
+The */posset set setting watchCommands &lt;true|false&gt;* command sets whether the plugin should listen for player commands for 'command' type aims or not. \
+The */posset set setting allowSigns &lt;true|false&gt;* command sets whether the plugin should allow the use of signs or not. \
+The */posset set setting defaultTarget &lt;targetName&gt;* command sets the default first target when a player first joins the promotion tree. \
+The */posset set setting lowestRankThatCanManuallyApproveAims &lt;rank&gt;* command sets the informational value in the config file used in error messages stating the lowest required rank that can manually approve aims. \
+The */posset set setting startInPromotionTree &lt;true|false&gt;* command sets whether players should automatically start in the promotion tree or not. \
+The */posset set setting resetPointsAfterEachPromotion &lt;true|false&gt;* command sets whether a player's points should be reset after each promotion or not. \
+The */posset set setting updateUsernames &lt;true|false&gt;* command sets whether the plugin should update the username recorded for the player in the config files each time the player logs in or not. \
 
 ## Permissions: 
 All permissions for this plugin default to being ops only. Any permission ending '.others' to refer to other players has, as a child permission, the permission referring to the player entering the command. This plugin has the following permissions: 
@@ -90,7 +85,7 @@ All permissions for this plugin default to being ops only. Any permission ending
  - pos.update.add.others - Add other players to the promotion tree 
  - pos.update.add - Add oneself to the promotion tree 
  - pos.update.target.others - Update a player's aims and set which target it should progress to next 
- - pos.update.target - Update one's own aims and set which target to progress to next /posset player <add|remove|delete> [name]
+ - pos.update.target - Update one's own aims and set which target to progress to next /posset player &lt;add|remove|delete&gt; [name]
  - pos.update.aim.others - Update an individual aim of a player without causing the player to advance 
  - pos.update.aim - Update one's own aim without causing oneself to advance 
  - pos.password.* - The root permission for getting and setting people's attempts at 'password' type aims 
@@ -143,7 +138,7 @@ All permissions for this plugin default to being ops only. Any permission ending
  - pos.set.sign.* - The root permission for setting configurable sign information 
  - pos.set.sign.usage - Set the maximum number of times a player can use a sign 
  - pos.set.promote.* - Let the player be promoted to any target (only valid for 'permission' type aims) 
- - pos.set.promote.<target-name> - Let the player be promoted to a specific target (only valid for 'permission' type aims) 
+ - pos.set.promote.&lt;target-name&gt; - Let the player be promoted to a specific target (only valid for 'permission' type aims) 
  - pos.sign.* - The root permission for handling signs 
  - pos.sign.update.* - The root permission for handling 'update' type signs 
  - pos.sign.update.use - Use an 'update' type sign 
@@ -367,14 +362,14 @@ signs:
   SignId4:
     usage: 10
 ```
-The only section directly within the file is the 'signs' section. Each subsection of this section is the 'id' of a sign; each sign with an id specifies its id by writing the id on its fourth line. Each sign id within the file has a 'usage' field, which specifies the maximum number of times a player can use the sign. A usage of '-1' means that each player can use the sign an unlimited number of times and a usage of '0' means that a player can only use the sign if it has the *pos.sign.limitexempt* permission. A player with the permission *pos.set.player.sign* can use the command */posset set player <username> sign <sign-id> <player-usage>* to change the usage numbers. 
+The only section directly within the file is the 'signs' section. Each subsection of this section is the 'id' of a sign; each sign with an id specifies its id by writing the id on its fourth line. Each sign id within the file has a 'usage' field, which specifies the maximum number of times a player can use the sign. A usage of '-1' means that each player can use the sign an unlimited number of times and a usage of '0' means that a player can only use the sign if it has the *pos.sign.limitexempt* permission. A player with the permission *pos.set.player.sign* can use the command */posset set player &lt;username&gt; sign &lt;sign-id&gt; &lt;player-usage&gt;* to change the usage numbers. 
 
 ## Signs: 
 Signs are written in the form: 
 line 1: [pos] \
-line2: <type> \
-line3: <data> \
-line4: <sign id as in signs.yml taht is used to set the maximum number of times a player can use the sign (optional)> \
+line2: &lt;type&gt; \
+line3: &lt;data&gt; \
+line4: &lt;sign id as in signs.yml taht is used to set the maximum number of times a player can use the sign (optional)&gt; \
 
 Signs can have any of the following types: 
  - Update 
@@ -384,7 +379,7 @@ Signs can have any of the following types:
 
 Signs with a type of 'update' have the same use as the */prom update [target]* command, where the third line of the sign is mandatory and represents the name of the target to progress to if the player has achieved all the necessary aims. 
 
-Signs with a type of 'points' have the same use as the */posset set player <player-name> points add <amount>* command, where the name of the player clicking the sign is the player-name and the third line of the sign is the amount of points to add. 
+Signs with a type of 'points' have the same use as the */posset set player &lt;player-name&gt; points add &lt;amount&gt;* command, where the name of the player clicking the sign is the player-name and the third line of the sign is the amount of points to add. 
 
 Signs with a type of 'target' set the player's target to the one specified by the third line of the sign. 
 

@@ -37,9 +37,6 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 	public Boolean permsExist = false; 
 	public PlayerPoints playerPointsPlugin = null; 
 	public Boolean playerPointsExists = false; 
-	//public int num = 0; 
-	//public int num2 = 0; 
-	//public int num3 = 0; 
 	
 	@Override 
 	public void onDisable() {
@@ -263,95 +260,6 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 				return false; 
 			}
 		}
-		//Debug commands below 
-		/*
-		else if (commandLabel.equalsIgnoreCase("playerexp")) {
-			if (sender instanceof Player) {
-				Player player = (Player) sender; 
-				player.sendMessage(Float.toString(player.getExp())); 
-			}
-			else {
-				sender.sendMessage("A player must execute this command "); 
-			}
-		}
-		else if (commandLabel.equalsIgnoreCase("sender")) {
-			sender.sendMessage(sender.toString()); 
-		}
-		else if (commandLabel.equalsIgnoreCase("ct")) {
-			if (args.length < 1) {
-				return false; 
-			}
-			else if (args[0].equalsIgnoreCase("get")) {
-				if (args.length != 2 && args.length != 3) {
-					return false; 
-				}
-				else if (args.length == 2 ){
-					sender.sendMessage(getConfig().getString(args[1])); 
-					logger.info("custom", getConfig().getString(args[1])); 
-				}
-				else if (args.length == 3) {
-					sender.sendMessage("three "); 
-				}
-			}
-			*//*
-			else if (args[0].equalsIgnoreCase("list")) {
-				if (args.length != 2 && args.length != 3) {
-					return false; 
-				} 
-				else if (args.length == 2) {
-					List<String> parts = getConfig().getStringList(args[1]); 
-					for (String temp : parts) {
-						sender.sendMessage(temp); 
-					}
-
-				}
-				else if (args.length == 3) {
-					int index = Integer.parseInt(args[2]);
-					String part = getConfig().getStringList(args[1]).get(index);  
-					sender.sendMessage(part); 
-				}
-			}
-			*//*
-			else if (args[0].equalsIgnoreCase("set")) {
-				if (args.length != 3) {
-					return false; 
-				} 
-				else {
-					getConfig().set(args[1], args[2]); 
-					sender.sendMessage(args[1] + " set to " + args[2]); 
-				}
-			}
-			else if (args[0].equalsIgnoreCase("create")) {
-				if (args.length != 2) {
-					return false; 
-				}
-				else {
-					getConfig().createSection(args[1]); 
-					sender.sendMessage(args[1] + " section created "); 
-				}
-			}
-			else if (args[0].equalsIgnoreCase("save")) {
-				saveConfig(); 
-				Bukkit.broadcastMessage("CT configuration saved"); 
-			}
-			else if (args[0].equalsIgnoreCase("reload")) {
-				reloadConfig(); 
-				Bukkit.broadcastMessage("CT configuration reloaded"); 
-			}
-			else {
-				return false; 
-			}
-		}
-		else if (commandLabel.equalsIgnoreCase("asdf")) {
-			if (sender instanceof Player) {
-				Player player = (Player) sender; 
-				player.sendMessage("Hello "); 
-			} 
-			else {
-				sender.sendMessage("Not a player "); 
-			}
-		}
-		*/
 		return true;
 	}
 }

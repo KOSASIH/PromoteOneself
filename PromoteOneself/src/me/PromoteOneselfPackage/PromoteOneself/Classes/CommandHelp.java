@@ -114,7 +114,7 @@ public class CommandHelp {
 			sender.sendMessage(ChatColor.AQUA + "/posset set sign <sign-id> usage <number>" + ChatColor.WHITE + " - set the maximum number of times a player can use a sign with the given sign id "); 
 		}
 		else {
-			sender.sendMessage(ChatColor.RED + "That is not a recognised command; for help type in " + ChatColor.AQUA + "/prom help"); 
+			sender.sendMessage(ChatColor.RED + "That is not a recognised command; for help enter the command " + ChatColor.AQUA + "/prom help"); 
 		}
 	}
 	private void helpCommandHeading(CommandSender sender, String command, String firstArgument) {

@@ -82,8 +82,6 @@ public class MyPlayerListener implements Listener{
 		if (plugin.yc.configuration.getBoolean("watchCommands") == true) {
 			if ((commands.isEmpty() == false) || ((commands.size() > 0) && (!(commands.get(0).equalsIgnoreCase("none"))))) {
 				for (String i : commands) {
-					//plugin.logger.info("custom", "Event message: " + event.getMessage()); 
-					//plugin.logger.info("custom", "command message: " + i); 
 					if ((event.getMessage().startsWith("/" + i) == true) || (event.getMessage().startsWith(i) == true)) {
 						UUID rpId = event.getPlayer().getUniqueId(); 
 						String spId = rpId.toString(); 

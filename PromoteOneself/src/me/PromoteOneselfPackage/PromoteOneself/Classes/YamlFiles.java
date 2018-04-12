@@ -81,9 +81,6 @@ public class YamlFiles {
 					players.configuration.set("players." + i + ".aims." + k, false); 
 				}
 			}
-			//logger.info("custom", targetAims.toString()); 
-			//logger.info("custom", playerAims.toString()); 
-			//logger.info("custom", newPlayerAims.toString()); 
 		}
 		Set<String> rawPasswordAndCommandPlayerAims = players.configuration.getConfigurationSection("players." + i + ".aims").getKeys(false); 
 		List<String> playerPasswordAndCommandAims = new ArrayList<String>(rawPasswordAndCommandPlayerAims); 
@@ -181,8 +178,6 @@ public class YamlFiles {
 				}
 			}
 		}
-		//logger.info("custom", Signs.toString()); 
-		//logger.info("custom", playerSigns.toString()); 
 	}
 	public static YamlConfiguration loadAConfiguration(File file) {
 		new YamlConfiguration(); 
