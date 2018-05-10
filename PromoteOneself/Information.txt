@@ -34,7 +34,6 @@ The */posset set setting updateUsernames <true|false>* command sets whether the 
 
 
 Permissions: 
-permissions:
   pos.*:
     description: Use all commands concerning the PromoteOneself plugin 
     default: op
@@ -443,10 +442,10 @@ Type1 (must do):
 Type2 (should learn to do):  
 
 Type 3 (could think about doing): 
-Make the plugin work for offline players too - checked main class and player properties class 
+(check) Make the plugin work for offline players too - checked main class and player properties class 
 
 Type4 (could do on a whim) 
-More comprehensive sign permissions - Permissions for id groups too or exempt from the limit of a certain id group or individual id limits for people or a permission to use all signs and another to create all signs etc - make sign permissions independent of command permissions    
-
+(already done?) More comprehensive sign permissions - Permissions for id groups too or exempt from the limit of a certain id group or individual id limits for people or a permission to use all signs and another to create all signs etc - make sign permissions independent of command permissions    
+Ensure compatibility with versions 1.8-1.12
 
 

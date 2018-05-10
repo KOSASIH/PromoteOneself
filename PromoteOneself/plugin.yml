@@ -1,6 +1,6 @@
 name: PromoteOneself
 main: me.PromoteOneselfPackage.PromoteOneself.Classes.PromoteOneselfMainClass 
-version: Development_10.2.1.1  
+version: Development_10.2.1.2  
 description: A plugin which lets people achieve aims to work up through a server's ranking system 
 author: aappleton3 
 database: false

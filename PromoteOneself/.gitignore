@@ -1,5 +1,4 @@
-# Ignore compiled files 
-/bin/ 
+# Ignore the classpath 
 *.classpath 
 
 # Ignore the temporary storage file 
