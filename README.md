@@ -369,7 +369,7 @@ Signs are written in the form: \
 line 1: [pos] \
 line2: &lt;type&gt; \
 line3: &lt;data&gt; \
-line4: &lt;sign id as in signs.yml taht is used to set the maximum number of times a player can use the sign (optional)&gt; \
+line4: &lt;sign id as in signs.yml that is used to set the maximum number of times a player can use the sign (optional)&gt; 
 
 Signs can have any of the following types: 
  - Update 
