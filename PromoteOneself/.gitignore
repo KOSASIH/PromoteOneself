@@ -1,5 +1,8 @@
 # Ignore the classpath 
 *.classpath 
 
+# Ignore the /bin/ folder 
+/bin/
+
 # Ignore the temporary storage file 
 /storage.txt
