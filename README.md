@@ -365,7 +365,7 @@ signs:
 The only section directly within the file is the 'signs' section. Each subsection of this section is the 'id' of a sign; each sign with an id specifies its id by writing the id on its fourth line. Each sign id within the file has a 'usage' field, which specifies the maximum number of times a player can use the sign. A usage of '-1' means that each player can use the sign an unlimited number of times and a usage of '0' means that a player can only use the sign if it has the *pos.sign.limitexempt* permission. A player with the permission *pos.set.player.sign* can use the command */posset set player &lt;username&gt; sign &lt;sign-id&gt; &lt;player-usage&gt;* to change the usage numbers. 
 
 ## Signs: 
-Signs are written in the form: 
+Signs are written in the form: \
 line 1: [pos] \
 line2: &lt;type&gt; \
 line3: &lt;data&gt; \
