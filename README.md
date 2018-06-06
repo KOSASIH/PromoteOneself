@@ -4,7 +4,7 @@ The PromoteOneself plugin is a Minecraft Spigot server plugin. This plugin enabl
 
 This plugin is compatible with the 'Vault' plugin and the 'PlayerPoints' plugin. There are currently no known compatibility issues. 
 
-## Versions 
+## Versions: 
 The current plugin version is Development 11.0.0.0. It is designed to be run with Minecraft Spigot running versions between 1.7.x and 1.12.x. Most versions of Vault and PlayerPoints for these Spigot versions should work. Bugs found when running on the aforementioned Minecraft versions will be fixed. The plugin may still work with other versions but bugs will not necessarily be fixed. 
 
 ## License: 
