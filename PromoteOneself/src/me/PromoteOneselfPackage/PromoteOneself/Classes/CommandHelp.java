@@ -16,6 +16,7 @@ public class CommandHelp {
 	public void helpPages(CommandSender sender) {
 		sender.sendMessage(encasing + ChatColor.DARK_BLUE + logger.getName() + " help" + encasing); 
 		sender.sendMessage(ChatColor.AQUA + "/prom help <command name> <first argument>" + ChatColor.WHITE + " - " + ChatColor.AQUA + "for help with an individual command  "); 
+		sender.sendMessage(ChatColor.AQUA + "/prom version" + ChatColor.WHITE + " - Get the version of the plugin "); 
 		sender.sendMessage(ChatColor.AQUA + "/prom update <arguments>" + ChatColor.WHITE + " - Update a player's targets and aims "); 
 		sender.sendMessage(ChatColor.AQUA + "/prom check [arguments]" + ChatColor.WHITE + " - Get information about a player, aim or target "); 
 		sender.sendMessage(ChatColor.AQUA + "/prom password <arguments>" + ChatColor.WHITE + " - Get and set a player's passwords for password type aims "); 

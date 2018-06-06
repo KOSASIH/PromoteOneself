@@ -542,8 +542,6 @@ public class UpdateAims {
 	private void updatePlayerTargets(String spId, UUID rpId, String nextTarget, Player player, CommandSender sender) {
 		Boolean runTheCommands = true; 
 		String target = plugin.yd.configuration.getString("players." + spId + ".target"); 
-		sender.sendMessage(nextTarget); 
-		sender.sendMessage(Integer.toString(nextTarget.length()));  
 		Boolean doesLeadTo = false; 
 		List<String> targetLeadsTo = plugin.yc.configuration.getStringList("targets." + target + ".leadsTo"); 
 		for (String k : targetLeadsTo) {
@@ -554,7 +552,6 @@ public class UpdateAims {
 		if (doesLeadTo == true) {
 			if (nextTarget.equalsIgnoreCase("none")) { 
 				if (targetLeadsTo.get(0).equalsIgnoreCase("none") || plugin.yc.configuration.getString("targets." + target + ".leadsTo").equalsIgnoreCase("none")) {
-					sender.sendMessage("Retrieved as a a list earlier on"); 
 					player.sendMessage(ChatColor.GREEN + "You have reached the highest self-promotion possible "); 
 					plugin.yd.configuration.set("players." + spId + ".finished", true); 
 					logger.info("custom", ChatColor.GREEN + Bukkit.getPlayer(rpId).getName() + " has reached the highest self-promotion possible "); 
@@ -574,7 +571,6 @@ public class UpdateAims {
 				plugin.yd.configuration.set("players." + spId + ".aims", null); 
 				for (String i : newAims) {
 					plugin.yd.configuration.set("players." + spId + ".aims." + i, false); 
-					sender.sendMessage("false"); 
 					if (plugin.yc.configuration.getString("aims." + i + ".type").equalsIgnoreCase("password")) {
 						plugin.yd.configuration.set("players." + spId + ".data.password." + i, "none"); 
 					}

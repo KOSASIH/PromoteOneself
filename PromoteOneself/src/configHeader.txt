@@ -1,5 +1,4 @@
 Configuration file for the 'PromoteOneself' plugin 
-Plugin version: Development_10.2.0.0; Configuration version: Development_5.0.0.0 
 
 'none' is a reserved word in this file and as such cannot be used as the name of something 
 
@@ -11,10 +10,11 @@ No aim or target can be called 'none'
 'permission' aim types must have the name of the target that the player needs the permission to achieve in their achieve field 
 There should never be more 'permission' type aims than targets 
  
-The aim types are: none, xp, xpl, item, password, points, playerpoints, kills, economy, group, pgroup, permission 
+The aim types are: none, xp, xpl, item, itemid, password, points, playerpoints, kills, economy, group, pgroup, permission, command, sign 
  
+An example layout is given below: 
+
  
-Example layout 
 detectKills: true
 watchCommands: true 
 allowSigns: true

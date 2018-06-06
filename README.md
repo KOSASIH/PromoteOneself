@@ -1,8 +1,11 @@
 # PromoteOneself
 ## Description: 
-The PromoteOneself plugin is built for Minecraft Spigot versions 1.8/1.12. This plugin enables server administrators to set a series of targets for player to achieve in order to gain rewards, such as rank-ups; the plugin is configured so that, when a player meets a target, the plugin can runs a set of commands as defined in the config.yml file. Targets are composed of aims; a player achieves a target upon completing all aims that are part of the target. As players achieve more targets, they work their way up the 'promotion tree' until they achieve the last target. 
+The PromoteOneself plugin is a Minecraft Spigot server plugin. This plugin enables server administrators to set a series of targets for player to achieve in order to gain rewards, such as rank-ups; the plugin is configured so that, when a player achieves a target, the plugin can runs a set of commands as defined in the config.yml file. Targets are composed of aims; a player achieves a target upon completing all aims that are part of the target. As players achieve more targets, they work their way up the 'promotion tree' until they achieve the last target. 
 
-This plugin is compatible with the 'Vault' plugin and the 'PlayerPoints' plugin. There are currently no known incompatibility issues. 
+This plugin is compatible with the 'Vault' plugin and the 'PlayerPoints' plugin. There are currently no known compatibility issues. 
+
+## Versions 
+The current plugin version is Development 11.0.0.0. It is designed to be run with Minecraft Spigot running versions between 1.7.x and 1.12.x. Most versions of Vault and PlayerPoints for these Spigot versions should work. Bugs found when running on the aforementioned Minecraft versions will be fixed. The plugin may still work with other versions but bugs will not necessarily be fixed. 
 
 ## License: 
 This plugin is under a MIT license (see the LICENSE file for the full license). 
@@ -19,7 +22,7 @@ Each aim can have one of any of the following types:
  - none - The aim must be given to a player by a server administrator 
  - xp - The player requires a certain amount of xp 
  - xpl - The player requires a certain number of levels of xp 
- - item - The player needs to possess a certain amount of a certain item (where the tiem is specified by its name in the appropriate enum https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html) 
+ - item - The player needs to possess a certain amount of a certain item (where the item is specified by its name in the appropriate enum https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html) 
  - itemid - The player needs to posees a certain amount of a certain item (where the item is specified by its id) 
  - password - The player needs to enter a password 
  - points - The player needs to have gathered a certain number of points 
@@ -43,6 +46,7 @@ The */promoteoneself* command shows the help page. \
 The */prom help* command shows the help page. \
 The */prom help &lt;command&gt; &lt;first argument&gt;* command shows more detailed information about the */&lt;command&gt; &lt;first argument&gt; &lt;all-remaining-arguments&gt;* commands. \
 The */prom help set &lt;second argument&gt;* command shows more detailed information about the */posset set &lt;second argument&gt; &lt;all-remaining arguments&gt;* commands. \
+The */prom version* command shows the plugin version. \
 The */prom update [target [player-username [aim]]]* command checks a player's completion status for a target or an aim of a target. \
 The */prom check [&lt;player|target|aim&gt; &lt;name&gt;]* command gives information about a player, target or aim. \
 The */prom password &lt;get [player] &lt;aim&gt;|set [player] &lt;password&gt; &lt;aim&gt;&gt;* command enables a player to get or set a player's password guess attempts. \

@@ -2,9 +2,11 @@ Player data file for the 'PromoteOneself' plugin
 
 The 'exempt' field should be 'true' if the player is to be exempt or 'add' if the player is to be added to the promotion tree 
 
-No field may be 'none' 
+No field may be 'none' as it is a reserved keyword 
 
-Example layout
+An example layout is given below: 
+
+
 exempt:
   UUID1:
     lastUsername: username
@@ -37,3 +39,4 @@ players:
       aim7: false
       aim8: true
       etc: false
+

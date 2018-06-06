@@ -1,8 +1,10 @@
 The sign data file for the 'PromoteOneself' plugin 
 
-No field may be 'none' 
+No field may be 'none' as it is a reserved keyword 
 
-Example layout:
+An example layout is given below:
+
+
 signs:
   SignId1:
     usage: -1
@@ -14,4 +16,3 @@ signs:
     usage: 10
   etc:
   
-

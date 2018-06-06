@@ -3,6 +3,7 @@ The */promoteoneself* command shows the help page.
 The */prom help* command shows the help page. 
 The */prom help <command> <first argument>* command shows more detailed information about the */<command> <first argument> <all-remaining-arguments>* commands. 
 The */prom help set <second argument>* command shows more detailed information about the */posset set <second argument> <all-remaining arguments>* commands. 
+The */prom version* command shows the plugin version. 
 The */prom update [target [player-username [aim]]]* command checks a player's completion status for a target or an aim of a target. 
 The */prom check [<player|target|aim> <name>]* command gives information about a player, target or aim. 
 The */prom password <get [player] <aim>|set [player] <password> <aim>>* command enables a player to get or set a player's password guess attempts. 

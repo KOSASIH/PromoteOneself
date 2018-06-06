@@ -82,7 +82,7 @@ public class LoggingClass {
 			sender.sendMessage(message); 
 		}
 		else if (type.equalsIgnoreCase("nopermission")) {
-			sender.sendMessage(ChatColor.RED + " You do not have the required permissions to perform this command; contact a server operator if you believe that this is an error " + message + " "); 
+			sender.sendMessage(ChatColor.RED + " You do not have the required permissions to perform this command; contact a server operator if you believe this is an error " + message + " "); 
 		}
 		else if (type.equalsIgnoreCase("wrongarrangement")) {
 			sender.sendMessage(ChatColor.RED + "This command with this arrangement of arguments must be typed in by a player " + message + " "); 

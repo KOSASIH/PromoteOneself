@@ -130,6 +130,15 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 				ch.helpPages(sender); 
 				return false; 
 			}
+			else if (args[0].equalsIgnoreCase("version")) {
+				if (args.length == 1) {
+					sender.sendMessage(getDescription().getName() + " is version " + getDescription().getVersion()); 
+				}
+				else {
+					ch.helpPages(sender); 
+					return false; 
+				}
+			}
 			else if (args[0].equalsIgnoreCase("help")) {
 				if (args.length ==  1) {
 					ch.helpPages(sender); 
