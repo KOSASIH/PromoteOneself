@@ -54,7 +54,7 @@ public class GetPlayerProperties {
 			return inGroup; 
 		}
 		else {
-			logger.warning("custom", "There is an aim that needs players to be in a certain group even though this plugin cannot detect vault "); 
+			logger.warning("custom", "There is an aim that needs players to have a certain primary group even though this plugin cannot detect vault "); 
 			return false; 
 		}
 	}

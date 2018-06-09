@@ -34,7 +34,8 @@ Each aim can have one of any of the following types:
  - permission - The player needs to have the permission to get to the next target (e.g. pos.promote.target1, where 'target1' is the name of a target defined in the config.yml file) 
  - command - The player must enter a certain command with a certain set of arguments 
  - sign - The player must achieve the aim by clicking on a sign 
-Each above aim type can also be given to a player manually by a server administrator with the correct permission. 
+ 
+Each of the above aim types can also be given to a player manually by a server administrator with the correct permission. 
 
 ## Commands: 
 This plugin contains the following commands: 

@@ -15,7 +15,6 @@ import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfigurationOptions;
 import org.bukkit.configuration.file.YamlConfiguration;
-
 public class YamlFiles {
 	private static PromoteOneselfMainClass plugin; 
 	private static LoggingClass logger;  
@@ -32,8 +31,13 @@ public class YamlFiles {
 		theOutFile = new File(plugin.getDataFolder(), outFileName); 
 		theInFile = inFileName; 
 		configuration = loadFiles(); 
-		save(); 
-		logger.info("custom", "Configuration file " + theOutFile.getName() + " loaded "); 
+		if (configuration.getKeys(false).size() > 0) {
+			save(); 
+			logger.info("custom", "Configuration file " + theOutFile.getName() + " loaded "); 
+		}
+		else {
+			logger.warning("configparseerror", outFileName); 
+		}
 	}
 	
 	public static void reloadTheConfiguration(YamlFiles configuration, YamlFiles players, YamlFiles signs) {
@@ -180,7 +184,6 @@ public class YamlFiles {
 		}
 	}
 	public static YamlConfiguration loadAConfiguration(File file) {
-		new YamlConfiguration(); 
 		YamlConfiguration currentConfigurationFile = YamlConfiguration.loadConfiguration(file); 
 		return currentConfigurationFile; 
 	}
@@ -225,7 +228,7 @@ public class YamlFiles {
 			fileHeaders(theConfiguration); 
 		}
 		else {
-			theConfiguration =  loadAConfiguration(theOutFile); 
+			theConfiguration = loadAConfiguration(theOutFile); 
 		}
 		return theConfiguration; 
 	}

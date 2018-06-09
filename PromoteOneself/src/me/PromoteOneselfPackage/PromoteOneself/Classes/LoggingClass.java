@@ -59,6 +59,9 @@ public class LoggingClass {
 		else if (type.equalsIgnoreCase("missingkey")) {
 			logger.warning(nameFormat + "The following key is missing from the following config file: " + message); 
 		}
+		else if (type.equalsIgnoreCase("configparseerror")) {
+			logger.warning(nameFormat + "The following config file could not be loaded (it is probably incorrectly formatted): " + message); 
+		}
 		else {
 			unrecognisedLogType(type, "warning"); 
 		}
