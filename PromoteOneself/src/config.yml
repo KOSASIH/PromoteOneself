@@ -8,6 +8,7 @@ lowestRankThatCanManuallyApproveAims: admin
 defaultPoints: 0
 commands: []
 defaultTarget: target1 
+alwaysSaveFiles: false
 aims: 
   aim1:
     type: none 

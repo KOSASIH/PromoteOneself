@@ -5,7 +5,7 @@ The PromoteOneself plugin is a Minecraft Spigot server plugin. This plugin enabl
 This plugin is compatible with the 'Vault' plugin and the 'PlayerPoints' plugin. There are currently no known compatibility issues. 
 
 ## Versions: 
-The current plugin version is Development_11.0.0.0. This is considered to be a pre-release version. The compiled .jar file can be found in the 'Jar' folder. When there is a full release, it will be found in both the 'Jar' folder and the 'releases' section. This plugin is designed to be run with Minecraft Spigot running versions between 1.7.x and 1.12.x. Most versions of Vault and PlayerPoints for these Spigot versions should work. Bugs found when running on the aforementioned Minecraft versions will be fixed. The plugin may still work with other versions but bugs will not necessarily be fixed. 
+The current plugin version is Development_11.0.1.0. This is considered to be a pre-release version. The compiled .jar file can be found in the 'Jar' folder. When there is a full release, it will be found in both the 'Jar' folder and the 'releases' section. This plugin is designed to be run with Minecraft Spigot running versions between 1.7.x and 1.12.x. Most versions of Vault and PlayerPoints for these Spigot versions should work. Bugs found when running on the aforementioned Minecraft versions will be fixed. The plugin may still work with other versions but bugs will not necessarily be fixed. 
 
 ## License: 
 This plugin is released under a MIT license (see the LICENSE file for the full license). 
@@ -76,6 +76,8 @@ The */posset set setting lowestRankThatCanManuallyApproveAims &lt;rank&gt;* comm
 The */posset set setting startInPromotionTree &lt;true|false&gt;* command sets whether players should automatically start in the promotion tree or not. \
 The */posset set setting resetPointsAfterEachPromotion &lt;true|false&gt;* command sets whether a player's points should be reset after each promotion or not. \
 The */posset set setting updateUsernames &lt;true|false&gt;* command sets whether the plugin should update the username recorded for the player in the config files each time the player logs in or not. \
+The */posset set setting defaultPoints &lt;integer&gt;* command sets the default number of points players should have. \
+The */posset set setting alwaysSaveFiles &lt;true|false&gt; command sets whether configuration files the plugin couldn't load properly should be saved regardless (this may wipe the files). \
 
 ## Permissions: 
 All permissions for this plugin default to being ops only. Any permission ending '.others' to refer to other players has, as a child permission, the permission referring to the player entering the command. This plugin has the following permissions: 
@@ -140,6 +142,8 @@ All permissions for this plugin default to being ops only. Any permission ending
  - pos.set.setting.resetpointsaftereachpromotion - Set whether players' points for 'points' type aims should be reset each time the player is promoted or not 
  - pos.set.setting.allowsigns - Set whether the plugin allows the use of signs or not 
  - pos.set.setting.watchcommands - Set whether the plugin should listen to player commands for 'command' type aims or not 
+ - pos.set.setting.defaultpoints - Set the default number of points players should have 
+ - pos.set.setting.alwayssavefiles - Set if files that the plugin couldn't load should be saved regardless (this may wipe the files) 
  - pos.set.sign.* - The root permission for setting configurable sign information 
  - pos.set.sign.usage - Set the maximum number of times a player can use a sign 
  - pos.set.promote.* - Let the player be promoted to any target (only valid for 'permission' type aims) 
@@ -182,6 +186,7 @@ The config.yml file defines aims and targets, as well as the following plugin se
  - defaultPoints - The integer number of points that players start off with (this has nothing to do with 'PlayerPoints' plugin points) 
  - commands - This is a list of commands with arguments that the plugin will watch for when dealing with 'command' type aims 
  - defaultTarget - This is the default target that players start on when they first join the promotion tree 
+ - alwaysSaveFiles - This turns on or off the saving of files that are suspected to be malformed when the game loads (saving these files may wipe their contents and this option doesn;t effect every in-game command: if a file is suspected to be malformed, the server should be stopped and the file should be backed up and fixed) 
 
 Aims are defined in this file in the section called 'aims'. An example 'aims' section is shown below: 
 ```yaml

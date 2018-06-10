@@ -243,7 +243,7 @@ public class CheckPlayers {
 		}
 		else {
 			logger.messageSender(sender, "help", null); 
-			sender.sendMessage(ChatColor.RED + "You can only do these to a player with this command: add, remove, reset "); 
+			sender.sendMessage(ChatColor.RED + "You can only do these actions to a player with this command: add, remove, reset "); 
 		}
 		plugin.saveFiles(); 
 	}
@@ -260,7 +260,7 @@ public class CheckPlayers {
 					if ((args.length == 6) && ((args[3].equalsIgnoreCase("aims")) || (args[3].equalsIgnoreCase("password")) || (args[3].equalsIgnoreCase("points")) || (args[3].equalsIgnoreCase("sign")))) {
 						if (args[3].equalsIgnoreCase("aims")) {
 							if (plugin.yc.configuration.contains("aims." + args[4])) {
-								configPlace += "." + args[3]; 
+								configPlace += "." + "aims"; 
 								if ((sender.hasPermission("pos.set.player.aim")) || (sender.hasPermission("pos.set.player.aim.none") && plugin.yc.configuration.getString("aims." + args[4] + ".type").equalsIgnoreCase("none"))) {
 									if (plugin.yd.configuration.contains(configPlace + "." + args[4]) == true) {
 										configPlace += "." + args[4]; 
@@ -289,7 +289,7 @@ public class CheckPlayers {
 							}
 						}
 						else if (args[3].equalsIgnoreCase("password")) {
-							configPlace += ".data." + args[3]; 
+							configPlace += ".data." + "password"; 
 							if (sender.hasPermission("pos.password.set.others") || sender.hasPermission("pos.set.player.password")) {
 								if (plugin.yd.configuration.contains(configPlace + "." + args[4])) {
 									configPlace += "." + args[4]; 
@@ -306,7 +306,7 @@ public class CheckPlayers {
 							}
 						}
 						else if (args[3].equalsIgnoreCase("points")) {
-							configPlace += ".data." + args[3]; 
+							configPlace += ".data." + "points"; 
 							if (sender.hasPermission("pos.set.player.points")) {
 								Boolean success = true; 
 								int value = 0; 
@@ -371,7 +371,7 @@ public class CheckPlayers {
 					}
 					else if (args.length == 5 && !(args[3].equalsIgnoreCase("aims")) && !(args[3].equalsIgnoreCase("password")) && !args[3].equalsIgnoreCase("points") && !(args[3].equalsIgnoreCase("lastUsername"))) {
 						if (args[3].equalsIgnoreCase("finished")) {
-							configPlace += "." + args[3]; 
+							configPlace += "." + "finished"; 
 							if (sender.hasPermission("pos.set.player.finished")) {
 								if (args[4].equalsIgnoreCase("true")) {
 									plugin.yd.configuration.set(configPlace, true); 
@@ -390,7 +390,7 @@ public class CheckPlayers {
 							}
 						}
 						else if (args[3].equalsIgnoreCase("target")) {
-							configPlace += "." + args[3]; 
+							configPlace += "." + "target"; 
 							if (sender.hasPermission("pos.set.player.target")) {
 								if (plugin.yc.configuration.contains("targets." + args[4]) == true) {
 									plugin.yd.configuration.set(configPlace, args[4]); 
@@ -407,7 +407,7 @@ public class CheckPlayers {
 							}
 						}
 						else if (args[3].equalsIgnoreCase("kills")) {
-							configPlace += ".data." + args[3]; 
+							configPlace += ".data." + "kills"; 
 							if (sender.hasPermission("pos.set.player.kills")) {
 								try {
 									int value = Integer.parseInt(args[4]); 
@@ -428,7 +428,7 @@ public class CheckPlayers {
 						}
 					}
 					else if (args.length == 4 && args[3].equalsIgnoreCase("lastUsername")) {
-						configPlace += "." + args[3]; 
+						configPlace += "." +"lastUsername"; 
 						if (sender.hasPermission("pos.set.player.player")) {
 							plugin.yd.configuration.set(configPlace, player.getName()); 
 							sender.sendMessage(args[4] + "'s last known username is now " + player.getName() + " "); 
@@ -454,8 +454,8 @@ public class CheckPlayers {
 			configPlace = "targets." + args[2]; 
 			if (plugin.yc.configuration.contains(configPlace)) {
 				if (args.length == 6 && (args[3].equalsIgnoreCase("aims") || (args[3].equalsIgnoreCase("leadsTo") && (args[4].equalsIgnoreCase("add") || args[4].equalsIgnoreCase("remove"))))) {
-					configPlace += "." + args[3]; 
 					if (args[3].equalsIgnoreCase("aims")) {
+						configPlace += "." + "aims"; 
 						if (sender.hasPermission("pos.set.target.aims")) {
 							if (args[4].equalsIgnoreCase("add")) {
 								if (plugin.yc.configuration.contains("aims." + args[5])) {
@@ -491,6 +491,7 @@ public class CheckPlayers {
 						}
 					}
 					else if (args[3].equalsIgnoreCase("leadsTo")) {
+						configPlace += "." + "leadsTo"; 
 						if (sender.hasPermission("pos.set.target.leadsto")) {
 							if (args[4].equalsIgnoreCase("add")) {
 								if (plugin.yc.configuration.contains("targets." + args[5])) {
@@ -531,8 +532,8 @@ public class CheckPlayers {
 					}
 				}
 				else if (args.length == 5 && (args[3].equalsIgnoreCase("defaultNextTarget") || (args[3].equalsIgnoreCase("leadsTo") && args[4].equalsIgnoreCase("nullify"))))  {
-					configPlace += "." + args[3]; 
 					if (args[3].equalsIgnoreCase("defaultNextTarget")) {
+						configPlace += "." + "defaultNextTarget"; 
 						if (sender.hasPermission("pos.set.target.defaultnexttarget")) {
 							if (plugin.yc.configuration.contains("targets." + args[4])) {
 								plugin.yc.configuration.set(configPlace, args[4]); 
@@ -547,6 +548,7 @@ public class CheckPlayers {
 						}
 					}
 					else if (args[3].equalsIgnoreCase("leadsTo")) {
+						configPlace += "." + "leadsTo"; 
 						if (sender.hasPermission("pos.set.target.leadsto")) {
 							List<String> none = Arrays.asList("none"); 
 							plugin.yc.configuration.set(configPlace, none); 
@@ -580,7 +582,7 @@ public class CheckPlayers {
 								sender.sendMessage(ChatColor.RED + "You cannot change 'command' aim types with this command "); 
 							}
 							else if (args[4].equalsIgnoreCase("xp") || args[4].equalsIgnoreCase("xpl") || args[4].equalsIgnoreCase("item") || args[4].equalsIgnoreCase("password") || args[4].equalsIgnoreCase("points") || args[4].equalsIgnoreCase("kills") || args[4].equalsIgnoreCase("group") || args[4].equalsIgnoreCase("pgroup") || args[4].equalsIgnoreCase("permission") || args[4].equalsIgnoreCase("sign") || args[4].equalsIgnoreCase("command") || args[4].equalsIgnoreCase("none") || args[4].equalsIgnoreCase("economy")) {
-								configPlace += "." + args[3]; 
+								configPlace += "." + "type"; 
 								plugin.yc.configuration.set(configPlace, args[4]); 
 								if ((plugin.yc.configuration.getString("aims." + args[2] + ".type").equalsIgnoreCase("sign")) || (plugin.yc.configuration.getString("aims." + args[2] + ".type").equalsIgnoreCase("none"))) {
 									plugin.yc.configuration.set("aims." + args[2] + ".achieve", "none"); 
@@ -605,7 +607,7 @@ public class CheckPlayers {
 								sender.sendMessage(ChatColor.RED + "You cannot change 'command' aim types with this command "); 
 							}
 							else {
-								configPlace += "." + args[3]; 
+								configPlace += "." + "achieve"; 
 								try {
 									int aimGoal = Integer.parseInt(args[4], 10); 
 									plugin.yc.configuration.set(configPlace, aimGoal); 
@@ -647,7 +649,7 @@ public class CheckPlayers {
 			if (args.length == 4) {
 				if (args[2].equalsIgnoreCase("detectKills")) {
 					if (sender.hasPermission("pos.set.setting.detectkills")) {
-						configPlace = args[2]; 
+						configPlace = "detectKills"; 
 						if (args[3].equalsIgnoreCase("true")) {
 							plugin.yc.configuration.set(configPlace, true); 
 							sender.sendMessage(args[2] + " has been set to " + args[3] + " "); 
@@ -666,7 +668,7 @@ public class CheckPlayers {
 				}
 				else if (args[2].equalsIgnoreCase("watchCommands")) {
 					if (sender.hasPermission("pos.set.setting.watchCommands")) {
-						configPlace = args[2]; 
+						configPlace = "watchCommands"; 
 						if (args[3].equalsIgnoreCase("true")) {
 							plugin.yc.configuration.set(configPlace, true); 
 							sender.sendMessage(args[2] + " has been set to " + args[3] + " "); 
@@ -685,7 +687,7 @@ public class CheckPlayers {
 				}
 				else if (args[2].equalsIgnoreCase("allowSigns")) {
 					if (sender.hasPermission("pos.set.setting.allowsigns")) {
-						configPlace = args[2]; 
+						configPlace = "allowSigns"; 
 						if (args[3].equalsIgnoreCase("true")) {
 							plugin.yc.configuration.set(configPlace, true); 
 							sender.sendMessage(args[2] + " has been set to " + args[3] + " "); 
@@ -704,7 +706,7 @@ public class CheckPlayers {
 				}
 				else if (args[2].equalsIgnoreCase("defaultTarget")) {
 					if (sender.hasPermission("pos.set.setting.defaulttarget")) {
-						configPlace = args[2]; 
+						configPlace = "defaultTarget"; 
 						if (plugin.yc.configuration.contains("targets." + args[3])) {
 							plugin.yc.configuration.set(configPlace, args[3]); 
 							sender.sendMessage(args[2] + " has been set to " + args[3] + " "); 
@@ -719,7 +721,7 @@ public class CheckPlayers {
 				}
 				else if (args[2].equalsIgnoreCase("lowestRankThatCanManuallyApproveAims")) {
 					if (sender.hasPermission("pos.set.setting.lowestrankthatcanmanuallyapproveaims")) {
-						configPlace = args[2]; 
+						configPlace = "lowestRankThatCanManuallyApproveAims"; 
 						plugin.yc.configuration.set(configPlace, args[3]); 
 						sender.sendMessage(args[2] + " has been set to " + args[3] + " "); 
 					}
@@ -729,7 +731,7 @@ public class CheckPlayers {
 				}
 				else if (args[2].equalsIgnoreCase("startInPromotionTree")) {
 					if (sender.hasPermission("pos.set.setting.startinpromotiontree")) {
-						configPlace = args[2]; 
+						configPlace = "startInPromotionTree"; 
 						if (args[3].equalsIgnoreCase("true")) {
 							plugin.yc.configuration.set(configPlace, true); 
 							sender.sendMessage(args[2] + " has been set to " + args[3] + " "); 
@@ -748,7 +750,7 @@ public class CheckPlayers {
 				}
 				else if (args[2].equalsIgnoreCase("resetPointsAfterEachPromotion")) {
 					if (sender.hasPermission("pos.set.setting.resetpointsaftereachpromotion")) {
-						configPlace = args[2]; 
+						configPlace = "resetPointsAfterEachPromotion"; 
 						if (args[3].equalsIgnoreCase("true")) {
 							plugin.yc.configuration.set(configPlace, true); 
 							sender.sendMessage(args[2] + " has been set to " + args[3] + " "); 
@@ -767,7 +769,49 @@ public class CheckPlayers {
 				}
 				else if (args[2].equalsIgnoreCase("updateUsernames")) {
 					if (sender.hasPermission("pos.set.setting.updateusernames")) {
-						configPlace = args[2]; 
+						configPlace = "updateUsernames"; 
+						if (args[3].equalsIgnoreCase("true")) {
+							plugin.yc.configuration.set(configPlace, true); 
+							sender.sendMessage(args[2] + " has been set to " + args[3] + " "); 
+						}
+						else if (args[3].equalsIgnoreCase("false")) {
+							plugin.yc.configuration.set(configPlace, false); 
+							sender.sendMessage(args[2] + " has been set to " + args[3] + " "); 
+						}
+						else {
+							sender.sendMessage(ChatColor.RED + "The setting " + args[2] + " must be either 'true' or 'false' "); 
+						}
+					}
+					else {
+						logger.messageSender(sender, "nopermission", null); 
+					}
+				}
+				else if (args[2].equalsIgnoreCase("defaultPoints")) {
+					if (sender.hasPermission("pos.set.setting.defaultpoints")) {
+						configPlace = "defaultPoints"; 
+						String rawNumber = args[3]; 
+						int pointsNumber = 0;
+						Boolean error = false; 
+						try {
+							pointsNumber = Integer.parseInt(rawNumber); 
+						}
+						catch (NumberFormatException e) {
+							error = true; 
+							logger.messageSender(sender, "numbererror", rawNumber); 
+							e.printStackTrace(); 
+						}
+						if (error == true) {
+							plugin.yc.configuration.set(configPlace, pointsNumber); 
+							sender.sendMessage(args[2] + " has been set to " + args[3] + " "); 
+						}
+					}
+					else {
+						logger.messageSender(sender, "nopermission", null);
+					}
+				}
+				else if (args[2].equalsIgnoreCase("alwaysSaveFiles")) {
+					if (sender.hasPermission("pos.set.setting.alwayssavefiles")) {
+						configPlace = "alwaysSaveFiles"; 
 						if (args[3].equalsIgnoreCase("true")) {
 							plugin.yc.configuration.set(configPlace, true); 
 							sender.sendMessage(args[2] + " has been set to " + args[3] + " "); 
@@ -786,14 +830,15 @@ public class CheckPlayers {
 				}
 				else {
 					logger.messageSender(sender, "help", null); 
-					sender.sendMessage(ChatColor.RED + "For the 'setting' setting type, only the settings 'updateUsernames', 'startInPromotionTree', 'lowestRankThatCanManuallyApproveAims' and 'defaultTarget' may be altered "); 
+					sender.sendMessage(ChatColor.RED + "For the 'setting' setting type, only the single level non-list type config fields may be altered "); 
 				}
 			}
 			else {
 				logger.messageSender(sender, "help", null); 
 				sender.sendMessage(ChatColor.RED + "'setting' setting types never need sub-settings "); 
 			}
-			YamlFiles.reloadTheConfiguration(plugin.yc, plugin.yd, plugin.ys); 
+			plugin.saveFiles(); 
+			YamlFiles.reloadTheConfiguration(plugin.yc, plugin.yd, plugin.ys);
 		}
 		else if (args[1].equalsIgnoreCase("sign")) {
 			if (args.length == 5) {

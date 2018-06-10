@@ -23,6 +23,7 @@ updateUsernames: true
 startInPromotionTree: true 
 lowestRankThatCanManuallyApproveAims: admin
 defaultPoints: 0
+alwaysSaveFiles: false
 
 commands:
 - command1 arg1 arg2 arg3

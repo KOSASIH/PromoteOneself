@@ -109,6 +109,8 @@ public class CommandHelp {
 			sender.sendMessage(ChatColor.AQUA + "/posset set setting startInPromotionTree <true|false>" + ChatColor.WHITE + " - set whether a player hsould automatically be added to the promotion tree on its first join or not "); 
 			sender.sendMessage(ChatColor.AQUA + "/posset set setting resetPointsAfterEachPromotion <true|false>" + ChatColor.WHITE + " - set whether a player's points should return to 0 after each promotion it gets or not "); 
 			sender.sendMessage(ChatColor.AQUA + "/posset set setting updateUsernames <true|false>" + ChatColor.WHITE + " - set whether the plugin should automatically update a player's recorded username after each login or not "); 
+			sender.sendMessage(ChatColor.AQUA + "/posset set setting defaultPoints <integer>" + ChatColor.WHITE + " - set the default amount of points each player gets "); 
+			sender.sendMessage(ChatColor.AQUA + "/posset set setting alwaysSaveFiles <true|false>" + ChatColor.WHITE + " - set if the plugin should still save config files it deems to have corrupted when loading "); 
 		}
 		else if (command.equalsIgnoreCase("set") && firstArgument.equalsIgnoreCase("sign")) {
 			helpCommandHeading(sender, command, firstArgument); 

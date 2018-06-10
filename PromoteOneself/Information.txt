@@ -1,3 +1,5 @@
+This is a general plugin information file that is shipped inside the exported .jar file of the plugin. More information can be found on this plugin's GitHub page. This file was last updated for plugin version Development_11.0.1.0. 
+
 Commands: 
 The */promoteoneself* command shows the help page. 
 The */prom help* command shows the help page. 
@@ -32,6 +34,8 @@ The */posset set setting lowestRankThatCanManuallyApproveAims <rank>* command se
 The */posset set setting startInPromotionTree <true|false>* command sets whether players should automatically start in the promotion tree or not. 
 The */posset set setting resetPointsAfterEachPromotion <true|false>* command sets whether a player's points should be reset after each promotion or not. 
 The */posset set setting updateUsernames <true|false>* command sets whether the plugin should update the username recorded for the player in the config files each time the player logs in or not. 
+The */posset set setting defaultPoints &lt;integer&gt;* command sets the default number of points players should have. \
+The */posset set setting alwaysSaveFiles &lt;true|false&gt; command sets whether configuration files the plugin couldn't load properly should be saved regardless (this may wipe the files). \
 
 
 Permissions: 
@@ -280,6 +284,8 @@ Permissions:
       pos.set.setting.resetpointsaftereachpromotion: true
       pos.set.setting.allowsigns: true
       pos.set.setting.watchcommands: true
+      pos.set.setting.defaultpoints: true
+      pos.set.setting.alwayssavefiles: true
   pos.set.setting.defaulttarget:
     description: Set the default starting target 
     default: op
@@ -303,6 +309,12 @@ Permissions:
     default: op
   pos.set.setting.watchcommands:
     description: Set whether 'command' type aims should work or not 
+    default: op
+  pos.set.setting.defaultpoints:
+    description: Set the default number of points players should have 
+    default: op
+  pos.set.setting.alwayssavefiles:
+    description: Set if files that the plugin couldn't load properly should be saved regardless (this may wipe the files) 
     default: op
   pos.set.sign.*:
     description: Set all setable items about signs 

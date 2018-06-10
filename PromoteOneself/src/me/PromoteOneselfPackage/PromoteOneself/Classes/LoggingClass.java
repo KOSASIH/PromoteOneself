@@ -62,6 +62,9 @@ public class LoggingClass {
 		else if (type.equalsIgnoreCase("configparseerror")) {
 			logger.warning(nameFormat + "The following config file could not be loaded (it is probably incorrectly formatted): " + message); 
 		}
+		else if (type.equalsIgnoreCase("configparseerroranonymous")) {
+			logger.warning(nameFormat + "A config file could not be loaded (it is probably incorrectly formatted). " + message); 
+		}
 		else {
 			unrecognisedLogType(type, "warning"); 
 		}
@@ -107,6 +110,9 @@ public class LoggingClass {
 		}
 		else if (type.equalsIgnoreCase("offline")) {
 			sender.sendMessage(ChatColor.RED + "The player could not be obtained" + message + " "); 
+		}
+		else if (type.equalsIgnoreCase("numbererror")) {
+			sender.sendMessage(ChatColor.RED + "The value you gave (" + message + ") was not an integer "); 
 		}
 		else {
 			unrecognisedLogType(type, "a command sender message"); 

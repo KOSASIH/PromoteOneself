@@ -53,6 +53,7 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 		registerExtraPermissions(pm); 
 		setupVault(pm); 
 		setupPlayerPoints(pm); 
+		YamlFiles.alwaysSaveFiles = yc.configuration.getBoolean("alwaysSaveFiles"); 
 	}
 	
 	private void registerExtraPermissions(PluginManager pm) {
@@ -235,11 +236,21 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 					}
 					else if (args[1].equalsIgnoreCase("nocheck")) {
 						if (sender.hasPermission("pos.reload.nocheck")) {
+							Boolean loadErrorFree = true; 
 							yc.configuration = YamlFiles.loadAConfiguration(yc.theOutFile); 
 							yd.configuration = YamlFiles.loadAConfiguration(yd.theOutFile); 
 							ys.configuration = YamlFiles.loadAConfiguration(ys.theOutFile); 
+							loadErrorFree = loadErrorFree && yc.checkConfiguration();
+							loadErrorFree = loadErrorFree && yd.checkConfiguration();
+							loadErrorFree = loadErrorFree && ys.checkConfiguration();
 							MyPlayerListener.updateCommandsList(); 
-							logger.broadcastMessageServer(sender, "The PromoteOneself config has been reloaded "); 
+							if (loadErrorFree == false) {
+								logger.broadcastMessageBukkit(plugin.getDescription().getName() + " configuration reloaded ");
+							}
+							else {
+								logger.broadcastMessageBukkit(plugin.getDescription().getName() + " configuration reloaded, but there were errors "); 
+								logger.warning("configparseerroranonymous", "");
+							}
 						}
 						else {
 							logger.messageSender(sender, "nopermission", null); 

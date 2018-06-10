@@ -12,16 +12,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfigurationOptions;
 import org.bukkit.configuration.file.YamlConfiguration;
 public class YamlFiles {
 	private static PromoteOneselfMainClass plugin; 
 	private static LoggingClass logger;  
+	public static Boolean alwaysSaveFiles = false; 
 	
 	public YamlConfiguration configuration; 
 	public final File theOutFile; 
 	private final String theInFile; 
+	private Boolean shouldSave; 
 	public YamlFiles(PromoteOneselfMainClass instance, LoggingClass log, String outFileName, String inFileName) {
 		plugin = instance; 
 		logger = log; 
@@ -30,20 +31,19 @@ public class YamlFiles {
 		}
 		theOutFile = new File(plugin.getDataFolder(), outFileName); 
 		theInFile = inFileName; 
+		shouldSave = true; 
 		configuration = loadFiles(); 
-		if (configuration.getKeys(false).size() > 0) {
-			save(); 
-			logger.info("custom", "Configuration file " + theOutFile.getName() + " loaded "); 
-		}
-		else {
-			logger.warning("configparseerror", outFileName); 
-		}
+		checkConfiguration(); 
 	}
 	
 	public static void reloadTheConfiguration(YamlFiles configuration, YamlFiles players, YamlFiles signs) {
+		Boolean loadErrorFree = true; 
 		configuration.configuration = loadAConfiguration(configuration.theOutFile); 
 		players.configuration = loadAConfiguration(players.theOutFile); 
 		signs.configuration = loadAConfiguration(signs.theOutFile); 
+		loadErrorFree = loadErrorFree && configuration.checkConfiguration(); 
+		loadErrorFree = loadErrorFree && players.checkConfiguration(); 
+		loadErrorFree = loadErrorFree && signs.checkConfiguration(); 
 		try {
 			Set<String> pcf = players.configuration.getConfigurationSection("players").getKeys(false); 
 			if (pcf.isEmpty() == false) {
@@ -52,6 +52,9 @@ public class YamlFiles {
 				}
 			}
 		}
+		catch (NullPointerException e) {
+			logger.warning("custom", "There was a null pointer exception when parsing the players.yml file; this is normally caused by there being no players in it (this is not an error if that is supposd to be true)");
+		}
 		catch (Exception e) {
 			logger.warning("reload", e.toString()); 
 			e.printStackTrace(); 
@@ -59,11 +62,14 @@ public class YamlFiles {
 		MyPlayerListener.updateCommandsList(); 
 		configuration.save(); 
 		players.save(); 
-		signs.save(); 
-		configuration.configuration = loadAConfiguration(configuration.theOutFile); 
-		players.configuration = loadAConfiguration(players.theOutFile); 
-		signs.configuration = loadAConfiguration(signs.theOutFile); 
-		Bukkit.broadcastMessage(plugin.getDescription().getName() + " configuration reloaded, checked and saved "); 
+		signs.save();  
+		if (loadErrorFree == false) {
+			logger.broadcastMessageBukkit(plugin.getDescription().getName() + " configuration reloaded, checked and saved ");
+		}
+		else {
+			logger.broadcastMessageBukkit(plugin.getDescription().getName() + " configuration reloaded, but there were errors "); 
+			logger.warning("configparseerroranonymous", "");
+		}
 	}
 	public static void updatePlayerTargets(String i, YamlFiles configuration, YamlFiles players, YamlFiles signs) {
 		Set<String> rawPlayerAims = players.configuration.getConfigurationSection("players." + i + ".aims").getKeys(false); 
@@ -187,6 +193,18 @@ public class YamlFiles {
 		YamlConfiguration currentConfigurationFile = YamlConfiguration.loadConfiguration(file); 
 		return currentConfigurationFile; 
 	}
+	public Boolean checkConfiguration() {
+		if (configuration.getKeys(false).size() > 0) {
+			save(); 
+			logger.info("custom", "Configuration file " + theOutFile.getName() + " loaded "); 
+			shouldSave = true; 
+		}
+		else {
+			logger.warning("configparseerror", theOutFile.getName()); 
+			shouldSave = false; 
+		}
+		return shouldSave; 
+	}
 	private static void copy(InputStream src, OutputStream dst) throws IOException{
 		byte[] bytes = new byte[2048]; 
 		int transfer; 
@@ -269,10 +287,12 @@ public class YamlFiles {
 		options.copyHeader(true); 
 	}
 	public void save() {
-		try {
-			configuration.save(theOutFile);
-		} catch (IOException e) {
-			logger.exception("Unable to save file " + theOutFile, e); 
-		} 
+		if (shouldSave == true || alwaysSaveFiles == true) {
+			try {
+				configuration.save(theOutFile);
+			} catch (IOException e) {
+				logger.exception("Unable to save file " + theOutFile, e); 
+			} 
+		}
 	}
 }

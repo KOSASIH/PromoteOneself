@@ -23,7 +23,7 @@ public class MyPlayerListener implements Listener{
 	}
 	public static void updateCommandsList() {
 		if (plugin.yc.configuration.getBoolean("watchCommands") == true) {
-			commands.addAll(plugin.yc.configuration.getStringList("commands")); 
+			commands = plugin.yc.configuration.getStringList("commands"); 
 		}
 		plugin.logger.info("custom", "Commands being watched: " + commands.toString()); 
 	}
