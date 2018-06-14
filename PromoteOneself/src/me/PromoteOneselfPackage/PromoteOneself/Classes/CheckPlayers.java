@@ -828,6 +828,25 @@ public class CheckPlayers {
 						logger.messageSender(sender, "nopermission", null); 
 					}
 				}
+				else if (args[2].equalsIgnoreCase("remindOnJoin")) {
+					if (sender.hasPermission("pos.set.setting.remindonjoin")) {
+						configPlace = "remindOnJoin"; 
+						if (args[3].equalsIgnoreCase("true")) {
+							plugin.yc.configuration.set(configPlace, true); 
+							sender.sendMessage(args[2] + " has been set to " + args[3] + " "); 
+						}
+						else if (args[3].equalsIgnoreCase("false")) {
+							plugin.yc.configuration.set(configPlace, false); 
+							sender.sendMessage(args[2] + " has been set to " + args[3] + " "); 
+						}
+						else {
+							sender.sendMessage(ChatColor.RED + "The setting " + args[2] + " must be either 'true' or 'false' "); 
+						}
+					}
+					else {
+						logger.messageSender(sender, "nopermission", null); 
+					}
+				}
 				else {
 					logger.messageSender(sender, "help", null); 
 					sender.sendMessage(ChatColor.RED + "For the 'setting' setting type, only the single level non-list type config fields may be altered "); 

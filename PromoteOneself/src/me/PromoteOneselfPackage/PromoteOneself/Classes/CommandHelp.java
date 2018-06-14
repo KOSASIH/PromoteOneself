@@ -45,6 +45,18 @@ public class CommandHelp {
 			sender.sendMessage(ChatColor.AQUA + "/prom password <get [player] <aim>|set [player] <password> <aim>> "); 
 			sender.sendMessage("With this comand you can get and set a player's password "); 
 		}
+		else if (command.equalsIgnoreCase("prom") && firstArgument.equalsIgnoreCase("help")) {
+			helpCommandHeading(sender, command, firstArgument); 
+			sender.sendMessage(ChatColor.AQUA + "/prom help ");
+			sender.sendMessage(ChatColor.AQUA + "/prom help <prom|posset|set> <argument> ");
+			sender.sendMessage("This command with no arguments displays the top level help information ");
+			sender.sendMessage("This command with two arguments gives more detailed help about the specific command ");
+		}
+		else if (command.equalsIgnoreCase("prom") && firstArgument.equalsIgnoreCase("version")) {
+			helpCommandHeading(sender, command, firstArgument); 
+			sender.sendMessage(ChatColor.AQUA + "/prom version"); 
+			sender.sendMessage("This command displays the running version of the " + logger.getName() + " plugin ");
+		}
 		else if (command.equalsIgnoreCase("posset") && firstArgument.equalsIgnoreCase("exempt")) {
 			helpCommandHeading(sender, command, firstArgument); 
 			sender.sendMessage(ChatColor.AQUA + "/posset exempt <player> <true|temp|add|join> "); 
@@ -111,6 +123,7 @@ public class CommandHelp {
 			sender.sendMessage(ChatColor.AQUA + "/posset set setting updateUsernames <true|false>" + ChatColor.WHITE + " - set whether the plugin should automatically update a player's recorded username after each login or not "); 
 			sender.sendMessage(ChatColor.AQUA + "/posset set setting defaultPoints <integer>" + ChatColor.WHITE + " - set the default amount of points each player gets "); 
 			sender.sendMessage(ChatColor.AQUA + "/posset set setting alwaysSaveFiles <true|false>" + ChatColor.WHITE + " - set if the plugin should still save config files it deems to have corrupted when loading "); 
+			sender.sendMessage(ChatColor.AQUA + "/posset set setting remindOnJoin <true|false>" + ChatColor.WHITE + " - set if the plugin should send a reminder message to players when they join ");
 		}
 		else if (command.equalsIgnoreCase("set") && firstArgument.equalsIgnoreCase("sign")) {
 			helpCommandHeading(sender, command, firstArgument); 

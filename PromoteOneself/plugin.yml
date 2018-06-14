@@ -1,6 +1,6 @@
 name: PromoteOneself
 main: me.PromoteOneselfPackage.PromoteOneself.Classes.PromoteOneselfMainClass 
-version: Development_11.0.1.0
+version: Development_11.0.1.1
 description: A plugin which lets people achieve aims to work up through a server's ranking system 
 author: aappleton3 
 database: false
@@ -263,6 +263,7 @@ permissions:
       pos.set.setting.watchcommands: true
       pos.set.setting.defaultpoints: true
       pos.set.setting.alwayssavefiles: true
+      pos.set.setting.remindonjoin: true
   pos.set.setting.defaulttarget:
     description: Set the default starting target 
     default: op
@@ -292,6 +293,9 @@ permissions:
     default: op
   pos.set.setting.alwayssavefiles:
     description: Set if files that the plugin couldn't load properly should be saved regardless (this may wipe the files) 
+    default: op
+  pos.set.setting.remindonjoin:
+    description: Set if the plugin should send a reminder message to players each time they join 
     default: op
   pos.set.sign.*:
     description: Set all setable items about signs 

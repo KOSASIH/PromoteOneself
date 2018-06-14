@@ -128,6 +128,14 @@ public class LoggingClass {
 	public String getName() {
 		return descriptionFile.getName(); 
 	}
+	public String getName(Boolean fullFormat) {
+		if (fullFormat == false) {
+			return getName(); 
+		}
+		else {
+			return nameFormat; 
+		}
+	}
 	private void unrecognisedLogType(String type, String severity) {
 		logger.warning(nameFormat + type + " is unrecognised for " + severity + " "); 
 	}

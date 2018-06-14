@@ -9,6 +9,7 @@ defaultPoints: 0
 commands: []
 defaultTarget: target1 
 alwaysSaveFiles: false
+remindOnJoin: true
 aims: 
   aim1:
     type: none 

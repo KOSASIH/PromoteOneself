@@ -56,7 +56,7 @@ public class UpdateAims {
 		catch (NullPointerException e) {
 			// No action required 
 		}
-		Bukkit.getPlayer(rpId).sendMessage("Your target is now " + target); 
+		Bukkit.getPlayer(rpId).sendMessage(ChatColor.AQUA + logger.getName(true) + "Your target is now: " + target); 
 		plugin.saveFiles(); 
 	}
 	@SuppressWarnings("deprecation")
@@ -383,7 +383,6 @@ public class UpdateAims {
 					result = false; 
 				}
 			}
-			player.sendMessage(result.toString()); 
 			return result; 
 		}
 		else if (aimSpecific == true) {
@@ -562,7 +561,6 @@ public class UpdateAims {
 				}
 			}
 			else {
-				sender.sendMessage("Second if statement works "); 
 				plugin.yd.configuration.set("players." + spId + ".target", nextTarget); 
 				plugin.yd.configuration.set("players." + spId + ".data.password", null); 
 				plugin.yd.configuration.set("players." + spId + ".data.commands", null); 
@@ -582,13 +580,16 @@ public class UpdateAims {
 				player.sendMessage("Your target is now " + nextTarget); 
 			}
 			if (runTheCommands == false) {
-				sender.sendMessage("runTheCommands == false"); 
+				//sender.sendMessage("runTheCommands == false"); 
+				// No action required 
 			}
 			else if (plugin.yc.configuration.getString("targets." + target + ".commands").equalsIgnoreCase("none")) {
-				sender.sendMessage("As a string, no commands"); 
+				//sender.sendMessage("As a string, no commands"); 
+				// No action required 
 			}
 			else if (plugin.yc.configuration.getStringList("targets." + target + ".commands").get(0).equalsIgnoreCase("none")) { 
-				sender.sendMessage("As a list, no commands"); 
+				//sender.sendMessage("As a list, no commands"); 
+				// No action required 
 			} 
 			else {
 				sender.sendMessage("works: there are commands"); 

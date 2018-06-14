@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -33,12 +35,14 @@ public class MyPlayerListener implements Listener{
 		String spId = rpId.toString(); 
 		Boolean updateUsername = plugin.yc.configuration.getBoolean("updateUsernames"); 
 		String defaultFirstTarget = plugin.yc.configuration.getString("defaultTarget"); 
+		Boolean exempt = false; 
 		if (plugin.yd.configuration.contains("exempt." + spId) == true) {
-			if (plugin.yd.configuration.getString("exempt." + spId + ".exempt").equalsIgnoreCase("true")) {
+			if (plugin.yd.configuration.getString("exempt." + spId + ".exempt").equalsIgnoreCase("true") || plugin.yd.configuration.getString("exempt." + spId + ".exempt").equalsIgnoreCase("temp")) {
 				if (updateUsername == true) {
 					plugin.yd.configuration.set("exempt." + spId + ".lastUsername", event.getPlayer().getName()); 
 					plugin.yd.save(); 
 				}
+				exempt = true; 
 			}
 			else {
 				plugin.yd.configuration.set("exempt." + spId, null); 
@@ -56,6 +60,10 @@ public class MyPlayerListener implements Listener{
 		}
 		else if (plugin.yc.configuration.getBoolean("startInPromotionTree") == true) {
 			ua.addPlayer(defaultFirstTarget, spId, rpId, true); 
+		}
+		if ((exempt == false) && plugin.yc.configuration.getBoolean("remindOnJoin")) {
+			String target = plugin.yd.configuration.getString("players." + spId + ".target"); 
+			Bukkit.getPlayer(rpId).sendMessage(ChatColor.AQUA + plugin.logger.getName(true) + "Your current target(" + target + ") requires the aims: " + plugin.yc.configuration.getStringList("targets." + target + ".aims"));
 		}
 	}
 	@EventHandler (ignoreCancelled = true, priority = EventPriority.MONITOR) 
