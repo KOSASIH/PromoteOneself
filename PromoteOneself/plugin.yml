@@ -1,6 +1,6 @@
 name: PromoteOneself
 main: me.PromoteOneselfPackage.PromoteOneself.Classes.PromoteOneselfMainClass 
-version: Development_11.0.1.1
+version: Development_11.0.1.2
 description: A plugin which lets people achieve aims to work up through a server's ranking system 
 author: aappleton3 
 database: false
@@ -25,6 +25,7 @@ permissions:
       pos.update.*: true
       pos.password.*: true
       pos.check.*: true
+      pos.list.*: true
       pos.exempt.*: true
       pos.player.*: true
       pos.set.*: true
@@ -127,6 +128,30 @@ permissions:
     default: op
   pos.check.aims:
     description: Check an aim 
+    default: op
+  pos.list.*:
+    description: Can list the names of all object types
+    default: op
+    children:
+      pos.list.targets: true
+      pos.list.aims: true
+      pos.list.players: true
+      pos.list.exempt: true
+      pos.list.signs: true
+  pos.list.targets:
+    description: Can list the names of all targets 
+    default: op
+  pos.list.aims:
+    description: Can list the names of all aims
+    default: op
+  pos.list.players:
+    description: Can list the names of all players
+    default: op
+  pos.list.exempt:
+    description: Can list the names of all exempt players
+    default: op
+  pos.list.signs:
+    description: Can list the ids of all signs
     default: op
   pos.exempt.*:
     description: Set a player's exemption status 

@@ -19,6 +19,7 @@ public class CommandHelp {
 		sender.sendMessage(ChatColor.AQUA + "/prom version" + ChatColor.WHITE + " - Get the version of the plugin "); 
 		sender.sendMessage(ChatColor.AQUA + "/prom update <arguments>" + ChatColor.WHITE + " - Update a player's targets and aims "); 
 		sender.sendMessage(ChatColor.AQUA + "/prom check [arguments]" + ChatColor.WHITE + " - Get information about a player, aim or target "); 
+		sender.sendMessage(ChatColor.AQUA + "/prom list <targets|aims|players|exempt|signs>" + ChatColor.WHITE + " - Get all the names of the specified object type "); 
 		sender.sendMessage(ChatColor.AQUA + "/prom password <arguments>" + ChatColor.WHITE + " - Get and set a player's passwords for password type aims "); 
 		sender.sendMessage(ChatColor.AQUA + "/posset exempt <arguments>" + ChatColor.WHITE + " - Make a player exempt from the promotion tree "); 
 		sender.sendMessage(ChatColor.AQUA + "/posset save" + ChatColor.WHITE + " - Save the plugin's configuration files "); 
@@ -39,6 +40,11 @@ public class CommandHelp {
 			sender.sendMessage(ChatColor.AQUA + "/prom check [<player|target|aim> <name>] "); 
 			sender.sendMessage("Using the command with one argument gives the player who typed it in its own information "); 
 			sender.sendMessage("Either player or target or aim can be specified and then a name can be given to get the information for the given object "); 
+		}
+		else if (command.equalsIgnoreCase("prom") && firstArgument.equalsIgnoreCase("list")) {
+			helpCommandHeading(sender, command, firstArgument); 
+			sender.sendMessage(ChatColor.AQUA + "/prom list <targets|aims|players|exempt|signs> "); 
+			sender.sendMessage("This command lists the name/id of each target, aim, player, exempt player or sign"); 
 		}
 		else if (command.equalsIgnoreCase("prom") && firstArgument.equalsIgnoreCase("password")) {
 			helpCommandHeading(sender, command, firstArgument); 

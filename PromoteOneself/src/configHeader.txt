@@ -25,11 +25,13 @@ lowestRankThatCanManuallyApproveAims: admin
 defaultPoints: 0
 alwaysSaveFiles: false
 remindOnJoin: true
+
 commands:
 - command1 arg1 arg2 arg3
 - command2 arg1
 - etc
 defaultTarget: target1 
+
 aims: 
   aim1:
     type:
@@ -38,6 +40,7 @@ aims:
     type: 
     achieve: 
   etc: 
+
 targets:
   target1: 
     aims:

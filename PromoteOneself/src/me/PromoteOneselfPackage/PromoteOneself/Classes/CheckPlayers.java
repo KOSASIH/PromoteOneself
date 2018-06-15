@@ -267,10 +267,12 @@ public class CheckPlayers {
 										if (args[5].equalsIgnoreCase("true")) {
 											plugin.yd.configuration.set(configPlace, true); 
 											sender.sendMessage(args[4] + " is now " + args[5] + " "); 
+											Bukkit.getPlayer(rpId).sendMessage(ChatColor.AQUA + logger.getName(true) + "You have completed aim " + args[4]); 
 										}
 										else if (args[5].equalsIgnoreCase("false")) {
 											plugin.yd.configuration.set(configPlace, false); 
 											sender.sendMessage(args[4] + " is now " + args[5] + " "); 
+											Bukkit.getPlayer(rpId).sendMessage(ChatColor.RED + logger.getName(true) + "You have no longer completed aim " + args[4]); 
 										}
 										else {
 											sender.sendMessage(ChatColor.RED + "A player's aim completion status must be either 'true' or 'false' "); 
@@ -814,10 +816,12 @@ public class CheckPlayers {
 						configPlace = "alwaysSaveFiles"; 
 						if (args[3].equalsIgnoreCase("true")) {
 							plugin.yc.configuration.set(configPlace, true); 
+							YamlFiles.alwaysSaveFiles = true; 
 							sender.sendMessage(args[2] + " has been set to " + args[3] + " "); 
 						}
 						else if (args[3].equalsIgnoreCase("false")) {
 							plugin.yc.configuration.set(configPlace, false); 
+							YamlFiles.alwaysSaveFiles = false; 
 							sender.sendMessage(args[2] + " has been set to " + args[3] + " "); 
 						}
 						else {

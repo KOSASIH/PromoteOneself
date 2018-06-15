@@ -5,7 +5,7 @@ The PromoteOneself plugin is a Minecraft Spigot server plugin. This plugin enabl
 This plugin is compatible with the 'Vault' plugin and the 'PlayerPoints' plugin. There are currently no known compatibility issues. 
 
 ## Versions: 
-The current plugin version is Development_11.0.1.0. This is considered to be a pre-release version. The compiled .jar file can be found in the 'Jar' folder. When there is a full release, it will be found in both the 'Jar' folder and the 'releases' section. This plugin is designed to be run with Minecraft Spigot running versions between 1.7.x and 1.12.x. Most versions of Vault and PlayerPoints for these Spigot versions should work. Bugs found when running on the aforementioned Minecraft versions will be fixed. The plugin may still work with other versions but bugs will not necessarily be fixed. 
+The current plugin version is Development_11.0.1.2. Thie most recent 'released' version (in the 'release' section) (which is considered to be a pre-release version) is version Development_11.0.1.0. The most recently compiled .jar file can be found in the 'Jar' folder. When there is a full release, it will be found in both the 'Jar' folder and the 'releases' section. This plugin is designed to be run with Minecraft Spigot running versions between 1.7.x and 1.12.x. Most versions of Vault and PlayerPoints for these Spigot versions should work. Bugs found when running on the aforementioned Minecraft versions will be fixed. The plugin may still work with other versions but bugs will not necessarily be fixed. 
 
 ## License: 
 This plugin and its source code are released under a GNU GPL v3.0 license (see the LICENSE file for the full license). This plugin is copyright (c) aappleton3/aappleton8, 2018. 
@@ -50,7 +50,8 @@ The */prom help set &lt;second argument&gt;* command shows more detailed informa
 The */prom version* command shows the plugin version. \
 The */prom update [target [player-username [aim]]]* command checks a player's completion status for a target or an aim of a target. \
 The */prom check [&lt;player|target|aim&gt; &lt;name&gt;]* command gives information about a player, target or aim. \
-The */prom password &lt;get [player] &lt;aim&gt;|set [player] &lt;password&gt; &lt;aim&gt;&gt;* command enables a player to get or set a player's password guess attempts. \
+The */prom password &lt;get [player] &lt;aim&gt;|set [player] &lt;password&gt; &lt;aim&gt;&gt;* command enables a player to get or set a player's password guess attempts. \7
+The */prom list &lt;targets|aims|players|exempt|signs&gt;* command lists all the names of the specified object type. \
 The */posset exempt &lt;player&gt; &lt;true|temp|add|join&gt;* command sets the exemption status of a player (true: make exempt and delete data; temp: make exempt and keep data; add: lose exemption at next login; join: lose exemption now). \
 The */posset save* command saves the config files. \
 The */posset reload [check|nocheck]* command reloads the configuration files (adding nothing or 'check' makes it checks each players' aims with the aims each target specifies the player should have; specifying 'nocheck' makes it jut reload the files). \
@@ -106,6 +107,12 @@ All permissions for this plugin default to being ops only. Any permission ending
  - pos.check - Let a player view its own information 
  - pos.check.targets - Get the information of a target 
  - pos.check.aims - Let a player check the information of an aim 
+ - pos.list.* - Let a player list the names of all object types 
+ - pos.list.targets - Let a player list the names of every target
+ - pos.list.aims - Let a player list the names of every aim
+ - pos.list.players - Let a player list the name of every player 
+ - pos.list.exempt - Let a player list the name of every exempt player
+ - pos.list.signs - Let a player list the id of every sign 
  - pos.exempt.* - The root permission for setting a player's exemption status 
  - pos.exempt.true - Make a player exempt 
  - pos.exempt.temp - Make a player exempt, whilst keeping its data in the promotion tree 

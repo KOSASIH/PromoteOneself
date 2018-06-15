@@ -1,4 +1,4 @@
-This is a general plugin information file that is shipped inside the exported .jar file of the plugin. More information can be found on this plugin's GitHub page. This file was last updated for plugin version Development_11.0.1.0. 
+This is a general plugin information file that is shipped inside the exported .jar file of the plugin. More information can be found on this plugin's GitHub page. This file was last updated for plugin version Development_11.0.1.2. 
 
 Commands: 
 The */promoteoneself* command shows the help page. 
@@ -8,12 +8,13 @@ The */prom help set <second argument>* command shows more detailed information a
 The */prom version* command shows the plugin version. 
 The */prom update [target [player-username [aim]]]* command checks a player's completion status for a target or an aim of a target. 
 The */prom check [<player|target|aim> <name>]* command gives information about a player, target or aim. 
+The */prom list <targets|aims|players|exempt|signs> command lists all the names of the specified object type. 
 The */prom password <get [player] <aim>|set [player] <password> <aim>>* command enables a player to get or set a player's password guess attempts. 
 The */posset exempt <player> <true|temp|add|join>* command sets the exemption status of a player (true: make exempt and delete data; temp: make exempt and keep data; add: lose exemption at next login; join: lose exemption now). 
 The */posset save* command saves the config files. 
 The */posset reload [check|nocheck]* command reloads the configuration files (adding nothing or 'check' makes it checks each players' aims with the aims each target specifies the player should have; specifying 'nocheck' makes it jut reload the files). 
 The */posset player <add|remove|delete> [name]* command provides the ability to add or remove a player to/from the promotion tree or to reset a player in the promotion tree. 
-The */posset set player <player-username> aims <aim-name> <true|false>* command sets a player's aim completetion status. 
+The */posset set player <player-username> aims <aim-name> <true|false>* command sets a player's aim completion status. 
 The */posset set player <player-username> password <aim-name> <password>* command sets a player's password guess for an aim. 
 The */posset set player <player-username> points <set|add|remove> <amount>* command changes the amount of points a player has. 
 The */posset set player <player-username> sign <sign-id> <player-usage>* command sets a player's recorded sign usage. 
@@ -34,8 +35,9 @@ The */posset set setting lowestRankThatCanManuallyApproveAims <rank>* command se
 The */posset set setting startInPromotionTree <true|false>* command sets whether players should automatically start in the promotion tree or not. 
 The */posset set setting resetPointsAfterEachPromotion <true|false>* command sets whether a player's points should be reset after each promotion or not. 
 The */posset set setting updateUsernames <true|false>* command sets whether the plugin should update the username recorded for the player in the config files each time the player logs in or not. 
-The */posset set setting defaultPoints &lt;integer&gt;* command sets the default number of points players should have. \
-The */posset set setting alwaysSaveFiles &lt;true|false&gt; command sets whether configuration files the plugin couldn't load properly should be saved regardless (this may wipe the files). \
+The */posset set setting defaultPoints <integer>* command sets the default number of points players should have. 
+The */posset set setting alwaysSaveFiles <true|false> command sets whether configuration files the plugin couldn't load properly should be saved regardless (this may wipe the files). 
+The */posset set setting remindOnJoin <true|false>* command sets whether the plugin reminds players of their targets when they join or not.  
 
 
 Permissions: 
@@ -150,6 +152,30 @@ Permissions:
     default: op
   pos.check.aims:
     description: Check an aim 
+    default: op
+  pos.list.*:
+    description: Can list the names of all object types
+    default: op
+    children:
+      pos.list.targets: true
+      pos.list.aims: true
+      pos.list.players: true
+      pos.list.exempt: true
+      pos.list.signs: true
+  pos.list.targets:
+    description: Can list the names of all targets 
+    default: op
+  pos.list.aims:
+    description: Can list the names of all aims
+    default: op
+  pos.list.players:
+    description: Can list the names of all players
+    default: op
+  pos.list.exempt:
+    description: Can list the names of all exempt players
+    default: op
+  pos.list.signs:
+    description: Can list the ids of all signs
     default: op
   pos.exempt.*:
     description: Set a player's exemption status 
@@ -286,6 +312,7 @@ Permissions:
       pos.set.setting.watchcommands: true
       pos.set.setting.defaultpoints: true
       pos.set.setting.alwayssavefiles: true
+      pos.set.setting.remindonjoin: true
   pos.set.setting.defaulttarget:
     description: Set the default starting target 
     default: op
@@ -316,6 +343,9 @@ Permissions:
   pos.set.setting.alwayssavefiles:
     description: Set if files that the plugin couldn't load properly should be saved regardless (this may wipe the files) 
     default: op
+  pos.set.setting.remindonjoin:
+    description: Set if the plugin will remind players of their targets when they join 
+    defaukt: op
   pos.set.sign.*:
     description: Set all setable items about signs 
     default: op
@@ -455,10 +485,10 @@ Type1 (must do):
 Type2 (should learn to do):  
 
 Type 3 (could think about doing): 
-(check) Make the plugin work for offline players too - checked main class and player properties class 
+Make the plugin work for offline players too - checked main class and player properties class but many commands only work for online players 
 
 Type4 (could do on a whim) 
 (already done?) More comprehensive sign permissions - Permissions for id groups too or exempt from the limit of a certain id group or individual id limits for people or a permission to use all signs and another to create all signs etc - make sign permissions independent of command permissions    
-Ensure compatibility with versions 1.8-1.12
+Ensure compatibility with versions 1.7.x-1.12.x
 
 

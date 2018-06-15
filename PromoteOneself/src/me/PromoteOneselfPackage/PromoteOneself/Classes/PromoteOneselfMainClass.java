@@ -179,6 +179,15 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 					return false; 
 				}
 			}
+			else if (args[0].equalsIgnoreCase("list")) {
+				if (args.length == 2) {
+					ua.listValues(sender, args); 
+				}
+				else {
+					logger.messageSender(sender, "help", null); 
+					return false; 
+				}
+			}
 			else {
 				logger.messageSender(sender, "help", null); 
 				return false; 
@@ -244,6 +253,7 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 							loadErrorFree = loadErrorFree && yd.checkConfiguration();
 							loadErrorFree = loadErrorFree && ys.checkConfiguration();
 							MyPlayerListener.updateCommandsList(); 
+							YamlFiles.alwaysSaveFiles = yc.configuration.getBoolean("alwaysSaveFiles"); 
 							if (loadErrorFree == false) {
 								logger.broadcastMessageBukkit(plugin.getDescription().getName() + " configuration reloaded ");
 							}

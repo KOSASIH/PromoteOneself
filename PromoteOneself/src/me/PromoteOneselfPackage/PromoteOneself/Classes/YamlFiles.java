@@ -60,6 +60,7 @@ public class YamlFiles {
 			e.printStackTrace(); 
 		}
 		MyPlayerListener.updateCommandsList(); 
+		alwaysSaveFiles = configuration.configuration.getBoolean("alwaysSaveFiles"); 
 		configuration.save(); 
 		players.save(); 
 		signs.save();  
@@ -71,7 +72,7 @@ public class YamlFiles {
 			logger.warning("configparseerroranonymous", "");
 		}
 	}
-	public static void updatePlayerTargets(String i, YamlFiles configuration, YamlFiles players, YamlFiles signs) {
+	protected static void updatePlayerTargets(String i, YamlFiles configuration, YamlFiles players, YamlFiles signs) {
 		Set<String> rawPlayerAims = players.configuration.getConfigurationSection("players." + i + ".aims").getKeys(false); 
 		List<String> playerAims = new ArrayList<String>(rawPlayerAims); 
 		List<String> targetAims = configuration.configuration.getStringList("targets." + players.configuration.getString("players." + i + ".target") + ".aims"); 

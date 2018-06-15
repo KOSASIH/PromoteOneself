@@ -63,7 +63,7 @@ public class MyPlayerListener implements Listener{
 		}
 		if ((exempt == false) && plugin.yc.configuration.getBoolean("remindOnJoin")) {
 			String target = plugin.yd.configuration.getString("players." + spId + ".target"); 
-			Bukkit.getPlayer(rpId).sendMessage(ChatColor.AQUA + plugin.logger.getName(true) + "Your current target(" + target + ") requires the aims: " + plugin.yc.configuration.getStringList("targets." + target + ".aims"));
+			Bukkit.getPlayer(rpId).sendMessage(ChatColor.AQUA + plugin.logger.getName(true) + "Your current target (" + target + ") requires the aims: " + plugin.yc.configuration.getStringList("targets." + target + ".aims"));
 		}
 	}
 	@EventHandler (ignoreCancelled = true, priority = EventPriority.MONITOR) 

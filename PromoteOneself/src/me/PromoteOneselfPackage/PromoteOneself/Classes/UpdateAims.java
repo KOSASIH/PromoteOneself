@@ -1,6 +1,7 @@
 package me.PromoteOneselfPackage.PromoteOneself.Classes;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -261,9 +262,45 @@ public class UpdateAims {
 		else if (args.length == 3) {
 			@SuppressWarnings("deprecation")
 			Player player = Bukkit.getPlayer(args[2]); 
-			if (player != null) {
-				UUID rpId = player.getUniqueId(); 
+			Boolean isInConfig = false; 
+			String configspId = ""; 
+			if (player == null) {
+				Set<String> exemptPlayers = new HashSet<>(); 
+				Set<String> playedPlayers= new HashSet<>(); 
+				if (plugin.yd.configuration.contains("exempt")) {
+					exemptPlayers = plugin.yd.configuration.getConfigurationSection("exempt").getKeys(false); 
+				}
+				if (plugin.yd.configuration.contains("players")) {
+					playedPlayers = plugin.yd.configuration.getConfigurationSection("players").getKeys(false); 
+				}
+				for (String i : exemptPlayers) {
+					if (plugin.yd.configuration.contains("exempt." + i)) {
+						if (plugin.yd.configuration.getString("exempt." + i + ".lastUsername") == args[2]) {
+							configspId = i; 
+							isInConfig = true; 
+						}
+					}
+				}
+				for (String i : playedPlayers) {
+					if (plugin.yd.configuration.contains("players." + i)) {
+						if (plugin.yd.configuration.getString("players." + i + ".lastUsername") == args[2]) {
+							configspId = i; 
+							isInConfig = true; 
+						}
+					}
+				}
+			}
+			if ((player != null) || (isInConfig == true)) {
+				UUID rpId = new UUID(0, 0); 
 				String spId = rpId.toString(); 
+				if (player != null) {
+					rpId = player.getUniqueId(); 
+					spId = rpId.toString();
+				}
+				else {
+					spId = configspId; 
+					rpId = UUID.fromString(spId); 
+				}
 				if (plugin.yd.configuration.contains("exempt." + spId + ".exempt")) {
 					logger.messageSender(sender, "exemptplayer", null); 
 				}
@@ -339,6 +376,9 @@ public class UpdateAims {
 				else if (plugin.yc.configuration.contains("targets." + args[1]) != true && !(args[1].equalsIgnoreCase("none"))) {
 					sender.sendMessage(ChatColor.RED + "The target you specified does not exist "); 
 				}
+				else if (plugin.yc.configuration.contains("aims." + args[3])) {
+					sender.sendMessage(ChatColor.RED + "The aim you specified does not exist "); 
+				}
 				else {
 					if (sender.hasPermission("pos.update.aim.others")) {
 						updatePlayerAims(spId, player, true, args); 
@@ -358,6 +398,61 @@ public class UpdateAims {
 		else {
 			logger.messageSender(sender, "argserror", null); 
 			logger.warning("updatePlayerError", null); 
+		}
+	}
+	public void listValues(CommandSender sender, String[] args) {
+		if (args[1].equalsIgnoreCase("targets")) {
+			if (sender.hasPermission("pos.list.targets")) {
+				sender.sendMessage(plugin.yc.configuration.getConfigurationSection("targets").getKeys(false).toString()); 
+			}
+			else {
+				logger.messageSender(sender, "nopermission", null); 
+			}
+		}
+		else if (args[1].equalsIgnoreCase("aims")) {
+			if (sender.hasPermission("pos.list.aims")) {
+				sender.sendMessage(plugin.yc.configuration.getConfigurationSection("aims").getKeys(false).toString()); 
+			}
+			else {
+				logger.messageSender(sender, "nopermission", null); 
+			}
+		}
+		else if (args[1].equalsIgnoreCase("players")) {
+			if (sender.hasPermission("pos.list.players")) {
+				Set<String> players = plugin.yd.configuration.getConfigurationSection("players").getKeys(false); 
+				List<String> playerUsernames = new ArrayList<String>(); 
+				for (String i : players) {
+					playerUsernames.add(plugin.yd.configuration.getString("players." + i + ".lastUsername")); 
+				}
+				sender.sendMessage(playerUsernames.toString()); 
+			}
+			else {
+				logger.messageSender(sender, "nopermission", null); 
+			}
+		}
+		else if (args[1].equalsIgnoreCase("exempt")) {
+			if (sender.hasPermission("pos.list.exempt")) {
+				Set<String> players = plugin.yd.configuration.getConfigurationSection("exempt").getKeys(false); 
+				List<String> playerUsernames = new ArrayList<String>(); 
+				for (String i : players) {
+					playerUsernames.add(plugin.yd.configuration.getString("exempt." + i + ".lastUsername")); 
+				}
+				sender.sendMessage(playerUsernames.toString()); 
+			}
+			else {
+				logger.messageSender(sender, "nopermission", null); 
+			}
+		}
+		else if (args[1].equalsIgnoreCase("signs")) {
+			if (sender.hasPermission("pos.list.signs")) {
+				sender.sendMessage(plugin.ys.configuration.getConfigurationSection("signs").getKeys(false).toString()); 
+			}
+			else {
+				logger.messageSender(sender, "nopermission", null); 
+			}
+		}
+		else {
+			logger.messageSender(sender, "custom", "The object type requested is not valid; it should be one of players, exempt, signs, targets or aims"); 
 		}
 	}
 	private Boolean updatePlayerAims(String spId, Player player, Boolean aimSpecific, String[] args) {
@@ -592,7 +687,6 @@ public class UpdateAims {
 				// No action required 
 			} 
 			else {
-				sender.sendMessage("works: there are commands"); 
 				for (String j : plugin.yc.configuration.getStringList("targets." + target + ".commands")) {
 					Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), j); 
 				}
