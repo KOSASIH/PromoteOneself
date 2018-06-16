@@ -1,7 +1,6 @@
 package me.PromoteOneselfPackage.PromoteOneself.Classes;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -200,6 +199,7 @@ public class UpdateAims {
 				else {
 					if (sender.hasPermission("pos.update")) {
 						Boolean progress = updatePlayerAims(spId, player, false, args); 
+						logger.messageSender(sender, "aimupdate", null); 
 						if (progress == true) {
 							String nextTarget = plugin.yc.configuration.getString("targets." + plugin.yd.configuration.getString("players." + spId + ".target") + ".defaultNextTarget"); 
 							updatePlayerTargets(spId, rpId, nextTarget, player, sender); 
@@ -246,6 +246,7 @@ public class UpdateAims {
 				else {
 					if (sender.hasPermission("pos.update.target")) {
 						Boolean progress = updatePlayerAims(spId, player, false, args); 
+						logger.messageSender(sender, "aimupdate", null); 
 						if (progress == true) {
 							updatePlayerTargets(spId, rpId, args[1], player, sender); 
 						}
@@ -262,45 +263,9 @@ public class UpdateAims {
 		else if (args.length == 3) {
 			@SuppressWarnings("deprecation")
 			Player player = Bukkit.getPlayer(args[2]); 
-			Boolean isInConfig = false; 
-			String configspId = ""; 
-			if (player == null) {
-				Set<String> exemptPlayers = new HashSet<>(); 
-				Set<String> playedPlayers= new HashSet<>(); 
-				if (plugin.yd.configuration.contains("exempt")) {
-					exemptPlayers = plugin.yd.configuration.getConfigurationSection("exempt").getKeys(false); 
-				}
-				if (plugin.yd.configuration.contains("players")) {
-					playedPlayers = plugin.yd.configuration.getConfigurationSection("players").getKeys(false); 
-				}
-				for (String i : exemptPlayers) {
-					if (plugin.yd.configuration.contains("exempt." + i)) {
-						if (plugin.yd.configuration.getString("exempt." + i + ".lastUsername") == args[2]) {
-							configspId = i; 
-							isInConfig = true; 
-						}
-					}
-				}
-				for (String i : playedPlayers) {
-					if (plugin.yd.configuration.contains("players." + i)) {
-						if (plugin.yd.configuration.getString("players." + i + ".lastUsername") == args[2]) {
-							configspId = i; 
-							isInConfig = true; 
-						}
-					}
-				}
-			}
-			if ((player != null) || (isInConfig == true)) {
-				UUID rpId = new UUID(0, 0); 
+			if (player != null) {
+				UUID rpId = player.getUniqueId(); 
 				String spId = rpId.toString(); 
-				if (player != null) {
-					rpId = player.getUniqueId(); 
-					spId = rpId.toString();
-				}
-				else {
-					spId = configspId; 
-					rpId = UUID.fromString(spId); 
-				}
 				if (plugin.yd.configuration.contains("exempt." + spId + ".exempt")) {
 					logger.messageSender(sender, "exemptplayer", null); 
 				}
@@ -334,12 +299,14 @@ public class UpdateAims {
 				else {
 					if (sender.hasPermission("pos.update.target.others") && sender.hasPermission("pos.update.others")) {
 						Boolean progress = updatePlayerAims(spId, player, false, args); 
+						logger.messageSender(sender, "aimupdate", null); 
 						if (progress == true) {
 							updatePlayerTargets(spId, rpId, args[1], player, sender); 
 						}
 					}
 					else if (sender.hasPermission("pos.update.others") && args[1].equalsIgnoreCase(plugin.yc.configuration.getString("defaultNextTarget"))) {
 						Boolean progress = updatePlayerAims(spId, player, false, args); 
+						logger.messageSender(sender, "aimupdate", null); 
 						if (progress == true) {
 							updatePlayerTargets(spId, rpId, args[1], player, sender); 
 						}
@@ -376,15 +343,17 @@ public class UpdateAims {
 				else if (plugin.yc.configuration.contains("targets." + args[1]) != true && !(args[1].equalsIgnoreCase("none"))) {
 					sender.sendMessage(ChatColor.RED + "The target you specified does not exist "); 
 				}
-				else if (plugin.yc.configuration.contains("aims." + args[3])) {
+				else if (plugin.yc.configuration.contains("aims." + args[3]) != true) {
 					sender.sendMessage(ChatColor.RED + "The aim you specified does not exist "); 
 				}
 				else {
 					if (sender.hasPermission("pos.update.aim.others")) {
 						updatePlayerAims(spId, player, true, args); 
+						logger.messageSender(sender, "aimupdate", null); 
 					}
 					else if ((sender instanceof Player) && ((Player) sender == player) && (sender.hasPermission("pos.update.aim"))) {
 						updatePlayerAims(spId, player, true, args); 
+						logger.messageSender(sender, "aimupdate", null); 
 					}
 					else {
 						logger.messageSender(sender, "nopermission", null); 

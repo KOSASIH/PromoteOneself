@@ -114,6 +114,9 @@ public class LoggingClass {
 		else if (type.equalsIgnoreCase("numbererror")) {
 			sender.sendMessage(ChatColor.RED + "The value you gave (" + message + ") was not an integer "); 
 		}
+		else if (type.equalsIgnoreCase("aimupdate")) {
+			sender.sendMessage(ChatColor.AQUA + nameFormat + "Player aim completion status update complete" + message + " "); 
+		}
 		else {
 			unrecognisedLogType(type, "a command sender message"); 
 		}

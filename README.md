@@ -50,7 +50,7 @@ The */prom help set &lt;second argument&gt;* command shows more detailed informa
 The */prom version* command shows the plugin version. \
 The */prom update [target [player-username [aim]]]* command checks a player's completion status for a target or an aim of a target. \
 The */prom check [&lt;player|target|aim&gt; &lt;name&gt;]* command gives information about a player, target or aim. \
-The */prom password &lt;get [player] &lt;aim&gt;|set [player] &lt;password&gt; &lt;aim&gt;&gt;* command enables a player to get or set a player's password guess attempts. \7
+The */prom password &lt;get [player] &lt;aim&gt;|set [player] &lt;password&gt; &lt;aim&gt;&gt;* command enables a player to get or set a player's password guess attempts. \
 The */prom list &lt;targets|aims|players|exempt|signs&gt;* command lists all the names of the specified object type. \
 The */posset exempt &lt;player&gt; &lt;true|temp|add|join&gt;* command sets the exemption status of a player (true: make exempt and delete data; temp: make exempt and keep data; add: lose exemption at next login; join: lose exemption now). \
 The */posset save* command saves the config files. \
@@ -79,7 +79,7 @@ The */posset set setting resetPointsAfterEachPromotion &lt;true|false&gt;* comma
 The */posset set setting updateUsernames &lt;true|false&gt;* command sets whether the plugin should update the username recorded for the player in the config files each time the player logs in or not. \
 The */posset set setting defaultPoints &lt;integer&gt;* command sets the default number of points players should have. \
 The */posset set setting alwaysSaveFiles &lt;true|false&gt; command sets whether configuration files the plugin couldn't load properly should be saved regardless (this may wipe the files). \
-The */posset set setting remindOnJoin &lt;true|false&gt; command sets whether the plugin should send a reminder to players each time they join. \
+The */posset set setting remindOnJoin &lt;true|false&gt; command sets whether the plugin should send a reminder to players each time they join. 
 
 ## Permissions: 
 All permissions for this plugin default to being ops only. Any permission ending '.others' to refer to other players has, as a child permission, the permission referring to the player entering the command. This plugin has the following permissions: 
