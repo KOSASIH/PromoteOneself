@@ -15,7 +15,7 @@ public class CommandHelp {
 	
 	public void helpPages(CommandSender sender) {
 		sender.sendMessage(encasing + ChatColor.DARK_BLUE + logger.getName() + " help" + encasing); 
-		sender.sendMessage(ChatColor.AQUA + "/prom help <command name> <first argument>" + ChatColor.WHITE + " - " + ChatColor.AQUA + "for help with an individual command  "); 
+		sender.sendMessage(ChatColor.AQUA + "/prom help [<command name> <first argument> [page]]" + ChatColor.WHITE + " - " + ChatColor.AQUA + "for help with an individual command  "); 
 		sender.sendMessage(ChatColor.AQUA + "/prom version" + ChatColor.WHITE + " - Get the version of the plugin "); 
 		sender.sendMessage(ChatColor.AQUA + "/prom update <arguments>" + ChatColor.WHITE + " - Update a player's targets and aims "); 
 		sender.sendMessage(ChatColor.AQUA + "/prom check [arguments]" + ChatColor.WHITE + " - Get information about a player, aim or target "); 
@@ -28,9 +28,12 @@ public class CommandHelp {
 		sender.sendMessage(ChatColor.AQUA + "/posset set <arguments>" + ChatColor.WHITE + " - Set various values for players, aim, targets and settings "); 
 	}
 	public void helpCommand(CommandSender sender, String command, String firstArgument) {
+		helpCommand(sender, command, firstArgument, 1); 
+	}
+	public void helpCommand(CommandSender sender, String command, String firstArgument, int page) {
 		if (command.equalsIgnoreCase("prom") && firstArgument.equalsIgnoreCase("update")) {
 			helpCommandHeading(sender, command, firstArgument); 
-			sender.sendMessage(ChatColor.AQUA + "/prom update [target [player-username [aim]]]"); 
+			sender.sendMessage(ChatColor.AQUA + "/prom update [target [player [aim]]]"); 
 			sender.sendMessage("Specifying a target specifies the next target to progress to "); 
 			sender.sendMessage("Specifying a username specifies the player who needs its information to be updated "); 
 			sender.sendMessage("Specifying an aim makes the command check only that one aim "); 
@@ -38,8 +41,10 @@ public class CommandHelp {
 		else if (command.equalsIgnoreCase("prom") && firstArgument.equalsIgnoreCase("check")) {
 			helpCommandHeading(sender, command, firstArgument); 
 			sender.sendMessage(ChatColor.AQUA + "/prom check [<player|target|aim> <name>] "); 
+			sender.sendMessage(ChatColor.AQUA + "/prom check <player>");
 			sender.sendMessage("Using the command with one argument gives the player who typed it in its own information "); 
 			sender.sendMessage("Either player or target or aim can be specified and then a name can be given to get the information for the given object "); 
+			sender.sendMessage("Using the command with two arguments assumes that a player is specified"); 
 		}
 		else if (command.equalsIgnoreCase("prom") && firstArgument.equalsIgnoreCase("list")) {
 			helpCommandHeading(sender, command, firstArgument); 
@@ -54,7 +59,7 @@ public class CommandHelp {
 		else if (command.equalsIgnoreCase("prom") && firstArgument.equalsIgnoreCase("help")) {
 			helpCommandHeading(sender, command, firstArgument); 
 			sender.sendMessage(ChatColor.AQUA + "/prom help ");
-			sender.sendMessage(ChatColor.AQUA + "/prom help <prom|posset|set> <argument> ");
+			sender.sendMessage(ChatColor.AQUA + "/prom help <prom|posset|set> <argument> [page]");
 			sender.sendMessage("This command with no arguments displays the top level help information ");
 			sender.sendMessage("This command with two arguments gives more detailed help about the specific command ");
 		}

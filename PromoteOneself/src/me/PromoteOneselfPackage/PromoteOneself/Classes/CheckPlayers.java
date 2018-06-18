@@ -904,6 +904,9 @@ public class CheckPlayers {
 		plugin.saveFiles(); 
 	}
 	public void checkPlayer(CommandSender sender, String[] args) {
+		if (args.length == 2) {
+			args = new String[] {args[0], "player", args[1]}; 
+		}
 		if (args.length == 1) {
 			if (sender instanceof Player) {
 				if (sender.hasPermission("pos.check")) {
@@ -982,7 +985,7 @@ public class CheckPlayers {
 							aimType = "a specific number of points"; 
 						}
 						else if (rawAimType.equalsIgnoreCase("playerpoints")) {
-							aimType = "a specific number of points"; 
+							aimType = "a specific number of points according to the 'PlayerPoints' plugin"; 
 						}
 						else if (rawAimType.equalsIgnoreCase("kills")) {
 							aimType = "a certain number of kills"; 
@@ -1041,7 +1044,7 @@ public class CheckPlayers {
 				}
 			}
 			else {
-				sender.sendMessage(ChatColor.RED + "The types of objects that you can chck are: player, target and aim"); 
+				sender.sendMessage(ChatColor.RED + "The types of objects that you can check are: player, target and aim"); 
 			}
 		}
 		else {

@@ -141,11 +141,22 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 				}
 			}
 			else if (args[0].equalsIgnoreCase("help")) {
-				if (args.length ==  1) {
+				if (args.length == 1) {
 					ch.helpPages(sender); 
 				}
-				else if (args.length ==  3) {
+				else if (args.length == 3) {
 					ch.helpCommand(sender, args[1], args[2]); 
+				}
+				else if (args.length == 4) {
+					int page = 0; 
+					try {
+						page = Integer.parseInt(args[3]); 
+					}
+					catch (NumberFormatException e) {
+						logger.messageSender(sender, "numbererror", args[3]); 
+						return false; 
+					}
+					ch.helpCommand(sender, args[1], args[2], page); 
 				}
 				else {
 					ch.helpPages(sender); 
@@ -171,7 +182,7 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 				}
 			}
 			else if (args[0].equalsIgnoreCase("check")) {
-				if (args.length == 1 || args.length == 3) {
+				if (args.length == 1 || args.length == 2 || args.length == 3) {
 					cp.checkPlayer(sender, args); 
 				}
 				else {

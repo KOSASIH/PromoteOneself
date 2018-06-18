@@ -372,7 +372,13 @@ public class UpdateAims {
 	public void listValues(CommandSender sender, String[] args) {
 		if (args[1].equalsIgnoreCase("targets")) {
 			if (sender.hasPermission("pos.list.targets")) {
-				sender.sendMessage(plugin.yc.configuration.getConfigurationSection("targets").getKeys(false).toString()); 
+				Set<String> targets = plugin.yc.configuration.getConfigurationSection("targets").getKeys(false); 
+				if (targets == null || targets.size() == 0 || targets.isEmpty()) {
+					logger.messageSender(sender, "custom", "There are no targets "); 
+				}
+				else {
+					logger.messageSender(sender, "custom", targets.toString()); 
+				}
 			}
 			else {
 				logger.messageSender(sender, "nopermission", null); 
@@ -485,7 +491,7 @@ public class UpdateAims {
 				Material material = null; 
 				Boolean success = true; 
 				if (aimType.equalsIgnoreCase("item")) {
-					Material.getMaterial(itemAmountArray[1]); 
+					material = Material.getMaterial(itemAmountArray[1]); 
 				}
 				else {
 					int id = 0; 
@@ -508,6 +514,10 @@ public class UpdateAims {
 					success = false; 
 					logger.warning("custom", aim + " is an 'item' type aim that uses a string to specify the number of items required rather than a number "); 
 				}
+				if (material == null) {
+					success = false; 
+					logger.warning("custom", "Aim " + aim + " seems to contain an imvalid material value "); 
+				}
 				if (success == true) {
 					ItemStack item = new ItemStack(material); 
 					Boolean isThere = props.getInventoryItem(item, amount, player); 
@@ -515,6 +525,9 @@ public class UpdateAims {
 						changed = true; 
 						plugin.yd.configuration.set("players." + spId + ".aims." + aim, changed); 
 					}
+				}
+				else {
+					logger.messageSender((CommandSender)player, "custom", "There was an error parsing the data for aim " + aim); 
 				}
 			}
 			else {
