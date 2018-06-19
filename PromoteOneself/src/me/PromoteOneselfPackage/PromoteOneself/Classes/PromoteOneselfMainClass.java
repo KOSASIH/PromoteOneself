@@ -144,6 +144,17 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 				if (args.length == 1) {
 					ch.helpPages(sender); 
 				}
+				else if (args.length == 2) {
+					int page = 0; 
+					try {
+						page = Integer.parseInt(args[1]); 
+					}
+					catch (NumberFormatException e) {
+						logger.messageSender(sender, "numbererror", args[1]); 
+						return false; 
+					}
+					ch.helpPages(sender, page); 
+				}
 				else if (args.length == 3) {
 					ch.helpCommand(sender, args[1], args[2]); 
 				}

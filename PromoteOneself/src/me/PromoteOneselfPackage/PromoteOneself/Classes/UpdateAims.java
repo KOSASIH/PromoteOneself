@@ -79,60 +79,54 @@ public class UpdateAims {
 				}
 			}
 			else if ((sender instanceof Player) && (!(args[1].equalsIgnoreCase("get")))) {
-				logger.messageSender(sender, "custom", ChatColor.RED + "This command with this arrangement of arguments must be typed in by a player and must be to get a password, not to set it "); 
+				logger.messageSender(sender, "custom", ChatColor.RED + "This command with this arrangement of arguments must be to get a password, not to set it "); 
 			}
 			else {
 				logger.messageSender(sender, "wrongarrangement", null); 
 			}
 		}
 		else if (args.length == 4) {
-			if (((sender instanceof Player) && (args[1].equalsIgnoreCase("set"))) || (args[1].equalsIgnoreCase("get"))) {
-				if (sender instanceof Player ) {
-					Player player = (Player) sender; 
-					UUID rpId = player.getUniqueId(); 
-					String spId = rpId.toString(); 
-					if (plugin.yd.configuration.contains("players." + spId + ".data.password." + args[3])) {
-						if (sender.hasPermission("pos.password.set")) {
-							plugin.yd.configuration.set("players." + spId + ".data.password." + args[3], args[2]); 
-							sender.sendMessage("Your password is now " + args[2] + " "); 
-							plugin.saveFiles(); 
-						}
-						else {
-							logger.messageSender(sender, "nopermission", null); 
-						}
-					}
-					else {
-						logger.messageSender(sender, "noplayer", null); 
-					}
-				}
-				else if (args[1].equalsIgnoreCase("get")) {
-					if (sender.hasPermission("pos.password.get.others")) {
-						Player player = Bukkit.getPlayer(args[2]); 
-						if (player != null) {
-							UUID rpId = player.getUniqueId(); 
-							String spId = rpId.toString(); 
-							if (plugin.yd.configuration.contains("players." + spId + ".data.password." + args[3])) {
-								sender.sendMessage(plugin.yd.configuration.getString("players." + spId + ".data.password." + args[3])); 
-							}
-							else {
-								logger.messageSender(sender, "custom", "The given aim does not have a password slot listed with the given player "); 
-							}
-						}
-						else {
-							sender.sendMessage(ChatColor.RED + "The player could not be obtained "); 
-						}
+			if (sender instanceof Player && args[1].equalsIgnoreCase("set")) {
+				Player player = (Player) sender; 
+				UUID rpId = player.getUniqueId(); 
+				String spId = rpId.toString(); 
+				if (plugin.yd.configuration.contains("players." + spId + ".data.password." + args[3])) {
+					if (sender.hasPermission("pos.password.set")) {
+						plugin.yd.configuration.set("players." + spId + ".data.password." + args[3], args[2]); 
+						sender.sendMessage("Your password is now " + args[2] + " "); 
+						plugin.saveFiles(); 
 					}
 					else {
 						logger.messageSender(sender, "nopermission", null); 
 					}
 				}
 				else {
-					logger.messageSender(sender, "argserror", null); 
-					logger.warning("updatePlayerError", null); 
+					logger.messageSender(sender, "noplayer", null); 
+				}
+			}
+			else if (args[1].equalsIgnoreCase("get")) {
+				if (sender.hasPermission("pos.password.get.others")) {
+					Player player = Bukkit.getPlayer(args[2]); 
+					if (player != null) {
+						UUID rpId = player.getUniqueId(); 
+						String spId = rpId.toString(); 
+						if (plugin.yd.configuration.contains("players." + spId + ".data.password." + args[3])) {
+							sender.sendMessage(plugin.yd.configuration.getString("players." + spId + ".data.password." + args[3])); 
+						}
+						else {
+							logger.messageSender(sender, "custom", "The given aim does not have a password slot listed with the given player "); 
+						}
+					}
+					else {
+						logger.messageSender(sender, "offlineplayer", null); 
+					}
+				}
+				else {
+					logger.messageSender(sender, "nopermission", null); 
 				}
 			}
 			else {
-				logger.messageSender(sender, "custom", ChatColor.RED + "This command with this arrangement of arguments must either be typed in by a player in order to set its own password or must be to get a player's password "); 
+				logger.messageSender(sender, "help", null); 
 			}
 		}
 		else if (args.length == 5) {
@@ -153,7 +147,7 @@ public class UpdateAims {
 						}
 					}
 					else {
-						sender.sendMessage(ChatColor.RED + "The player could not be obtained "); 
+						logger.messageSender(sender, "offlineplayer", null); 
 					}
 				}
 				else {
@@ -161,12 +155,11 @@ public class UpdateAims {
 				}
 			}
 			else {
-				logger.messageSender(sender, "wrongarrangement", null); 
+				logger.messageSender(sender, "help", null); 
 			}
 		}
 		else {
-			logger.messageSender(sender, "argserror", null); 
-			logger.warning("updatePlayerError", null); 
+			logger.messageSender(sender, "help", null); 
 		}
 	}
 	public void updatePlayer(CommandSender sender, String[] args) {
@@ -372,12 +365,17 @@ public class UpdateAims {
 	public void listValues(CommandSender sender, String[] args) {
 		if (args[1].equalsIgnoreCase("targets")) {
 			if (sender.hasPermission("pos.list.targets")) {
-				Set<String> targets = plugin.yc.configuration.getConfigurationSection("targets").getKeys(false); 
-				if (targets == null || targets.size() == 0 || targets.isEmpty()) {
-					logger.messageSender(sender, "custom", "There are no targets "); 
+				if (plugin.yc.configuration.getConfigurationSection("targets") != null) {
+					Set<String> targets = plugin.yc.configuration.getConfigurationSection("targets").getKeys(false); 
+					if (targets == null || targets.size() == 0 || targets.isEmpty()) {
+						logger.messageSender(sender, "custom", "There are no targets "); 
+					}
+					else {
+						logger.messageSender(sender, "custom", targets.toString()); 
+					}
 				}
 				else {
-					logger.messageSender(sender, "custom", targets.toString()); 
+					logger.messageSender(sender, "custom", "There are no targets "); 
 				}
 			}
 			else {
@@ -386,7 +384,18 @@ public class UpdateAims {
 		}
 		else if (args[1].equalsIgnoreCase("aims")) {
 			if (sender.hasPermission("pos.list.aims")) {
-				sender.sendMessage(plugin.yc.configuration.getConfigurationSection("aims").getKeys(false).toString()); 
+				if (plugin.yc.configuration.getConfigurationSection("aims") != null) {
+					Set<String> aims = plugin.yc.configuration.getConfigurationSection("aims").getKeys(false); 
+					if (aims == null || aims.size() == 0 || aims.isEmpty()) {
+						logger.messageSender(sender, "custom", "There are no aims "); 
+					}
+					else {
+						sender.sendMessage(aims.toString()); 
+					}
+				}
+				else {
+					logger.messageSender(sender, "custom", "There are no aims "); 
+				}
 			}
 			else {
 				logger.messageSender(sender, "nopermission", null); 
@@ -394,12 +403,22 @@ public class UpdateAims {
 		}
 		else if (args[1].equalsIgnoreCase("players")) {
 			if (sender.hasPermission("pos.list.players")) {
-				Set<String> players = plugin.yd.configuration.getConfigurationSection("players").getKeys(false); 
-				List<String> playerUsernames = new ArrayList<String>(); 
-				for (String i : players) {
-					playerUsernames.add(plugin.yd.configuration.getString("players." + i + ".lastUsername")); 
+				if (plugin.yd.configuration.getConfigurationSection("players") != null) {
+					Set<String> players = plugin.yd.configuration.getConfigurationSection("players").getKeys(false); 
+					List<String> playerUsernames = new ArrayList<String>(); 
+					for (String i : players) {
+						playerUsernames.add(plugin.yd.configuration.getString("players." + i + ".lastUsername")); 
+					}
+					if (playerUsernames == null || playerUsernames.size() == 0 || playerUsernames.isEmpty()) {
+						logger.messageSender(sender, "custom", "There are no players "); 
+					}
+					else {
+						sender.sendMessage(playerUsernames.toString()); 
+					}
 				}
-				sender.sendMessage(playerUsernames.toString()); 
+				else {
+					logger.messageSender(sender, "custom", "There are no players "); 
+				}
 			}
 			else {
 				logger.messageSender(sender, "nopermission", null); 
@@ -407,12 +426,22 @@ public class UpdateAims {
 		}
 		else if (args[1].equalsIgnoreCase("exempt")) {
 			if (sender.hasPermission("pos.list.exempt")) {
-				Set<String> players = plugin.yd.configuration.getConfigurationSection("exempt").getKeys(false); 
-				List<String> playerUsernames = new ArrayList<String>(); 
-				for (String i : players) {
-					playerUsernames.add(plugin.yd.configuration.getString("exempt." + i + ".lastUsername")); 
+				if (plugin.yd.configuration.getConfigurationSection("exempt") != null) {
+					Set<String> players = plugin.yd.configuration.getConfigurationSection("exempt").getKeys(false); 
+					List<String> playerUsernames = new ArrayList<String>(); 
+					for (String i : players) {
+						playerUsernames.add(plugin.yd.configuration.getString("exempt." + i + ".lastUsername")); 
+					}
+					if (playerUsernames == null || playerUsernames.size() == 0 || playerUsernames.isEmpty()) {
+						logger.messageSender(sender, "custom", "There are no exempt players "); 
+					}
+					else {
+						sender.sendMessage(playerUsernames.toString()); 
+					}
 				}
-				sender.sendMessage(playerUsernames.toString()); 
+				else {
+					logger.messageSender(sender, "custom", "There are no exempt players "); 
+				}
 			}
 			else {
 				logger.messageSender(sender, "nopermission", null); 
@@ -420,7 +449,18 @@ public class UpdateAims {
 		}
 		else if (args[1].equalsIgnoreCase("signs")) {
 			if (sender.hasPermission("pos.list.signs")) {
-				sender.sendMessage(plugin.ys.configuration.getConfigurationSection("signs").getKeys(false).toString()); 
+				if (plugin.ys.configuration.getConfigurationSection("signs") != null) {
+					Set<String> signs = plugin.ys.configuration.getConfigurationSection("signs").getKeys(false); 
+					if (signs == null || signs.size() == 0 || signs.isEmpty()) {
+						logger.messageSender(sender, "custom", "There are no signs "); 
+					}
+					else {
+						sender.sendMessage(signs.toString()); 
+					}
+				}
+				else {
+					logger.messageSender(sender, "custom", "There are no signs "); 
+				}
 			}
 			else {
 				logger.messageSender(sender, "nopermission", null); 

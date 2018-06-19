@@ -5,7 +5,7 @@ The PromoteOneself plugin is a Minecraft Spigot server plugin. This plugin enabl
 This plugin is compatible with the 'Vault' plugin and the 'PlayerPoints' plugin. There are currently no known compatibility issues. 
 
 ## Versions: 
-The current plugin version is Development_11.0.1.4. Thie most recent 'released' version (in the 'release' section) (which is considered to be a pre-release version) is version Development_11.0.1.0. The most recently compiled .jar file can be found in the 'Jar' folder. When there is a full release, it will be found in both the 'Jar' folder and the 'releases' section. This plugin is designed to be run with Minecraft Spigot running versions between 1.7.x and 1.12.x. Most versions of Vault and PlayerPoints for these Spigot versions should work. Bugs found when running on the aforementioned Minecraft versions will be fixed. The plugin may still work with other versions but bugs will not necessarily be fixed. 
+The current plugin version is Development_11.0.1.5. Thie most recent 'released' version (in the 'release' section) (which is considered to be a pre-release version) is version Development_11.0.1.0. The most recently compiled .jar file can be found in the 'Jar' folder. When there is a full release, it will be found in both the 'Jar' folder and the 'releases' section. This plugin is designed to be run with Minecraft Spigot running versions between 1.7.x and 1.12.x. Most versions of Vault and PlayerPoints for these Spigot versions should work. Bugs found when running on the aforementioned Minecraft versions will be fixed. The plugin may still work with other versions but bugs will not necessarily be fixed. 
 
 ## License: 
 This plugin and its source code are released under a GNU GPL v3.0 license (see the LICENSE file for the full license). This plugin is copyright (c) aappleton3/aappleton8, 2018. 
@@ -44,8 +44,8 @@ This plugin contains the following commands:
  - /posset &lt;arguments&gt; 
 
 The */promoteoneself* command shows the help page. \
-The */prom help* command shows the help page. \
-The */prom help &lt;command&gt; &lt;first argument&gt;* command shows more detailed information about the */&lt;command&gt; &lt;first argument&gt; &lt;all-remaining-arguments&gt;* commands. \
+The */prom help [page]* command shows the top level help pages. \
+The */prom help &lt;command&gt; &lt;first argument&gt; [page]* command shows more detailed information about the */&lt;command&gt; &lt;first argument&gt; &lt;all-remaining-arguments&gt;* commands. \
 The */prom help set &lt;second argument&gt;* command shows more detailed information about the */posset set &lt;second argument&gt; &lt;all-remaining arguments&gt;* commands. \
 The */prom version* command shows the plugin version. \
 The */prom update [target [player-username [aim]]]* command checks a player's completion status for a target or an aim of a target. \

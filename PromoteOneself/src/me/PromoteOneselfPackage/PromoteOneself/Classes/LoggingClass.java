@@ -117,6 +117,9 @@ public class LoggingClass {
 		else if (type.equalsIgnoreCase("aimupdate")) {
 			sender.sendMessage(ChatColor.AQUA + nameFormat + "Player aim completion status update complete" + message + " "); 
 		}
+		else if (type.equalsIgnoreCase("offlineplayer")) {
+			sender.sendMessage(ChatColor.RED + "The player could not be obtained; it is probably offline "); 
+		}
 		else {
 			unrecognisedLogType(type, "a command sender message"); 
 		}
