@@ -1,5 +1,6 @@
 package me.PromoteOneselfPackage.PromoteOneself.Classes;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -15,10 +16,12 @@ public class CheckPlayers {
 	private static PromoteOneselfMainClass plugin; 
 	private static LoggingClass logger; 
 	private static UpdateAims ua; 
-	public CheckPlayers(PromoteOneselfMainClass instance, LoggingClass log, UpdateAims uai) {
+	private static GetPlayerProperties pp; 
+	public CheckPlayers(PromoteOneselfMainClass instance, LoggingClass log, UpdateAims uai, GetPlayerProperties ppi) {
 		plugin = instance; 
 		logger = log; 
 		ua = uai; 
+		pp = ppi; 
 	}
 	
 	public void exemptPlayer (CommandSender sender, String[] args) {
@@ -397,7 +400,17 @@ public class CheckPlayers {
 								if (plugin.yc.configuration.contains("targets." + args[4]) == true) {
 									plugin.yd.configuration.set(configPlace, args[4]); 
 									plugin.saveFiles(); 
-									YamlFiles.updatePlayerTargets(spId, plugin.yc, plugin.yd, plugin.ys); 
+									Boolean areSigns = true; 
+									List<String> signIds = new ArrayList<String>(); 
+									try {
+										Set<String> rawSignIds = plugin.ys.configuration.getConfigurationSection("signs").getKeys(false); 
+										signIds.addAll(rawSignIds); 
+									}
+									catch (NullPointerException e) {
+										areSigns = false; 
+										logger.warning("custom", "No sign ids were found in the 'signs.yml' file (this is not an error if this is supposed to be true) "); 
+									}
+									YamlFiles.updatePlayerTargets(spId, plugin.yc, plugin.yd, plugin.ys, areSigns, signIds); 
 									player.sendMessage("Your target is now " + args[4] + " "); 
 								}
 								else {
@@ -925,14 +938,16 @@ public class CheckPlayers {
 		else if (args.length == 3) {
 			if (args[1].equalsIgnoreCase("player")) {
 				if (sender.hasPermission("pos.check.others")) {
-					@SuppressWarnings("deprecation")
-					Player player = Bukkit.getPlayer(args[2]); 
-					if (player != null) {
-						UUID rpId = player.getUniqueId(); 
-						getPlayerStatus(sender, rpId, player.getName()); 
+					String spId = pp.getConfigPlayerspId(args[2], "players"); 
+					if (spId == null) {
+						spId = pp.getConfigPlayerspId(args[2],  "exempt"); 
+					}
+					if (spId != null) {
+						UUID rpId = UUID.fromString(spId);  
+						getPlayerStatus(sender, rpId, args[2]); 
 					}
 					else {
-						sender.sendMessage(ChatColor.RED + "That player is not online "); 
+						sender.sendMessage(ChatColor.RED + "That player is not in the config file "); 
 					}
 				}
 				else {
@@ -1043,8 +1058,46 @@ public class CheckPlayers {
 					logger.messageSender(sender, "nopermission", null); 
 				}
 			}
+			else if (args[1].equalsIgnoreCase("sign")) {
+				if (sender.hasPermission("pos.check.signs")) {
+					if (plugin.ys.configuration.contains("signs." + args[2])) {
+						if (plugin.ys.configuration.contains("signs." + args[2] + ".usage")) {
+							logger.messageSender(sender, "custom", "The sign usage limit is: " + plugin.ys.configuration.getString("signs." + args[2] + ".usage")); 
+						}
+						else {
+							sender.sendMessage(ChatColor.RED + "No usage limit can be found for that sign id "); 
+							logger.warning("custom", "The sign with id " + args[2] + " has no associated usage limit "); 
+						}
+					}
+					else {
+						sender.sendMessage(ChatColor.RED + "There is no sogn with the id " + args[2]); 
+					}
+				}
+				else {
+					logger.messageSender(sender, "nopermission", null); 
+				}
+			}
+			else if (args[1].equalsIgnoreCase("config")) {
+				if (sender.hasPermission("pos.check.configs")) {
+					if (args[2].equalsIgnoreCase("config") || args[2].equalsIgnoreCase("config.yml")) {
+						logger.messageSender(sender, "custom", "The config.yml file has a saveable status of: " + plugin.yc.getSaveable().toString()); 
+					}
+					else if (args[2].equalsIgnoreCase("players") || args[2].equalsIgnoreCase("players.yml")) {
+						logger.messageSender(sender, "custom", "The players.yml file has a saveable status of: " + plugin.yd.getSaveable().toString()); 
+					}
+					else if (args[2].equalsIgnoreCase("signs") || args[2].equalsIgnoreCase("signs.yml")) {
+						logger.messageSender(sender, "custom", "The signs.yml file has a saveable status of: " + plugin.ys.getSaveable().toString());
+					}
+					else {
+						logger.messageSender(sender, "custom", ChatColor.RED + "There is no config file with that name "); 
+					}
+				}
+				else {
+					logger.messageSender(sender, "nopermission", null); 
+				}
+			}
 			else {
-				sender.sendMessage(ChatColor.RED + "The types of objects that you can check are: player, target and aim"); 
+				sender.sendMessage(ChatColor.RED + "The types of objects that you can check are: player, target, aim, sign and config"); 
 			}
 		}
 		else {

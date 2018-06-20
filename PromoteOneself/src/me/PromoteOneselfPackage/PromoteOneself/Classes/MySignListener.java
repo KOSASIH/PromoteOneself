@@ -220,10 +220,20 @@ public class MySignListener implements Listener {
 								if (player.hasPermission("pos.sign.target.use")) {
 									String target = sign.getLine(2); 
 									if (plugin.yc.configuration.contains("targets." + target)) {
+										Boolean areSigns = true; 
+										List<String> signIds = new ArrayList<String>(); 
+										try {
+											Set<String> rawSignIds = plugin.ys.configuration.getConfigurationSection("signs").getKeys(false); 
+											signIds.addAll(rawSignIds); 
+										}
+										catch (NullPointerException e) {
+											areSigns = false; 
+											logger.warning("custom", "No sign ids were found in the 'signs.yml' file (this is not an error if this is supposed to be true) "); 
+										}
 										if (signId == null || signId.equalsIgnoreCase("") || player.hasPermission("pos.sign.limitexempt")) {
 											plugin.yd.configuration.set("players." + spId + ".target", target); 
 											plugin.saveFiles(); 
-											YamlFiles.updatePlayerTargets(spId, plugin.yc, plugin.yd, plugin.ys); 
+											YamlFiles.updatePlayerTargets(spId, plugin.yc, plugin.yd, plugin.ys, areSigns, signIds); 
 											player.sendMessage("Your target is now " + target + " "); 
 											plugin.saveFiles(); 
 										}
@@ -233,7 +243,7 @@ public class MySignListener implements Listener {
 												if (playerUsage < plugin.ys.configuration.getInt("signs." + signId + ".usage") || plugin.ys.configuration.getInt("signs." + signId + ".usage") == -1) {
 													plugin.yd.configuration.set("players." + spId + ".target", target); 
 													plugin.saveFiles(); 
-													YamlFiles.updatePlayerTargets(spId, plugin.yc, plugin.yd, plugin.ys); 
+													YamlFiles.updatePlayerTargets(spId, plugin.yc, plugin.yd, plugin.ys, areSigns, signIds); 
 													player.sendMessage("Your target is now " + target + " "); 
 													playerUsage += 1; 
 													plugin.yd.configuration.set("players." + spId + ".data.signs." + signId, playerUsage); 

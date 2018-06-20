@@ -1,13 +1,13 @@
-This is a general plugin information file that is shipped inside the exported .jar file of the plugin. More information can be found on this plugin's GitHub page. This file was last updated for plugin version Development_11.0.1.5. 
+This is a general plugin information file that is shipped inside the exported .jar file of the plugin. More information can be found on this plugin's GitHub page. This file was last updated for plugin version Development_11.0.1.7. 
 
 Commands: 
 The */promoteoneself* command shows the help page. 
-The */prom help* command shows the help page. 
-The */prom help <command> <first argument>* command shows more detailed information about the */<command> <first argument> <all-remaining-arguments>* commands. 
-The */prom help set <second argument>* command shows more detailed information about the */posset set <second argument> <all-remaining arguments>* commands. 
+The */prom help [page]* command shows the help page. 
+The */prom help <command> <first argument> [page]* command shows more detailed information about the */<command> <first argument> <all-remaining-arguments>* commands. 
+The */prom help set <second argument> [page]* command shows more detailed information about the */posset set <second argument> <all-remaining arguments>* commands. 
 The */prom version* command shows the plugin version. 
 The */prom update [target [player-username [aim]]]* command checks a player's completion status for a target or an aim of a target. 
-The */prom check [<player|target|aim> <name>]* command gives information about a player, target or aim. 
+The */prom check [player|target|aim|sign|config] <name>* command gives information about a player, target or aim. 
 The */prom list <targets|aims|players|exempt|signs> command lists all the names of the specified object type. 
 The */prom password <get [player] <aim>|set [player] <password> <aim>>* command enables a player to get or set a player's password guess attempts. 
 The */posset exempt <player> <true|temp|add|join>* command sets the exemption status of a player (true: make exempt and delete data; temp: make exempt and keep data; add: lose exemption at next login; join: lose exemption now). 
@@ -139,6 +139,8 @@ Permissions:
       pos.check.others: true
       pos.check.targets: true
       pos.check.aims: true
+      pos.check.signs: true
+      pos.check.configs: true
   pos.check.others:
     description: Check a players' aims 
     default: op
@@ -152,6 +154,12 @@ Permissions:
     default: op
   pos.check.aims:
     description: Check an aim 
+    default: op
+  pos.check.signs:
+    description: Check a sign's maximum usage 
+    default: op
+  pos.check.configs:
+    description: Check a config file's saveable status 
     default: op
   pos.list.*:
     description: Can list the names of all object types
@@ -490,38 +498,6 @@ Make the plugin work for offline players too - checked main class and player pro
 Type4 (could do on a whim) 
 (already done?) More comprehensive sign permissions - Permissions for id groups too or exempt from the limit of a certain id group or individual id limits for people or a permission to use all signs and another to create all signs etc - make sign permissions independent of command permissions    
 Ensure compatibility with versions 1.7.x-1.12.x
-
-
-/*
-			Boolean isInConfig = false; 
-			String configspId = ""; 
-			if (player == null) {
-				Set<String> exemptPlayers = new HashSet<>(); 
-				Set<String> playedPlayers= new HashSet<>(); 
-				if (plugin.yd.configuration.contains("exempt")) {
-					exemptPlayers = plugin.yd.configuration.getConfigurationSection("exempt").getKeys(false); 
-				}
-				if (plugin.yd.configuration.contains("players")) {
-					playedPlayers = plugin.yd.configuration.getConfigurationSection("players").getKeys(false); 
-				}
-				for (String i : exemptPlayers) {
-					if (plugin.yd.configuration.contains("exempt." + i)) {
-						if (plugin.yd.configuration.getString("exempt." + i + ".lastUsername") == args[2]) {
-							configspId = i; 
-							isInConfig = true; 
-						}
-					}
-				}
-				for (String i : playedPlayers) {
-					if (plugin.yd.configuration.contains("players." + i)) {
-						if (plugin.yd.configuration.getString("players." + i + ".lastUsername") == args[2]) {
-							configspId = i; 
-							isInConfig = true; 
-						}
-					}
-				}
-			}
-*/
 
 
 

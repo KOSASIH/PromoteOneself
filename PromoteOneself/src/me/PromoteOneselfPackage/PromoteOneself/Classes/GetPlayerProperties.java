@@ -1,5 +1,7 @@
 package me.PromoteOneselfPackage.PromoteOneself.Classes;
 
+import java.util.Set;
+
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -91,5 +93,21 @@ public class GetPlayerProperties {
 			logger.warning("custom", "There is an aim that needs players to have a certain number of player points even though this plugin cannot detect PlayerPoints "); 
 			return false; 
 		}
+	}
+	
+	public String getConfigPlayerspId(String playername, String configRoot) {
+		String configspId = null; 
+		if (plugin.yd.configuration.getConfigurationSection(configRoot) != null) {
+			Set<String> players = plugin.yd.configuration.getConfigurationSection(configRoot).getKeys(false); 
+			for (String i : players) {
+				if (plugin.yd.configuration.contains(configRoot + "." + i + ".lastUsername")) {
+					if (plugin.yd.configuration.getString(configRoot + "." + i + ".lastUsername") == playername) {
+						configspId = i; 
+						break; 
+					}
+				}
+			}
+		}
+		return configspId; 
 	}
 }

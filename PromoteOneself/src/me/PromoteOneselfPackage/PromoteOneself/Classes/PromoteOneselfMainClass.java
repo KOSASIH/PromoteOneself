@@ -2,6 +2,7 @@ package me.PromoteOneselfPackage.PromoteOneself.Classes;
 
 import java.util.Set;
 
+import org.bukkit.ChatColor;
 //import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -29,7 +30,7 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 	private final UpdateAims ua = new UpdateAims(this, logger, pp); 
 	private final MyPlayerListener pl = new MyPlayerListener(this, ua); 
 	private final MySignListener sl = new MySignListener(this, logger, ua); 
-	private final CheckPlayers cp = new CheckPlayers(this, logger, ua); 
+	private final CheckPlayers cp = new CheckPlayers(this, logger, ua, pp); 
 	
 	public Economy econ = null; 
 	public Boolean econExists = false; 
@@ -276,11 +277,11 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 							loadErrorFree = loadErrorFree && ys.checkConfiguration();
 							MyPlayerListener.updateCommandsList(); 
 							YamlFiles.alwaysSaveFiles = yc.configuration.getBoolean("alwaysSaveFiles"); 
-							if (loadErrorFree == false) {
-								logger.broadcastMessageBukkit(plugin.getDescription().getName() + " configuration reloaded ");
+							if (loadErrorFree == true) {
+								logger.broadcastMessageBukkit(getDescription().getName() + " configuration reloaded ");
 							}
 							else {
-								logger.broadcastMessageBukkit(plugin.getDescription().getName() + " configuration reloaded, but there were errors "); 
+								logger.broadcastMessageBukkit(ChatColor.RED + getDescription().getName() + " configuration reloaded, but there were errors "); 
 								logger.warning("configparseerroranonymous", "");
 							}
 						}

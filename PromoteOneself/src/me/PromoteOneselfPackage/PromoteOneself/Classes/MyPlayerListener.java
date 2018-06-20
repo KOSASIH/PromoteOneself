@@ -23,6 +23,7 @@ public class MyPlayerListener implements Listener{
 		ua = uai; 
 		updateCommandsList(); 
 	}
+	
 	public static void updateCommandsList() {
 		if (plugin.yc.configuration.getBoolean("watchCommands") == true) {
 			commands = plugin.yc.configuration.getStringList("commands"); 

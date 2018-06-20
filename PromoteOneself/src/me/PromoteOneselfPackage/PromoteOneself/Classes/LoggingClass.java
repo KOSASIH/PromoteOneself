@@ -102,6 +102,9 @@ public class LoggingClass {
 		else if (type.equalsIgnoreCase("noplayer")) {
 			sender.sendMessage(ChatColor.RED + "This player is not in the promotion tree "); 
 		}
+		else if (type.equalsIgnoreCase("noaim")) {
+			sender.sendMessage(ChatColor.RED + "That aim could not be found "); 
+		}
 		else if (type.equalsIgnoreCase("sign")) {
 			sender.sendMessage(ChatColor.RED + "This is not a valid " + descriptionFile.getName() + " sign configuration "); 
 		}

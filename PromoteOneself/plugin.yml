@@ -1,6 +1,6 @@
 name: PromoteOneself
 main: me.PromoteOneselfPackage.PromoteOneself.Classes.PromoteOneselfMainClass 
-version: Development_11.0.1.5
+version: Development_11.0.1.7
 description: A plugin which lets people achieve aims to work up through a server's ranking system 
 author: aappleton3 
 database: false
@@ -115,6 +115,8 @@ permissions:
       pos.check.others: true
       pos.check.targets: true
       pos.check.aims: true
+      pos.check.signs: true
+      pos.check.configs: true
   pos.check.others:
     description: Check a players' aims 
     default: op
@@ -128,6 +130,12 @@ permissions:
     default: op
   pos.check.aims:
     description: Check an aim 
+    default: op
+  pos.check.signs:
+    description: Check a sign's maximum usage 
+    default: op
+  pos.check.configs:
+    description: Check a config file's saveable status 
     default: op
   pos.list.*:
     description: Can list the names of all object types

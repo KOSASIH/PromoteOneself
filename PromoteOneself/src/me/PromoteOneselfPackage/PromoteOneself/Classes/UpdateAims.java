@@ -66,12 +66,17 @@ public class UpdateAims {
 				Player player = (Player) sender; 
 				UUID rpId = player.getUniqueId(); 
 				String spId = rpId.toString(); 
-				if (plugin.yd.configuration.contains("players." + spId + ".data.password." + args[2])) {
-					if (sender.hasPermission("pos.password.get")) {
-						sender.sendMessage(plugin.yd.configuration.getString("players." + spId + ".data.password." + args[2])); 
+				if (plugin.yd.configuration.contains("players." + spId)) {
+					if (plugin.yd.configuration.contains("players." + spId + ".data.password." + args[2])) {
+						if (sender.hasPermission("pos.password.get")) {
+							sender.sendMessage(plugin.yd.configuration.getString("players." + spId + ".data.password." + args[2])); 
+						}
+						else {
+							logger.messageSender(sender, "nopermission", null); 
+						}
 					}
 					else {
-						logger.messageSender(sender, "nopermission", null); 
+						logger.messageSender(sender, "noaim", "as its entry cannot be found amongst the your stored data "); 
 					}
 				}
 				else {
@@ -91,13 +96,18 @@ public class UpdateAims {
 				UUID rpId = player.getUniqueId(); 
 				String spId = rpId.toString(); 
 				if (plugin.yd.configuration.contains("players." + spId + ".data.password." + args[3])) {
-					if (sender.hasPermission("pos.password.set")) {
-						plugin.yd.configuration.set("players." + spId + ".data.password." + args[3], args[2]); 
-						sender.sendMessage("Your password is now " + args[2] + " "); 
-						plugin.saveFiles(); 
+					if (plugin.yd.configuration.contains("players." + spId + ".data.password." + args[3])) {
+						if (sender.hasPermission("pos.password.set")) {
+							plugin.yd.configuration.set("players." + spId + ".data.password." + args[3], args[2]); 
+							sender.sendMessage("Your password is now " + args[2] + " "); 
+							plugin.saveFiles(); 
+						}
+						else {
+							logger.messageSender(sender, "nopermission", null); 
+						}
 					}
 					else {
-						logger.messageSender(sender, "nopermission", null); 
+						logger.messageSender(sender, "noaim", "as its entry cannot be found amongst the your stored data "); 
 					}
 				}
 				else {

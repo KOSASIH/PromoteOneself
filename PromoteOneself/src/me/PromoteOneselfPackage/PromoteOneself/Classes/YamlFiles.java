@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfigurationOptions;
 import org.bukkit.configuration.file.YamlConfiguration;
 public class YamlFiles {
@@ -44,11 +45,21 @@ public class YamlFiles {
 		loadErrorFree = loadErrorFree && configuration.checkConfiguration(); 
 		loadErrorFree = loadErrorFree && players.checkConfiguration(); 
 		loadErrorFree = loadErrorFree && signs.checkConfiguration(); 
+		Boolean areSigns = true; 
+		List<String> signIds = new ArrayList<String>(); 
+		try {
+			Set<String> rawSignIds = signs.configuration.getConfigurationSection("signs").getKeys(false); 
+			signIds.addAll(rawSignIds); 
+		}
+		catch (NullPointerException e) {
+			areSigns = false; 
+			logger.warning("custom", "No sign ids were found in the 'signs.yml' file (this is not an error if this is supposed to be true) "); 
+		}
 		try {
 			Set<String> pcf = players.configuration.getConfigurationSection("players").getKeys(false); 
 			if (pcf.isEmpty() == false) {
 				for (String i : pcf) {
-					updatePlayerTargets(i, configuration, players, signs); 
+					updatePlayerTargets(i, configuration, players, signs, areSigns, signIds); 
 				}
 			}
 		}
@@ -64,15 +75,15 @@ public class YamlFiles {
 		configuration.save(); 
 		players.save(); 
 		signs.save();  
-		if (loadErrorFree == false) {
+		if (loadErrorFree == true) {
 			logger.broadcastMessageBukkit(plugin.getDescription().getName() + " configuration reloaded, checked and saved ");
 		}
 		else {
-			logger.broadcastMessageBukkit(plugin.getDescription().getName() + " configuration reloaded, but there were errors "); 
+			logger.broadcastMessageBukkit(ChatColor.RED + plugin.getDescription().getName() + " configuration reloaded, but there were errors "); 
 			logger.warning("configparseerroranonymous", "");
 		}
 	}
-	protected static void updatePlayerTargets(String i, YamlFiles configuration, YamlFiles players, YamlFiles signs) {
+	protected static void updatePlayerTargets(String i, YamlFiles configuration, YamlFiles players, YamlFiles signs, Boolean areSigns, List<String> Signs) {
 		Set<String> rawPlayerAims = players.configuration.getConfigurationSection("players." + i + ".aims").getKeys(false); 
 		List<String> playerAims = new ArrayList<String>(rawPlayerAims); 
 		List<String> targetAims = configuration.configuration.getStringList("targets." + players.configuration.getString("players." + i + ".target") + ".aims"); 
@@ -134,25 +145,16 @@ public class YamlFiles {
 		}
 		else {
 		}
-		List<String> Signs = new ArrayList<String>(); 
 		List<String> playerSigns = new ArrayList<String>(); 
-		Boolean runSigns = true; 
+		Boolean runSigns = areSigns; 
 		Boolean runPlayerSigns = true; 
-		try {
-			Set<String> rawSigns = signs.configuration.getConfigurationSection("signs").getKeys(false); 
-			Signs.addAll(rawSigns); 
-		}
-		catch (NullPointerException e2) {
-			runSigns = false; 
-			logger.warning("custom", "The signs file could not have its section keys loaded "); 
-		}
 		try {
 			Set<String> rawPlayerSigns = players.configuration.getConfigurationSection("players." + i + ".data.signs").getKeys(false); 
 			playerSigns.addAll(rawPlayerSigns); 
 		}
 		catch (NullPointerException e3) {
 			runPlayerSigns = false; 
-			logger.warning("custom", "Some player sign information could not be found "); 
+			//logger.warning("custom", "Some player sign information could not be found "); 
 		}
 		if (runSigns == true) {
 			if (runPlayerSigns == true) {
@@ -174,7 +176,7 @@ public class YamlFiles {
 			}
 			catch (NullPointerException e4) {
 				runNewPlayerSigns = false; 
-				logger.warning("custom", "Player sign information could not be updated properly "); 
+				//logger.warning("custom", "Player sign information could not be updated properly "); 
 			}
 			if (runNewPlayerSigns == true) {
 				for (String p : Signs) {
@@ -204,6 +206,9 @@ public class YamlFiles {
 			logger.warning("configparseerror", theOutFile.getName()); 
 			shouldSave = false; 
 		}
+		return shouldSave; 
+	}
+	public Boolean getSaveable() {
 		return shouldSave; 
 	}
 	private static void copy(InputStream src, OutputStream dst) throws IOException{

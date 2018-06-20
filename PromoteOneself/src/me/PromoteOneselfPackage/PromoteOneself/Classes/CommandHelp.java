@@ -20,11 +20,11 @@ public class CommandHelp {
 		if (page == 1) {
 			sender.sendMessage(encasing + ChatColor.DARK_BLUE + logger.getName() + " help" + ChatColor.AQUA + " | " + "page 1/2" + encasing); 
 			sender.sendMessage(ChatColor.AQUA + "/prom help [page]" + ChatColor.WHITE + " - " + ChatColor.AQUA + "displays this top level help command "); 
-			sender.sendMessage(ChatColor.AQUA + "/prom help [<command name> <first argument> [page]]" + ChatColor.WHITE + " - " + ChatColor.AQUA + "for help with an individual command of the form <command name> <first argument> <other arguments> "); 
+			sender.sendMessage(ChatColor.AQUA + "/prom help <command name> <first argument> [page]" + ChatColor.WHITE + " - " + ChatColor.AQUA + "for help with an individual command of the form <command name> <first argument> <other arguments> "); 
 			sender.sendMessage(ChatColor.AQUA + "/prom version" + ChatColor.WHITE + " - Get the version of the plugin "); 
 			sender.sendMessage(ChatColor.AQUA + "/prom update <arguments>" + ChatColor.WHITE + " - Update a player's targets and aims "); 
 			sender.sendMessage(ChatColor.AQUA + "/prom check [arguments]" + ChatColor.WHITE + " - Get information about a player, aim or target "); 
-			sender.sendMessage(ChatColor.AQUA + "/prom list <targets|aims|players|exempt|signs>" + ChatColor.WHITE + " - Get all the names of the specified object type "); 
+			sender.sendMessage(ChatColor.AQUA + "/prom list <argument>" + ChatColor.WHITE + " - Get all the names of the specified object type "); 
 			sender.sendMessage(ChatColor.AQUA + "/prom password <arguments>" + ChatColor.WHITE + " - Get and set a player's passwords for password type aims "); 
 		}
 		else {
@@ -49,21 +49,21 @@ public class CommandHelp {
 		}
 		else if (command.equalsIgnoreCase("prom") && firstArgument.equalsIgnoreCase("check")) {
 			helpCommandHeading(sender, command, firstArgument); 
-			sender.sendMessage(ChatColor.AQUA + "/prom check [<player|target|aim> <name>] "); 
+			sender.sendMessage(ChatColor.AQUA + "/prom check [player|target|aim|sign|config] <name> "); 
 			sender.sendMessage(ChatColor.AQUA + "/prom check <player>");
 			sender.sendMessage("Using the command with one argument gives the player who typed it in its own information "); 
-			sender.sendMessage("Either player or target or aim can be specified and then a name can be given to get the information for the given object "); 
-			sender.sendMessage("Using the command with two arguments assumes that a player is specified"); 
+			sender.sendMessage("One of player, target, aim, sign and config can be specified and then a name can be given to get the information for the given object "); 
+			sender.sendMessage("Using the command with two arguments assumes that a player is specified "); 
 		}
 		else if (command.equalsIgnoreCase("prom") && firstArgument.equalsIgnoreCase("list")) {
 			helpCommandHeading(sender, command, firstArgument); 
 			sender.sendMessage(ChatColor.AQUA + "/prom list <targets|aims|players|exempt|signs> "); 
-			sender.sendMessage("This command lists the name/id of each target, aim, player, exempt player or sign"); 
+			sender.sendMessage("This command lists the name/id of each target, aim, player, exempt player or sign "); 
 		}
 		else if (command.equalsIgnoreCase("prom") && firstArgument.equalsIgnoreCase("password")) {
 			helpCommandHeading(sender, command, firstArgument); 
 			sender.sendMessage(ChatColor.AQUA + "/prom password get [player] <aim> "); 
-			sender.sendMessage(ChatColor.AQUA + "/prom password set [player] <password> <aim>");
+			sender.sendMessage(ChatColor.AQUA + "/prom password set [player] <password> <aim> ");
 			sender.sendMessage("With this comand you can get and set a player's password "); 
 		}
 		else if (command.equalsIgnoreCase("prom") && firstArgument.equalsIgnoreCase("help")) {
