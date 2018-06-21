@@ -446,7 +446,7 @@ public class CheckPlayers {
 						configPlace += "." +"lastUsername"; 
 						if (sender.hasPermission("pos.set.player.player")) {
 							plugin.yd.configuration.set(configPlace, player.getName()); 
-							sender.sendMessage(args[4] + "'s last known username is now " + player.getName() + " "); 
+							sender.sendMessage(args[2] + "'s last known username is now " + player.getName() + " "); 
 						}
 						else {
 							logger.messageSender(sender, "nopermission", null); 
@@ -986,10 +986,19 @@ public class CheckPlayers {
 							String aimGoal = plugin.yc.configuration.getString("aims." + args[2] + ".achieve"); 
 							String[] items = aimGoal.split(";"); 
 							if (items.length != 2) {
-								logger.warning("custom", args[2] + " does not use a ';' to separate its arguments for its goal "); 
+								logger.warning("custom", args[2] + " does not use a semicolon (;) to separate its arguments for its goal "); 
 							}
 							run = false; 
 							sender.sendMessage("This aim requires the player to get " + items[0] + " of the " + items[1] + " material "); 
+						}
+						else if (rawAimType.equalsIgnoreCase("itemid")) {
+							String aimGoal = plugin.yc.configuration.getString("aims." + args[2] + ".achieve"); 
+							String[] items = aimGoal.split(";"); 
+							if (items.length != 2) {
+								logger.warning("custom", args[2] + " does not use a  semicolon (;) to separate its arguments for its goal "); 
+							}
+							run = false; 
+							sender.sendMessage("This aim requires the player to get " + items[0] + " of the material with the id " + items[1] + " "); 
 						}
 						else if (rawAimType.equalsIgnoreCase("password")) {
 							aimType = "a specific password"; 
@@ -1041,7 +1050,7 @@ public class CheckPlayers {
 							run = false; 
 						}
 						else {
-							sender.sendMessage("Aim type unrecognised"); 
+							sender.sendMessage(ChatColor.RED + "Aim type unrecognised"); 
 							logger.warning("aimType", rawAimType); 
 							run = false; 
 						}

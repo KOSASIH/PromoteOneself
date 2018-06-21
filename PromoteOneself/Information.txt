@@ -1,4 +1,4 @@
-This is a general plugin information file that is shipped inside the exported .jar file of the plugin. More information can be found on this plugin's GitHub page. This file was last updated for plugin version Development_11.0.1.7. 
+This is a general plugin information file that is shipped inside the exported .jar file of the plugin. More information can be found on this plugin's GitHub page. This file was last updated for plugin version Development_11.0.1.8. 
 
 Commands: 
 The */promoteoneself* command shows the help page. 
@@ -493,7 +493,7 @@ Type1 (must do):
 Type2 (should learn to do):  
 
 Type 3 (could think about doing): 
-Make the plugin work for offline players too - checked main class and player properties class but many commands only work for online players 
+Make the plugin work for offline players too - done /prom check and /prom password (irrelevant for /prom help, /prom version, /prom list, /posset save, /posset reload, /posset set target, /posset set aim, /posset set setting) 
 
 Type4 (could do on a whim) 
 (already done?) More comprehensive sign permissions - Permissions for id groups too or exempt from the limit of a certain id group or individual id limits for people or a permission to use all signs and another to create all signs etc - make sign permissions independent of command permissions    

@@ -101,7 +101,7 @@ public class GetPlayerProperties {
 			Set<String> players = plugin.yd.configuration.getConfigurationSection(configRoot).getKeys(false); 
 			for (String i : players) {
 				if (plugin.yd.configuration.contains(configRoot + "." + i + ".lastUsername")) {
-					if (plugin.yd.configuration.getString(configRoot + "." + i + ".lastUsername") == playername) {
+					if (plugin.yd.configuration.getString(configRoot + "." + i + ".lastUsername").equals(playername)) {
 						configspId = i; 
 						break; 
 					}

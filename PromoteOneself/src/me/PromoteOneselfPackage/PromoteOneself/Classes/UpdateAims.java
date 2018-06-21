@@ -59,7 +59,6 @@ public class UpdateAims {
 		Bukkit.getPlayer(rpId).sendMessage(ChatColor.AQUA + logger.getName(true) + "Your target is now: " + target); 
 		plugin.saveFiles(); 
 	}
-	@SuppressWarnings("deprecation")
 	public void password (CommandSender sender, String[] args) {
 		if (args.length == 3)  {
 			if ((sender instanceof Player) && (args[1].equalsIgnoreCase("get"))) {
@@ -116,10 +115,8 @@ public class UpdateAims {
 			}
 			else if (args[1].equalsIgnoreCase("get")) {
 				if (sender.hasPermission("pos.password.get.others")) {
-					Player player = Bukkit.getPlayer(args[2]); 
-					if (player != null) {
-						UUID rpId = player.getUniqueId(); 
-						String spId = rpId.toString(); 
+					String spId = props.getConfigPlayerspId(args[2], "players"); 
+					if (spId != null) {
 						if (plugin.yd.configuration.contains("players." + spId + ".data.password." + args[3])) {
 							sender.sendMessage(plugin.yd.configuration.getString("players." + spId + ".data.password." + args[3])); 
 						}
@@ -128,7 +125,7 @@ public class UpdateAims {
 						}
 					}
 					else {
-						logger.messageSender(sender, "offlineplayer", null); 
+						logger.messageSender(sender, "offline", " as no data about it could be found in the config file ");  
 					}
 				}
 				else {
@@ -142,14 +139,16 @@ public class UpdateAims {
 		else if (args.length == 5) {
 			if (args[1].equalsIgnoreCase("set")) {
 				if (sender.hasPermission("pos.password.set.others") || sender.hasPermission("pos.set.player.password")) {
-					Player player = Bukkit.getPlayer(args[2]); 
-					if (player != null) {
-						UUID rpId = player.getUniqueId(); 
-						String spId = rpId.toString(); 
+					String spId = props.getConfigPlayerspId(args[2], "players"); 
+					if (spId != null) {
 						if (plugin.yd.configuration.contains("players." + spId + ".data.password." + args[4])) {
 							plugin.yd.configuration.set("players." + spId + ".data.password." + args[4], args[3]); 
 							sender.sendMessage(args[2] + "'s password is now " + args[3] + " "); 
-							player.sendMessage("your password if now " + args[3] + " "); 
+							UUID rpId = UUID.fromString(spId); 
+							Player player = Bukkit.getPlayer(rpId); 
+							if (player != null) {
+								player.sendMessage("Your password if now " + args[3] + " "); 
+							}
 							plugin.saveFiles(); 
 						}
 						else {
@@ -157,7 +156,7 @@ public class UpdateAims {
 						}
 					}
 					else {
-						logger.messageSender(sender, "offlineplayer", null); 
+						logger.messageSender(sender, "offline", " as no data about it could be found in the config file ");  
 					}
 				}
 				else {
@@ -553,7 +552,7 @@ public class UpdateAims {
 						logger.warning("custom", aim + " is an 'itemid' type aim that uses a string to specify the item instead of a number "); 
 					}
 					if (success == true) {
-						Material.getMaterial(id); 
+						material = Material.getMaterial(id); 
 					}
 				}
 				int amount = 1; 
@@ -566,7 +565,7 @@ public class UpdateAims {
 				}
 				if (material == null) {
 					success = false; 
-					logger.warning("custom", "Aim " + aim + " seems to contain an imvalid material value "); 
+					logger.warning("custom", "Aim " + aim + " seems to contain an invalid material value "); 
 				}
 				if (success == true) {
 					ItemStack item = new ItemStack(material); 
