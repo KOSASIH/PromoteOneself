@@ -172,6 +172,9 @@ public class UpdateAims {
 		}
 	}
 	public void updatePlayer(CommandSender sender, String[] args) {
+		updatePlayer(sender, args, false); 
+	}
+	public void updatePlayer(CommandSender sender, String[] args, Boolean signUser) {
 		if (args.length == 1) { 
 			if (sender instanceof Player) { 
 				Player player = (Player) sender; 
@@ -230,7 +233,7 @@ public class UpdateAims {
 						logger.warning("noPlayer", player.getName()); 
 					}
 					else {
-						if (sender.hasPermission("pos.update.add") && sender.hasPermission("pos.update.target")) {
+						if ((sender.hasPermission("pos.update.add") && sender.hasPermission("pos.update.target")) || ((signUser == true) && sender.hasPermission("pos.sign.update.use.add"))) {
 							addPlayer(args[1], spId, rpId, true); 
 							player.sendMessage("You have added yourself to the promotion tree "); 
 						}
@@ -246,7 +249,7 @@ public class UpdateAims {
 					sender.sendMessage(ChatColor.RED + "The target you specified does not exist "); 
 				}
 				else {
-					if (sender.hasPermission("pos.update.target")) {
+					if (sender.hasPermission("pos.update.target") || (signUser == true)) {
 						Boolean progress = updatePlayerAims(spId, player, false, args); 
 						logger.messageSender(sender, "aimupdate", null); 
 						if (progress == true) {

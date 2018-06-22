@@ -1,4 +1,5 @@
-This is a general plugin information file that is shipped inside the exported .jar file of the plugin. More information can be found on this plugin's GitHub page. This file was last updated for plugin version Development_11.0.1.8. 
+This is a general plugin information file that is shipped inside the exported .jar file of the plugin. More information can be found on this plugin's GitHub page. This file was last updated for plugin version Development_11.0.1.9. 
+
 
 Commands: 
 The */promoteoneself* command shows the help page. 
@@ -38,6 +39,8 @@ The */posset set setting updateUsernames <true|false>* command sets whether the 
 The */posset set setting defaultPoints <integer>* command sets the default number of points players should have. 
 The */posset set setting alwaysSaveFiles <true|false> command sets whether configuration files the plugin couldn't load properly should be saved regardless (this may wipe the files). 
 The */posset set setting remindOnJoin <true|false>* command sets whether the plugin reminds players of their targets when they join or not.  
+
+Where applicable, commands of the form */prom update <arguments>*, *posset player <arguments>* and */posset set player <arguments>* only work for players which are currently online. 
 
 
 Permissions: 
@@ -373,14 +376,20 @@ Permissions:
       pos.sign.points.*: true
       pos.sign.target.*: true
       pos.sign.sign.*: true
+      pos.sign.aim.*: true
       pos.sign.limitexempt: true
   pos.sign.update.*:
     description: Let the player create, delete and use update type signs 
     default: op 
     children:
-      pos.sign.update.use: true
+      pos.sign.update.use.add: true
       pos.sign.update.create: true
       pos.sign.update.delete: true
+  pos.sign.update.use.add:
+    description: Let the player use update type signs to add itself to the promotion tree 
+    default: op
+    children:
+      pos.sign.update.use: true
   pos.sign.update.use:
     description: Let the player use update type signs 
     default: op
@@ -438,6 +447,22 @@ Permissions:
   pos.sign.sign.delete:
     description: Let the player delete sign type signs 
     default: op 
+  pos.sign.aim.*:
+    description: Let the player create, delete and use aim type signs 
+    default: op
+    children:
+      pos.sign.aim.use: true
+      pos.sign.aim.create: true
+      pos.sign.aim.delete: true
+  pos.sign.aim.use:
+    description: Let the player use aim type signs 
+    default: op
+  pos.sign.aim.create:
+    description: Let the player create aim type signs 
+    default: op
+  pos.sign.aim.delete:
+    description: Let the player delete aim type signs 
+    default: op
   pos.sign.limitexempt:
     description: Be exempt from sign usage limits 
     default: op  
@@ -486,18 +511,23 @@ sign
 [aim name] 
 [sign id]
 
+aim:
+[pos]
+aim
+[aim name]
+[sign id]
+
 
 To do: 
 Type1 (must do): 
+Ensure compatibility with versions 1.7.x-1.12.x
 
 Type2 (should learn to do):  
 
 Type 3 (could think about doing): 
-Make the plugin work for offline players too - done /prom check and /prom password (irrelevant for /prom help, /prom version, /prom list, /posset save, /posset reload, /posset set target, /posset set aim, /posset set setting) 
 
 Type4 (could do on a whim) 
-(already done?) More comprehensive sign permissions - Permissions for id groups too or exempt from the limit of a certain id group or individual id limits for people or a permission to use all signs and another to create all signs etc - make sign permissions independent of command permissions    
-Ensure compatibility with versions 1.7.x-1.12.x
+More comprehensive sign permissions - Permissions for id groups too or exempt from the limit of a certain id group 
 
 
 

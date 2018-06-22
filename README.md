@@ -81,6 +81,8 @@ The */posset set setting defaultPoints &lt;integer&gt;* command sets the default
 The */posset set setting alwaysSaveFiles &lt;true|false&gt; command sets whether configuration files the plugin couldn't load properly should be saved regardless (this may wipe the files). \
 The */posset set setting remindOnJoin &lt;true|false&gt; command sets whether the plugin should send a reminder to players each time they join. 
 
+Where applicable, commands of the form */prom update &lt;arguments&gt;*, *posset player &lt;arguments&gt;* and */posset set player &lt;arguments&gt;* only work for players which are currently online. 
+
 ## Permissions: 
 All permissions for this plugin default to being ops only. Any permission ending '.others' to refer to other players has, as a child permission, the permission referring to the player entering the command. This plugin has the following permissions: 
  - pos.* - The root permission for the plugin 
@@ -157,10 +159,11 @@ All permissions for this plugin default to being ops only. Any permission ending
  - pos.set.setting.remindonjoin - Set if the plugin should send a reminder to players when they join 
  - pos.set.sign.* - The root permission for setting configurable sign information 
  - pos.set.sign.usage - Set the maximum number of times a player can use a sign 
- - pos.set.promote.* - Let the player be promoted to any target (only valid for 'permission' type aims) 
- - pos.set.promote.&lt;target-name&gt; - Let the player be promoted to a specific target (only valid for 'permission' type aims) 
+ - pos.promote.* - Let the player be promoted to any target (only required for targets with 'permission' type aims) 
+ - pos.promote.&lt;target-name&gt; - Let the player be promoted to a specific target (only required for targets with 'permission' type aims) 
  - pos.sign.* - The root permission for handling signs 
  - pos.sign.update.* - The root permission for handling 'update' type signs 
+ - pos.sign.update.use.add - Use an 'update' type sign to add yourself to the promotion tree (this has the pos.sign.update.use permission as a child permission) 
  - pos.sign.update.use - Use an 'update' type sign 
  - pos.sign.update.create - Create an 'update' type sign 
  - pos.sign.update.delete - Remove an 'update' type sign 
@@ -176,6 +179,10 @@ All permissions for this plugin default to being ops only. Any permission ending
  - pos.sign.sign.use - Use a 'sign' type sign 
  - pos.sign.sign.create - Create a 'sign' type sign 
  - pos.sign.sign.delete - Remove a 'sign' type sign 
+ - pos.sign.aim.* - The root permission for handling 'aim' type signs 
+ - pos.sign.aim.use - Use an 'aim' type sign 
+ - pos.sign.aim.create - Create an 'aim' type sign 
+ - pos.sign.aim.delete - Remove an 'aim' type sign 
  - pos.sign.limitexempt - Be exempt from sign usage limits 
 
 ## Config Files: 
@@ -391,13 +398,16 @@ Signs are written in the form: \
 line 1: [pos] \
 line2: &lt;type&gt; \
 line3: &lt;data&gt; \
-line4: &lt;sign id as in signs.yml that is used to set the maximum number of times a player can use the sign (optional)&gt; 
+line4: [sign id] 
 
-Signs can have any of the following types: 
+The first line of a sign for use within this plugin is always [pos]. 
+
+The second line of a sign specifies what type of sign it is. Signs can have any of the following types: 
  - Update 
  - Points 
  - Target 
  - Sign 
+ - Aim
 
 Signs with a type of 'update' have the same use as the */prom update [target]* command, where the third line of the sign is mandatory and represents the name of the target to progress to if the player has achieved all the necessary aims. 
 
@@ -406,3 +416,9 @@ Signs with a type of 'points' have the same use as the */posset set player &lt;p
 Signs with a type of 'target' set the player's target to the one specified by the third line of the sign. 
 
 Signs with a type of 'sign' are used by aims with a type of 'sign': when a player clicks on one of these signs, the player completes the aim specified by the third line of the sign. 
+
+Signs with a type of 'aim' are used to make a player achieve an aim, regardless of whether the player has met the aim completion condition or not. When a player clicks on one of these signs, the player completes the aim specified by the third line of the sign. 
+
+The sign id should match one defined in the signs.yml file; it is used to set the maximum number of times a player can use the sign. Specifying an id for a sign is optional; if no id is required, the fourth line of a sign should be left blank. 
+
+
