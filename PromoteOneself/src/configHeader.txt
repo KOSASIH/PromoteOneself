@@ -39,7 +39,7 @@ aims:
   aim2: 
     type: 
     achieve: 
-  etc: 
+  etc...
 
 targets:
   target1: 
@@ -48,7 +48,7 @@ targets:
       - aim2 
     commands: 
       - completion_command_1 
-      - completion_command_2  
+      - completion_command_2 argument 
     defaultNextTarget: etc2 
     leadsTo: 
       - target2 
@@ -56,11 +56,10 @@ targets:
   target2:
     aims: 
       - aim2 
-      - etc 
+      - etc... 
     commands:
       - completion_command_3 
     defaultNextTarget: none 
     leadsTo: none 
-  etc1: 
-  etc2: 
+  etc... 
  

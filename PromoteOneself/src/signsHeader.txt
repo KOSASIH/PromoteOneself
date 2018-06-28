@@ -13,6 +13,8 @@ signs:
   SignId3:
     usage: 1
   SignId4:
+    usage: 4
+  SignId5:
     usage: 10
-  etc:
+  etc...
   

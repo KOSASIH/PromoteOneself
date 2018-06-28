@@ -11,6 +11,7 @@ exempt:
   UUID1:
     lastUsername: username
     exempt: true
+  etc...
 players: 
   UUID1: 
     lastUsername: username
@@ -38,5 +39,6 @@ players:
       aim6: true
       aim7: false
       aim8: true
-      etc: false
+      etc...
+  etc...
 

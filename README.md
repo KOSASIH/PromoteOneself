@@ -49,7 +49,7 @@ The */prom help &lt;command&gt; &lt;first argument&gt; [page]* command shows mor
 The */prom help set &lt;second argument&gt; [page]* command shows more detailed information about the */posset set &lt;second argument&gt; &lt;all-remaining arguments&gt;* commands. \
 The */prom version* command shows the plugin version. \
 The */prom update [target [player-username [aim]]]* command checks a player's completion status for a target or an aim of a target. \
-The */prom check [player|target|aim|sign|config] &lt;name&gt;* command gives information about a player, target, aim, sign or config (not specifying which one defaults to finding a player). \
+The */prom check [[player|target|aim|sign|config] name]* command gives information about a player, target, aim, sign or config (not specifying which one defaults to finding a player). \
 The */prom password &lt;get [player] &lt;aim&gt;|set [player] &lt;password&gt; &lt;aim&gt;&gt;* command enables a player to get or set a player's password guess attempts. \
 The */prom list &lt;targets|aims|players|exempt|signs&gt;* command lists all the names of the specified object type. \
 The */posset exempt &lt;player&gt; &lt;true|temp|add|join&gt;* command sets the exemption status of a player (true: make exempt and delete data; temp: make exempt and keep data; add: lose exemption at next login; join: lose exemption now). \

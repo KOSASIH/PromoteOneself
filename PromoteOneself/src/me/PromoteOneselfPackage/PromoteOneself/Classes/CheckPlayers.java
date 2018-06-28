@@ -2,6 +2,7 @@ package me.PromoteOneselfPackage.PromoteOneself.Classes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -1156,6 +1157,21 @@ public class CheckPlayers {
 				}
 				sender.sendMessage(UPNU + " " + CVTH + " " + plugin.yd.configuration.getString("players." + spId + ".data.points") + " points "); 
 				sender.sendMessage(UPNU + " " + CVTH + " " + plugin.yd.configuration.getString("players." + spId + ".data.kills") + " recorded kills "); 
+				if (plugin.yd.configuration.contains("players." + spId + ".data.signs")) {
+					Set<String> signs = Collections.emptySet(); 
+					try {
+						signs = plugin.yd.configuration.getConfigurationSection("players." + spId + ".data.signs").getKeys(false); 
+					}
+					catch (NullPointerException e) {
+						// No action required 
+					}
+					if (signs.isEmpty() == false) {
+						sender.sendMessage(UPNP + " sign usages are: "); 
+						for (String i : signs) {
+							sender.sendMessage(i + ": " + plugin.yd.configuration.getString("players." + spId + ".data.signs." + i)); 
+						}
+					}
+				}
 			}
 		}
 		else if (plugin.yd.configuration.contains("players." + spId + ".finished") == false && plugin.yc.configuration.getBoolean("startInPromotionTree") == false) {

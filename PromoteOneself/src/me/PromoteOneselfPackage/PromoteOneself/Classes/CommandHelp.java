@@ -49,8 +49,8 @@ public class CommandHelp {
 		}
 		else if (command.equalsIgnoreCase("prom") && firstArgument.equalsIgnoreCase("check")) {
 			helpCommandHeading(sender, command, firstArgument); 
-			sender.sendMessage(ChatColor.AQUA + "/prom check [player|target|aim|sign|config] <name> "); 
-			sender.sendMessage(ChatColor.AQUA + "/prom check <player>");
+			sender.sendMessage(ChatColor.AQUA + "/prom check <player|target|aim|sign|config> <name> "); 
+			sender.sendMessage(ChatColor.AQUA + "/prom check [player]");
 			sender.sendMessage("Using the command with one argument gives the player who typed it in its own information "); 
 			sender.sendMessage("One of player, target, aim, sign and config can be specified and then a name can be given to get the information for the given object "); 
 			sender.sendMessage("Using the command with two arguments assumes that a player is specified "); 

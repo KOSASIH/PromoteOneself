@@ -160,10 +160,9 @@ public class YamlFiles {
 			if (runPlayerSigns == true) {
 				for (String o : playerSigns) {
 					if (Signs.contains(o) == true) {
-						logger.info("custom", "loop o true if: " + o); 
+						// No action required 
 					}
 					else {
-						logger.info("custom", "loop o: " + o); 
 						players.configuration.set("players." + i + ".data.signs." + o, null); 
 					}
 				}
