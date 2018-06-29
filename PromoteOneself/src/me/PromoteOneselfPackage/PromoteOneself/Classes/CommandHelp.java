@@ -99,7 +99,7 @@ public class CommandHelp {
 		}
 		else if (command.equalsIgnoreCase("posset") && firstArgument.equalsIgnoreCase("player")) {
 			helpCommandHeading(sender, command, firstArgument); 
-			sender.sendMessage(ChatColor.AQUA + "/posset player <add|remove|delete> [name] "); 
+			sender.sendMessage(ChatColor.AQUA + "/posset player <add|reset|delete> [name] "); 
 			sender.sendMessage("This command lets you remove or add a player from or to the promotion tree and reset a player in the promotion tree "); 
 			sender.sendMessage("A player could also do these things to itself "); 
 		}
@@ -114,7 +114,7 @@ public class CommandHelp {
 				helpCommandHeading(sender, command, firstArgument, 1, 2); 
 				sender.sendMessage(ChatColor.AQUA + "/posset set player <player-username> aims <aim-name> <true|false>" + ChatColor.WHITE + " - set a player's aim completion status "); 
 				sender.sendMessage(ChatColor.AQUA + "/posset set player <player-username> password <aim-name> <password>" + ChatColor.WHITE + " - set a password for a player's aim "); 
-				sender.sendMessage(ChatColor.AQUA + "/posset set player <player-username> points <set|add|remove> <amount>" + ChatColor.WHITE + " - change the amount of points that a player has "); 
+				sender.sendMessage(ChatColor.AQUA + "/posset set player <player-username> points <set|add|remove|reset> [amount]" + ChatColor.WHITE + " - change the amount of points that a player has "); 
 				sender.sendMessage(ChatColor.AQUA + "/posset set player <player-username> sign <sign-id> <player-usage>" + ChatColor.WHITE + " - change the recorded sign usage of a player "); 
 				sender.sendMessage(ChatColor.AQUA + "/posset set player <player-username> finished <true|false>" + ChatColor.WHITE + " - set whether a player has finished the promotion tree or not "); 
 			}
@@ -129,7 +129,7 @@ public class CommandHelp {
 			helpCommandHeading(sender, command, firstArgument); 
 			sender.sendMessage(ChatColor.AQUA + "/posset set target <target-name> aims <add|remove> <aim-name>" + ChatColor.WHITE + " - set the aims for a target "); 
 			sender.sendMessage(ChatColor.AQUA + "/posset set target <target-name> leadsTo <nullify|add <target-name>|remove <target-name>>" + ChatColor.WHITE + " - set the targets that lead on from the specified target "); 
-			sender.sendMessage(ChatColor.AQUA + "/posset set target <target-name> defaultNextTarget <target-name>" + ChatColor.WHITE + " - set the default next target for the specified target "); 
+			sender.sendMessage(ChatColor.AQUA + "/posset set target <target-name> defaultNextTarget <target-name|none>" + ChatColor.WHITE + " - set the default next target for the specified target "); 
 		}
 		else if (command.equalsIgnoreCase("set")  && firstArgument.equalsIgnoreCase("aim")) {
 			helpCommandHeading(sender, command, firstArgument); 

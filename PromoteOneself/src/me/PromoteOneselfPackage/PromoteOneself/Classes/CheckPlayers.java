@@ -247,7 +247,7 @@ public class CheckPlayers {
 		}
 		else {
 			logger.messageSender(sender, "help", null); 
-			sender.sendMessage(ChatColor.RED + "You can only do these actions to a player with this command: add, remove, reset "); 
+			sender.sendMessage(ChatColor.RED + "You can only do these actions to a player with this command: add, reset, delete "); 
 		}
 		plugin.saveFiles(); 
 	}
@@ -375,7 +375,7 @@ public class CheckPlayers {
 							logger.warning("updateplayererror", null); 
 						}
 					}
-					else if (args.length == 5 && !(args[3].equalsIgnoreCase("aims")) && !(args[3].equalsIgnoreCase("password")) && !args[3].equalsIgnoreCase("points") && !(args[3].equalsIgnoreCase("lastUsername"))) {
+					else if (args.length == 5 && !(args[3].equalsIgnoreCase("aims")) && !(args[3].equalsIgnoreCase("password")) && !(args[3].equalsIgnoreCase("lastUsername"))) {
 						if (args[3].equalsIgnoreCase("finished")) {
 							configPlace += "." + "finished"; 
 							if (sender.hasPermission("pos.set.player.finished")) {
@@ -434,6 +434,17 @@ public class CheckPlayers {
 									sender.sendMessage(ChatColor.RED + "The aim goal must be an integer "); 
 								}
 								
+							}
+							else {
+								logger.messageSender(sender, "nopermission", null); 
+							}
+						}
+						else if (args[3].equalsIgnoreCase("points")) {
+							configPlace += ".data." + "points"; 
+							if (sender.hasPermission("pos.set.player.points")) {
+								int points = plugin.yc.configuration.getInt("defaultPoints"); 
+								plugin.yd.configuration.set(configPlace, points);
+								sender.sendMessage(args[2] + " now has " + Integer.toString(points) + " points "); 
 							}
 							else {
 								logger.messageSender(sender, "nopermission", null); 
@@ -551,7 +562,7 @@ public class CheckPlayers {
 					if (args[3].equalsIgnoreCase("defaultNextTarget")) {
 						configPlace += "." + "defaultNextTarget"; 
 						if (sender.hasPermission("pos.set.target.defaultnexttarget")) {
-							if (plugin.yc.configuration.contains("targets." + args[4])) {
+							if (plugin.yc.configuration.contains("targets." + args[4]) || args[4].equalsIgnoreCase("none")) {
 								plugin.yc.configuration.set(configPlace, args[4]); 
 								sender.sendMessage("The default next target of " + args[2] + " has been set to " + args[4] + " "); 
 							}
@@ -913,7 +924,7 @@ public class CheckPlayers {
 		}
 		else {
 			logger.messageSender(sender, "help", null); 
-			sender.sendMessage(ChatColor.RED + "You can only change the settings for these object types: aim, target, player and setting"); 
+			sender.sendMessage(ChatColor.RED + "You can only change the settings for these object types: aim, target, player, sign and setting"); 
 		}
 		plugin.saveFiles(); 
 	}
@@ -1146,8 +1157,6 @@ public class CheckPlayers {
 			if (isFinished == true) {
 				sender.sendMessage(UPNU + " " + CVTH + " reached the highest self-promotion possible "); 
 				sender.sendMessage("The last target " + UPN + " achieved is: " + target); 
-				sender.sendMessage(UPNU + " " + CVTH + " " + plugin.yd.configuration.getString("players." + spId + ".data.points") + " points "); 
-				sender.sendMessage(UPNU + " " + CVTH + " " + plugin.yd.configuration.getString("players." + spId + ".data.kills") + " recorded kills "); 
 			}
 			else {
 				sender.sendMessage("The target " + UPN + " " + CVTB + " currently working towards is: " + target); 
@@ -1155,21 +1164,21 @@ public class CheckPlayers {
 				for (String i : plugin.yc.configuration.getStringList("targets." + target + ".aims")) {
 					sender.sendMessage(i + ": " + plugin.yd.configuration.getString("players." + spId + ".aims." + i)); 
 				}
-				sender.sendMessage(UPNU + " " + CVTH + " " + plugin.yd.configuration.getString("players." + spId + ".data.points") + " points "); 
-				sender.sendMessage(UPNU + " " + CVTH + " " + plugin.yd.configuration.getString("players." + spId + ".data.kills") + " recorded kills "); 
-				if (plugin.yd.configuration.contains("players." + spId + ".data.signs")) {
-					Set<String> signs = Collections.emptySet(); 
-					try {
-						signs = plugin.yd.configuration.getConfigurationSection("players." + spId + ".data.signs").getKeys(false); 
-					}
-					catch (NullPointerException e) {
-						// No action required 
-					}
-					if (signs.isEmpty() == false) {
-						sender.sendMessage(UPNP + " sign usages are: "); 
-						for (String i : signs) {
-							sender.sendMessage(i + ": " + plugin.yd.configuration.getString("players." + spId + ".data.signs." + i)); 
-						}
+			}
+			sender.sendMessage(UPNU + " " + CVTH + " " + plugin.yd.configuration.getString("players." + spId + ".data.points") + " points "); 
+			sender.sendMessage(UPNU + " " + CVTH + " " + plugin.yd.configuration.getString("players." + spId + ".data.kills") + " recorded kills "); 
+			if (plugin.yd.configuration.contains("players." + spId + ".data.signs")) {
+				Set<String> signs = Collections.emptySet(); 
+				try {
+					signs = plugin.yd.configuration.getConfigurationSection("players." + spId + ".data.signs").getKeys(false); 
+				}
+				catch (NullPointerException e) {
+					// No action required 
+				}
+				if (signs.isEmpty() == false) {
+					sender.sendMessage(UPNP + " sign usages are: "); 
+					for (String i : signs) {
+						sender.sendMessage(i + ": " + plugin.yd.configuration.getString("players." + spId + ".data.signs." + i)); 
 					}
 				}
 			}

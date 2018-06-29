@@ -55,10 +55,10 @@ The */prom list &lt;targets|aims|players|exempt|signs&gt;* command lists all the
 The */posset exempt &lt;player&gt; &lt;true|temp|add|join&gt;* command sets the exemption status of a player (true: make exempt and delete data; temp: make exempt and keep data; add: lose exemption at next login; join: lose exemption now). \
 The */posset save* command saves the config files. \
 The */posset reload [check|nocheck]* command reloads the configuration files (adding nothing or 'check' makes it checks each players' aims with the aims each target specifies the player should have; specifying 'nocheck' makes it jut reload the files). \
-The */posset player &lt;add|remove|delete&gt; [name]* command provides the ability to add or remove a player to/from the promotion tree or to reset a player in the promotion tree. \
+The */posset player &lt;add|reset|delete&gt; [name]* command provides the ability to add or remove a player to/from the promotion tree or to reset a player in the promotion tree. \
 The */posset set player &lt;player-username&gt; aims &lt;aim-name&gt; &lt;true|false&gt;* command sets a player's aim completetion status. \
 The */posset set player &lt;player-username&gt; password &lt;aim-name&gt; &lt;password&gt;* command sets a player's password guess for an aim. \
-The */posset set player &lt;player-username&gt; points &lt;set|add|remove&gt; &lt;amount&gt;* command changes the amount of points a player has. \
+The */posset set player &lt;player-username&gt; points &lt;set|add|remove|reset&gt; [amount]* command changes the amount of points a player has. \
 The */posset set player &lt;player-username&gt; sign &lt;sign-id&gt; &lt;player-usage&gt;* command sets a player's recorded sign usage. \
 The */posset set player &lt;player-username&gt; finished &lt;true|false&gt;* command sets the promotion tree completion status of a player. \
 The */posset set player &lt;player-username&gt; target &lt;target-name&gt;* command changes a player's target and updates the player's aims. \
@@ -66,9 +66,9 @@ The */posset set player &lt;player-username&gt; kills &lt;amount&gt;* command ch
 The */posset set player &lt;player-username&gt; lastusername* command makes the plugin update the player's recorded last username in the config files. \
 The */posset set target &lt;target-name&gt; aims &lt;add|remove&gt; &lt;aim-name&gt;* command adds or removes an aim to/from a target. \
 The */posset set target &lt;target-name&gt; leadsTo &lt;nullify|add &lt;target-name&gt;|remove &lt;target-name&gt;&gt;* command sets which targets lead on from the specified target. \
-The */posset set target &lt;target-name&gt; defaultNextTarget &lt;target-name&gt;* command sets the default next target of the specified target. \
+The */posset set target &lt;target-name&gt; defaultNextTarget &lt;target-name|none&gt;* command sets the default next target of the specified target. \
 The */posset set aim &lt;aim-name&gt; type &lt;aim-type&gt;* command sets the type of an aim (this command does not work for 'command' type aims). \
-The */posset set aim &lt;aim-name&gt; achieve &lt;aim-goal&gt;* command sets the goal of an aim (this command does not worm for 'command' type aims). \
+The */posset set aim &lt;aim-name&gt; achieve &lt;aim-goal&gt;* command sets the goal of an aim (this command does not work for 'command' type aims). \
 The */posset set setting detectKills &lt;true|false&gt;* command sets whether the plugin should listen for player deaths for 'kills' type aims or not. \
 The */posset set setting watchCommands &lt;true|false&gt;* command sets whether the plugin should listen for player commands for 'command' type aims or not. \
 The */posset set setting allowSigns &lt;true|false&gt;* command sets whether the plugin should allow the use of signs or not. \
@@ -81,7 +81,7 @@ The */posset set setting defaultPoints &lt;integer&gt;* command sets the default
 The */posset set setting alwaysSaveFiles &lt;true|false&gt; command sets whether configuration files the plugin couldn't load properly should be saved regardless (this may wipe the files). \
 The */posset set setting remindOnJoin &lt;true|false&gt; command sets whether the plugin should send a reminder to players each time they join. 
 
-Where applicable, commands of the form */prom update &lt;arguments&gt;*, *posset player &lt;arguments&gt;* and */posset set player &lt;arguments&gt;* only work for players which are currently online. 
+Where applicable, commands of the form */prom update &lt;arguments&gt;*, */posset player &lt;arguments&gt;*, */posset exempt &ltarguments&gt;* and */posset set player &lt;arguments&gt;* only work for players which are currently online. 
 
 ## Permissions: 
 All permissions for this plugin default to being ops only. Any permission ending '.others' to refer to other players has, as a child permission, the permission referring to the player entering the command. This plugin has the following permissions: 

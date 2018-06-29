@@ -1,4 +1,4 @@
-This is a general plugin information file that is shipped inside the exported .jar file of the plugin. More information can be found on this plugin's GitHub page. This file was last updated for plugin version Development_11.0.1.10. 
+This is a general plugin information file that is shipped inside the exported .jar file of the plugin. More information can be found on this plugin's GitHub page. This file was last updated for plugin version Development_11.0.1.11. 
 
 
 Commands: 
@@ -40,7 +40,7 @@ The */posset set setting defaultPoints <integer>* command sets the default numbe
 The */posset set setting alwaysSaveFiles <true|false> command sets whether configuration files the plugin couldn't load properly should be saved regardless (this may wipe the files). 
 The */posset set setting remindOnJoin <true|false>* command sets whether the plugin reminds players of their targets when they join or not.  
 
-Where applicable, commands of the form */prom update <arguments>*, *posset player <arguments>* and */posset set player <arguments>* only work for players which are currently online. 
+Where applicable, commands of the form */prom update <arguments>*, */posset player <arguments>*, */posset exempt <arguments>* and */posset set player <arguments>* only work for players which are currently online. 
 
 
 Permissions: 
