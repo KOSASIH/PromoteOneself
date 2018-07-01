@@ -466,7 +466,6 @@ public class CheckPlayers {
 					}
 					else {
 						logger.messageSender(sender, "help", null); 
-						sender.sendMessage(ChatColor.RED + "A sub-setting is only required by the 'aim' setting type "); 
 					}
 				}
 				else {

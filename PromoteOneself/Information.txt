@@ -1,44 +1,45 @@
-This is a general plugin information file that is shipped inside the exported .jar file of the plugin. More information can be found on this plugin's GitHub page. This file was last updated for plugin version Development_11.0.1.11. 
+This is a general plugin information file that is shipped inside the exported .jar file of the plugin. More information can be found on this plugin's GitHub page. This file was last updated for plugin version Development_11.0.1.12. 
 
 
 Commands: 
 The */promoteoneself* command shows the help page. 
-The */prom help [page]* command shows the help page. 
-The */prom help <command> <first argument> [page]* command shows more detailed information about the */<command> <first argument> <all-remaining-arguments>* commands. 
-The */prom help set <second argument> [page]* command shows more detailed information about the */posset set <second argument> <all-remaining arguments>* commands. 
+The */prom help [<page>]* command shows the help page. 
+The */prom help <command> <first argument> [<page>]* command shows more detailed information about the */<command> <first argument> <all-remaining-arguments>* commands. 
+The */prom help set <second argument> [<page>]* command shows more detailed information about the */posset set <second argument> <all-remaining arguments>* commands. 
 The */prom version* command shows the plugin version. 
-The */prom update [target [player-username [aim]]]* command checks a player's completion status for a target or an aim of a target. 
-The */prom check [player|target|aim|sign|config] <name>* command gives information about a player, target or aim. 
-The */prom list <targets|aims|players|exempt|signs> command lists all the names of the specified object type. 
-The */prom password <get [player] <aim>|set [player] <password> <aim>>* command enables a player to get or set a player's password guess attempts. 
-The */posset exempt <player> <true|temp|add|join>* command sets the exemption status of a player (true: make exempt and delete data; temp: make exempt and keep data; add: lose exemption at next login; join: lose exemption now). 
+The */prom update [<target> [<player> [<aim>]]]* command checks a player's completion status for a target or an aim of a target. 
+The */prom check [[player|target|aim|sign|config] <name|id>]* command gives information about a player, target or aim. 
+The */prom list targets|aims|players|exempt|signs* command lists all the names of the specified object type. 
+The */prom password {get [player] <aim>}|{set [player] <password> <aim>}* command enables a player to get or set a player's password guess attempts. 
+The */posset exempt <player> true|temp|add|join* command sets the exemption status of a player (true: make exempt and delete data; temp: make exempt and keep data; add: lose exemption at next login; join: lose exemption now). 
 The */posset save* command saves the config files. 
 The */posset reload [check|nocheck]* command reloads the configuration files (adding nothing or 'check' makes it checks each players' aims with the aims each target specifies the player should have; specifying 'nocheck' makes it jut reload the files). 
-The */posset player <add|remove|delete> [name]* command provides the ability to add or remove a player to/from the promotion tree or to reset a player in the promotion tree. 
-The */posset set player <player-username> aims <aim-name> <true|false>* command sets a player's aim completion status. 
-The */posset set player <player-username> password <aim-name> <password>* command sets a player's password guess for an aim. 
-The */posset set player <player-username> points <set|add|remove> <amount>* command changes the amount of points a player has. 
-The */posset set player <player-username> sign <sign-id> <player-usage>* command sets a player's recorded sign usage. 
-The */posset set player <player-username> finished <true|false>* command sets the promotion tree completion status of a player. 
-The */posset set player <player-username> target <target-name>* command changes a player's target and updates the player's aims. 
-The */posset set player <player-username> kills <amount>* command changes a player's recorded kill number. 
-The */posset set player <player-username> lastusername* command makes the plugin update the player's recorded last username in the config files. 
-The */posset set target <target-name> aims <add|remove> <aim-name>* command adds or removes an aim to/from a target. 
-The */posset set target <target-name> leadsTo <nullify|add <target-name>|remove <target-name>>* command sets which targets lead on from the specified target. 
-The */posset set target <target-name> defaultNextTarget <target-name>* command sets the default next target of the specified target. 
-The */posset set aim <aim-name> type <aim-type>* command sets the type of an aim (this command does not work for 'command' type aims). 
-The */posset set aim <aim-name> achieve <aim-goal>* command sets the goal of an aim (this command does not worm for 'command' type aims). 
-The */posset set setting detectKills <true|false>* command sets whether the plugin should listen for player deaths for 'kills' type aims or not. 
-The */posset set setting watchCommands <true|false>* command sets whether the plugin should listen for player commands for 'command' type aims or not. 
-The */posset set setting allowSigns <true|false>* command sets whether the plugin should allow the use of signs or not. 
-The */posset set setting defaultTarget <targetName>* command sets the default first target when a player first joins the promotion tree. 
+The */posset player add|remove|delete [<player>]* command provides the ability to add or remove a player to/from the promotion tree or to reset a player in the promotion tree. 
+The */posset set player <player> aims <aim> true|false* command sets a player's aim completion status. 
+The */posset set player <player> password <aim> <password>* command sets a player's password guess for an aim. 
+The */posset set player <player> points {set|add|remove <amount>}|reset* command changes the amount of points a player has. 
+The */posset set player <player> sign <sign-id> <player-usage>* command sets a player's recorded sign usage. 
+The */posset set player <player> finished true|false* command sets the promotion tree completion status of a player. 
+The */posset set player <player> target <target>* command changes a player's target and updates the player's aims. 
+The */posset set player <player> kills <amount>* command changes a player's recorded kill number. 
+The */posset set player <player> lastusername* command makes the plugin update the player's recorded last username in the config files. 
+The */posset set target <target> aims add|remove <aim>* command adds or removes an aim to/from a target. 
+The */posset set target <target> leadsTo nullify|{add <target>}|{remove <target>}* command sets which targets lead on from the specified target. 
+The */posset set target <target> defaultNextTarget <target>* command sets the default next target of the specified target. 
+The */posset set aim <aim> type <aim-type>* command sets the type of an aim (this command does not work for 'command' type aims). 
+The */posset set aim <aim> achieve <aim-goal>* command sets the goal of an aim (this command does not worm for 'command' type aims). 
+The */posset set setting detectKills true|false* command sets whether the plugin should listen for player deaths for 'kills' type aims or not. 
+The */posset set setting watchCommands true|false* command sets whether the plugin should listen for player commands for 'command' type aims or not. 
+The */posset set setting allowSigns true|false* command sets whether the plugin should allow the use of signs or not. 
+The */posset set setting defaultTarget <target>* command sets the default first target when a player first joins the promotion tree. 
 The */posset set setting lowestRankThatCanManuallyApproveAims <rank>* command sets the informational value in the config file used in error messages stating the lowest required rank that can manually approve aims. 
-The */posset set setting startInPromotionTree <true|false>* command sets whether players should automatically start in the promotion tree or not. 
-The */posset set setting resetPointsAfterEachPromotion <true|false>* command sets whether a player's points should be reset after each promotion or not. 
-The */posset set setting updateUsernames <true|false>* command sets whether the plugin should update the username recorded for the player in the config files each time the player logs in or not. 
+The */posset set setting startInPromotionTree true|false* command sets whether players should automatically start in the promotion tree or not. 
+The */posset set setting resetPointsAfterEachPromotion true|false* command sets whether a player's points should be reset after each promotion or not. 
+The */posset set setting updateUsernames true|false* command sets whether the plugin should update the username recorded for the player in the config files each time the player logs in or not. 
 The */posset set setting defaultPoints <integer>* command sets the default number of points players should have. 
-The */posset set setting alwaysSaveFiles <true|false> command sets whether configuration files the plugin couldn't load properly should be saved regardless (this may wipe the files). 
-The */posset set setting remindOnJoin <true|false>* command sets whether the plugin reminds players of their targets when they join or not.  
+The */posset set setting alwaysSaveFiles true|false command sets whether configuration files the plugin couldn't load properly should be saved regardless (this may wipe the files). 
+The */posset set setting remindOnJoin true|false* command sets whether the plugin reminds players of their targets when they join or not.  
+The */posset set sign <sign-id> usage <integr>* command sets the maximum usage allowed by a sign 
 
 Where applicable, commands of the form */prom update <arguments>*, */posset player <arguments>*, */posset exempt <arguments>* and */posset set player <arguments>* only work for players which are currently online. 
 

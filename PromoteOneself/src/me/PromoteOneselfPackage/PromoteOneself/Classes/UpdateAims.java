@@ -147,7 +147,7 @@ public class UpdateAims {
 							UUID rpId = UUID.fromString(spId); 
 							Player player = Bukkit.getPlayer(rpId); 
 							if (player != null) {
-								player.sendMessage("Your password if now " + args[3] + " "); 
+								player.sendMessage("Your password is now " + args[3] + " "); 
 							}
 							plugin.saveFiles(); 
 						}
