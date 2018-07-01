@@ -52,9 +52,9 @@ This plugin contains the following commands:
  - /posset &lt;arguments&gt; 
 
 The */promoteoneself* command shows the help page. \
-The */prom help [<page>]* command shows the top level help pages. \
-The */prom help &lt;command&gt; &lt;first argument&gt; [<page>]* command shows more detailed information about the */&lt;command&gt; &lt;first argument&gt; &lt;all-remaining-arguments&gt;* commands. \
-The */prom help set &lt;second argument&gt; [<page>]* command shows more detailed information about the */posset set &lt;second argument&gt; &lt;all-remaining arguments&gt;* commands. \
+The */prom help [&lt;page&gt;]* command shows the top level help pages. \
+The */prom help &lt;command&gt; &lt;first argument&gt; [&lt;page&gt;]* command shows more detailed information about the */&lt;command&gt; &lt;first argument&gt; &lt;all-remaining-arguments&gt;* commands. \
+The */prom help set &lt;second argument&gt; [&lt;page&gt;]* command shows more detailed information about the */posset set &lt;second argument&gt; &lt;all-remaining arguments&gt;* commands. \
 The */prom version* command shows the plugin version. \
 The */prom update [&lt;target&gt; [&lt;player&gt; [&lt;aim&gt;]]]* command checks a player's completion status for a target or an aim of a target. \
 The */prom check [[player|target|aim|sign|config] &lt;name|id&gt;]* command gives information about a player, target, aim, sign or config (not specifying which one defaults to finding a player). \
