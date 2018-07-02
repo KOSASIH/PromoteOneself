@@ -18,6 +18,7 @@ public class CheckPlayers {
 	private static LoggingClass logger; 
 	private static UpdateAims ua; 
 	private static GetPlayerProperties pp; 
+	private static final String aimCheckMessageStart = "This aim requires the player to get "; 
 	public CheckPlayers(PromoteOneselfMainClass instance, LoggingClass log, UpdateAims uai, GetPlayerProperties ppi) {
 		plugin = instance; 
 		logger = log; 
@@ -607,7 +608,7 @@ public class CheckPlayers {
 							if (args[4].equalsIgnoreCase("command")) {
 								sender.sendMessage(ChatColor.RED + "You cannot change 'command' aim types with this command "); 
 							}
-							else if (args[4].equalsIgnoreCase("xp") || args[4].equalsIgnoreCase("xpl") || args[4].equalsIgnoreCase("item") || args[4].equalsIgnoreCase("password") || args[4].equalsIgnoreCase("points") || args[4].equalsIgnoreCase("kills") || args[4].equalsIgnoreCase("group") || args[4].equalsIgnoreCase("pgroup") || args[4].equalsIgnoreCase("permission") || args[4].equalsIgnoreCase("sign") || args[4].equalsIgnoreCase("command") || args[4].equalsIgnoreCase("none") || args[4].equalsIgnoreCase("economy")) {
+							else if (args[4].equalsIgnoreCase("xp") || args[4].equalsIgnoreCase("xpl") || args[4].equalsIgnoreCase("item") || args[4].equalsIgnoreCase("password") || args[4].equalsIgnoreCase("points") || args[4].equalsIgnoreCase("kills") || args[4].equalsIgnoreCase("group") || args[4].equalsIgnoreCase("pgroup") || args[4].equalsIgnoreCase("permission") || args[4].equalsIgnoreCase("generalpermission") || args[4].equalsIgnoreCase("sign") || args[4].equalsIgnoreCase("command") || args[4].equalsIgnoreCase("none") || args[4].equalsIgnoreCase("economy")) {
 								configPlace += "." + "type"; 
 								plugin.yc.configuration.set(configPlace, args[4]); 
 								if ((plugin.yc.configuration.getString("aims." + args[2] + ".type").equalsIgnoreCase("sign")) || (plugin.yc.configuration.getString("aims." + args[2] + ".type").equalsIgnoreCase("none"))) {
@@ -936,7 +937,7 @@ public class CheckPlayers {
 				if (sender.hasPermission("pos.check")) {
 					Player player = (Player) sender; 
 					UUID rpId = player.getUniqueId(); 
-					getPlayerStatus(sender, rpId, "you"); 
+					getPlayerStatus(sender, rpId, "you", "011"); 
 				}
 				else {
 					logger.messageSender(sender, "nopermission", null); 
@@ -947,15 +948,28 @@ public class CheckPlayers {
 			}
 		}
 		else if (args.length == 3) {
-			if (args[1].equalsIgnoreCase("player")) {
-				if (sender.hasPermission("pos.check.others")) {
+			if ((args[1].equalsIgnoreCase("player")) || (args[1].equalsIgnoreCase("playerall")) || (args[1].equalsIgnoreCase("playeraims")) || (args[1].equalsIgnoreCase("playersigns"))) {
+				if ((sender.hasPermission("pos.check.others")) || ((sender.hasPermission("pos.check")) && (args[2].equalsIgnoreCase(sender.getName())))) {
 					String spId = pp.getConfigPlayerspId(args[2], "players"); 
 					if (spId == null) {
 						spId = pp.getConfigPlayerspId(args[2],  "exempt"); 
 					}
 					if (spId != null) {
+						String informationToGet = ""; 
+						if (args[1].equalsIgnoreCase("player")) {
+							informationToGet = "011"; 
+						}
+						else if (args[1].equalsIgnoreCase("playerall")) {
+							informationToGet = "111"; 
+						}
+						else if (args[1].equalsIgnoreCase("playeraims")) {
+							informationToGet = "010"; 
+						}
+						else if (args[1].equalsIgnoreCase("playersigns")) {
+							informationToGet = "100"; 
+						}
 						UUID rpId = UUID.fromString(spId);  
-						getPlayerStatus(sender, rpId, args[2]); 
+						getPlayerStatus(sender, rpId, args[2], informationToGet); 
 					}
 					else {
 						sender.sendMessage(ChatColor.RED + "That player is not in the config file "); 
@@ -981,69 +995,74 @@ public class CheckPlayers {
 					logger.messageSender(sender, "nopermission", null); 
 				}
 			}
-			else if (args[1].equalsIgnoreCase("aim")) {
-				if (sender.hasPermission("pos.check.aims")) {
+			else if (args[1].equalsIgnoreCase("aim") || args[1].equalsIgnoreCase("aimfull")) {
+				Boolean full = args[1].equalsIgnoreCase("aimfull"); 
+				if ((sender.hasPermission("pos.check.aims.full")) || ((sender.hasPermission("pos.check.aims")) && (full == false))) {
 					if (plugin.yc.configuration.contains("aims." + args[2]) == true) {
-						String aimType = null; 
 						String rawAimType = plugin.yc.configuration.getString("aims." + args[2] + ".type"); 
-						Boolean run = true; 
+						String rawAimAchieve = plugin.yc.configuration.getString("aims." + args[2] + ".achieve"); 
 						if (rawAimType.equalsIgnoreCase("xp")) {
-							aimType = "an amount of experience "; 
+							sender.sendMessage(aimCheckMessageStart + rawAimAchieve + " experience points "); 
 						}
 						else if (rawAimType.equalsIgnoreCase("xpl")) {
-							aimType = "a number of experience levels "; 
+							sender.sendMessage(aimCheckMessageStart + rawAimAchieve + " experience levels "); 
 						}
 						else if (rawAimType.equalsIgnoreCase("item")) {
-							String aimGoal = plugin.yc.configuration.getString("aims." + args[2] + ".achieve"); 
-							String[] items = aimGoal.split(";"); 
+							String[] items = rawAimAchieve.split(";"); 
 							if (items.length != 2) {
 								logger.warning("custom", args[2] + " does not use a semicolon (;) to separate its arguments for its goal "); 
+								sender.sendMessage(ChatColor.RED + "This aim has an invalid aim condition "); 
 							}
-							run = false; 
-							sender.sendMessage("This aim requires the player to get " + items[0] + " of the " + items[1] + " material "); 
+							else {
+								sender.sendMessage(aimCheckMessageStart + items[0] + " pieces of the material " + items[1] + " "); 
+							}
 						}
 						else if (rawAimType.equalsIgnoreCase("itemid")) {
-							String aimGoal = plugin.yc.configuration.getString("aims." + args[2] + ".achieve"); 
-							String[] items = aimGoal.split(";"); 
+							String[] items = rawAimAchieve.split(";"); 
 							if (items.length != 2) {
 								logger.warning("custom", args[2] + " does not use a  semicolon (;) to separate its arguments for its goal "); 
+								sender.sendMessage(ChatColor.RED + "This aim has an invalid aim condition "); 
 							}
-							run = false; 
-							sender.sendMessage("This aim requires the player to get " + items[0] + " of the material with the id " + items[1] + " "); 
+							else {
+								sender.sendMessage(aimCheckMessageStart + items[0] + " pieces of the material with the id " + items[1] + " "); 
+							}
 						}
 						else if (rawAimType.equalsIgnoreCase("password")) {
-							aimType = "a specific password"; 
-							run = false; 
-							sender.sendMessage("This aim requires a player to get " + aimType + " "); 
+							if (full == false) {
+								sender.sendMessage(aimCheckMessageStart + "a specific password"); 
+							}
+							else {
+								sender.sendMessage(aimCheckMessageStart + "the password " + rawAimAchieve); 
+							}
 						}
 						else if (rawAimType.equalsIgnoreCase("points")) {
-							aimType = "a specific number of points"; 
+							sender.sendMessage(aimCheckMessageStart + rawAimAchieve + " points"); 
 						}
 						else if (rawAimType.equalsIgnoreCase("playerpoints")) {
-							aimType = "a specific number of points according to the 'PlayerPoints' plugin"; 
+							sender.sendMessage(aimCheckMessageStart + rawAimAchieve + " points as defined by the 'PlayerPoints' plugin"); 
 						}
 						else if (rawAimType.equalsIgnoreCase("kills")) {
-							aimType = "a certain number of kills"; 
+							sender.sendMessage(aimCheckMessageStart + rawAimAchieve + " kills"); 
 						}
 						else if (rawAimType.equalsIgnoreCase("economy")) {
-							aimType = "a certain amount of money"; 
+							sender.sendMessage(aimCheckMessageStart + "a bank balance of at least " + rawAimAchieve); 
 						}
 						else if (rawAimType.equalsIgnoreCase("group")) {
-							aimType = "membership of a certain group"; 
+							sender.sendMessage(aimCheckMessageStart + "membership of the group " + rawAimAchieve); 
 						}
 						else if (rawAimType.equalsIgnoreCase("pgroup")) {
-							aimType = "membership of a certain group, and for that group to be its primary group"; 
+							sender.sendMessage(aimCheckMessageStart + "its primary group to be the group " + rawAimAchieve); 
 						}
 						else if (rawAimType.equalsIgnoreCase("permission")) {
-							aimType = "a specific permission, possibly assigned to a certain group ";
-							run = false; 
-							sender.sendMessage("This aim requires a player to get " + aimType); 
+							sender.sendMessage(aimCheckMessageStart + "the permission pos.promote." + rawAimAchieve); 
+						}
+						else if (rawAimType.equalsIgnoreCase("generalpermission")) {
+							sender.sendMessage(aimCheckMessageStart + "the permission " + rawAimAchieve); 
 						}
 						else if (rawAimType.equalsIgnoreCase("command")) {
-							aimType = "a certain command executed"; 
+							sender.sendMessage("This aim requires the player to execute the command " + rawAimAchieve); 
 						}
 						else if (rawAimType.equalsIgnoreCase("sign")) {
-							run = false; 
 							sender.sendMessage("This aim requires a player to click on a certain sign"); 
 						}
 						else if (rawAimType.equalsIgnoreCase("none")) {
@@ -1055,19 +1074,10 @@ public class CheckPlayers {
 								rank = " " + rank; 
 							}
 							sender.sendMessage("This aim must be approved by a" + rank + " of the server "); 
-							if (!(plugin.yc.configuration.getString("aims." + args[2] + ".achieve").equalsIgnoreCase("none"))) {
-								sender.sendMessage("To get the aim, you must " + plugin.yc.configuration.getString("aims." + args[2] + ".achieve")); 
-							}
-							run = false; 
 						}
 						else {
-							sender.sendMessage(ChatColor.RED + "Aim type unrecognised"); 
+							sender.sendMessage(ChatColor.RED + "The aim type is unrecognised"); 
 							logger.warning("aimType", rawAimType); 
-							run = false; 
-						}
-						if (run == true) {
-							sender.sendMessage("This aim requires the player to get " + aimType + " "); 
-							sender.sendMessage(plugin.yc.configuration.getString("aims." + args[2] + ".achieve") + ", to be precise "); 
 						}
 					}
 					else {
@@ -1125,7 +1135,7 @@ public class CheckPlayers {
 			logger.warning("updatePlayerError", null); 
 		}
 	}
-	private void getPlayerStatus(CommandSender sender, UUID rpId, String UPN) {
+	private void getPlayerStatus(CommandSender sender, UUID rpId, String UPN, String informationToGet) {
 		/*
 		 * UPN = The name of the player to use in lower case 
 		 * UPNU = The name of the player to use in upper case 
@@ -1133,6 +1143,13 @@ public class CheckPlayers {
 		 * CVTH = The conjugation of the verb to have 
 		 * CVTB = The conjugation of the verb to be 
 		 */ 
+		/*
+		 * 'informationToGet' is a string representing a binary integer representing what player information to show 
+		 * Counting from the bit on the right: 
+		 * - bit 0 represents general player data (like points, kills, etc.) 
+		 * - bit 1 represents player aims 
+		 * - bit 2 represents player signs 
+		 */
 		String spId = rpId.toString(); 
 		String UPNU, UPNP, CVTH, CVTB; 
 		if (UPN.equalsIgnoreCase("you")) {
@@ -1147,26 +1164,38 @@ public class CheckPlayers {
 			CVTH = "has"; 
 			CVTB = "is"; 
 		}
+		String ITG = informationToGet; 
 		if (plugin.yd.configuration.contains("exempt." + spId + ".exempt")) {
 			sender.sendMessage(UPNU + " " + CVTH + " an exemption status of " + plugin.yd.configuration.getString("exempt." + spId + ".exempt")); 
+		}
+		else if (ITG.length() != 3) {
+			sender.sendMessage(ChatColor.RED + "There was an error determing player information ");
 		}
 		else if (plugin.yd.configuration.contains("players." + spId + ".finished") == true) {
 			Boolean isFinished = plugin.yd.configuration.getBoolean("players." + spId + ".finished"); 
 			String target = plugin.yd.configuration.getString("players." + spId + ".target"); 
-			if (isFinished == true) {
-				sender.sendMessage(UPNU + " " + CVTH + " reached the highest self-promotion possible "); 
-				sender.sendMessage("The last target " + UPN + " achieved is: " + target); 
-			}
-			else {
-				sender.sendMessage("The target " + UPN + " " + CVTB + " currently working towards is: " + target); 
-				sender.sendMessage("The aims for this target and " + UPNP + " completion status for each of them are: "); 
-				for (String i : plugin.yc.configuration.getStringList("targets." + target + ".aims")) {
-					sender.sendMessage(i + ": " + plugin.yd.configuration.getString("players." + spId + ".aims." + i)); 
+			if ((ITG.charAt(2) == '1') || (ITG.charAt(1) == '1')) {
+				if (isFinished == true) {
+					sender.sendMessage(UPNU + " " + CVTH + " reached the highest self-promotion possible "); 
+					if (ITG.charAt(1) == '1') {
+						sender.sendMessage("The last target " + UPN + " achieved is: " + target); 
+					}
+				}
+				else {
+					sender.sendMessage("The target " + UPN + " " + CVTB + " currently working towards is: " + target); 
+					if (ITG.charAt(1) == '1') {
+						sender.sendMessage("The aims for this target and " + UPNP + " completion status for each of them are: "); 
+						for (String i : plugin.yc.configuration.getStringList("targets." + target + ".aims")) {
+							sender.sendMessage(i + ": " + plugin.yd.configuration.getString("players." + spId + ".aims." + i)); 
+						}
+					}
 				}
 			}
-			sender.sendMessage(UPNU + " " + CVTH + " " + plugin.yd.configuration.getString("players." + spId + ".data.points") + " points "); 
-			sender.sendMessage(UPNU + " " + CVTH + " " + plugin.yd.configuration.getString("players." + spId + ".data.kills") + " recorded kills "); 
-			if (plugin.yd.configuration.contains("players." + spId + ".data.signs")) {
+			if (ITG.charAt(2) == '1') {
+				sender.sendMessage(UPNU + " " + CVTH + " " + plugin.yd.configuration.getString("players." + spId + ".data.points") + " points "); 
+				sender.sendMessage(UPNU + " " + CVTH + " " + plugin.yd.configuration.getString("players." + spId + ".data.kills") + " recorded kills "); 
+			}
+			if ((plugin.yd.configuration.contains("players." + spId + ".data.signs")) && (ITG.charAt(0) == '1')) {
 				Set<String> signs = Collections.emptySet(); 
 				try {
 					signs = plugin.yd.configuration.getConfigurationSection("players." + spId + ".data.signs").getKeys(false); 
@@ -1175,7 +1204,7 @@ public class CheckPlayers {
 					// No action required 
 				}
 				if (signs.isEmpty() == false) {
-					sender.sendMessage(UPNP + " sign usages are: "); 
+					sender.sendMessage("The amount of times " + UPN + " " + CVTH + " each sign are: "); 
 					for (String i : signs) {
 						sender.sendMessage(i + ": " + plugin.yd.configuration.getString("players." + spId + ".data.signs." + i)); 
 					}

@@ -156,26 +156,47 @@ public class MySignListener implements Listener {
 						String signId = sign.getLine(3); 
 						if (sign.getLine(1).equalsIgnoreCase("update")) {
 							if (event.getPlayer().hasPermission("pos.sign.update.use")) {
-								if (signId == null || signId.equalsIgnoreCase("") || player.hasPermission("pos.sign.limitexempt")) {
-									ua.updatePlayer(player, new String[] {"update", sign.getLine(2)}, true); 
+								if (signId == null || signId.equalsIgnoreCase("")) {
+									if (player.hasPermission("pos.sign.noid")) {
+										ua.updatePlayer(player, new String[] {"update", sign.getLine(2)}, true); 
+									}
+									else {
+										event.setCancelled(true); 
+										logger.messageSender(player, "nopermission", null); 
+									}
+								}
+								else if (player.hasPermission("pos.sign.limitexempt")) {
+									if (player.hasPermission("pos.sign.id.*") || player.hasPermission("pos.sign.id." + signId)) {
+										ua.updatePlayer(player, new String[] {"update", sign.getLine(2)}, true); 
+									}
+									else {
+										event.setCancelled(true); 
+										logger.messageSender(player, "nopermission", null); 
+									}
 								}
 								else if (listedSignIds.contains(signId)) {
-									try {
-										int playerUsage = plugin.yd.configuration.getInt("players." + spId + ".data.signs." + signId); 
-										if (playerUsage < plugin.ys.configuration.getInt("signs." + signId + ".usage") || plugin.ys.configuration.getInt("signs." + signId + ".usage") == -1) {
-											ua.updatePlayer(player, new String[] {"update", sign.getLine(2)}, true); 
-											playerUsage += 1; 
-											plugin.yd.configuration.set("players." + spId + ".data.signs." + signId, playerUsage); 
-											plugin.yd.save(); 
+									if (player.hasPermission("pos.sign.id.*") || player.hasPermission("pos.sign.id." + signId)) {
+										try {
+											int playerUsage = plugin.yd.configuration.getInt("players." + spId + ".data.signs." + signId); 
+											if (playerUsage < plugin.ys.configuration.getInt("signs." + signId + ".usage") || plugin.ys.configuration.getInt("signs." + signId + ".usage") == -1) {
+												ua.updatePlayer(player, new String[] {"update", sign.getLine(2)}, true); 
+												playerUsage += 1; 
+												plugin.yd.configuration.set("players." + spId + ".data.signs." + signId, playerUsage); 
+												plugin.yd.save(); 
+											}
+											else {
+												player.sendMessage(ChatColor.RED + "Could not update target: you have run out of sign usage allowance for this sign "); 
+												event.setCancelled(true); 
+											}
 										}
-										else {
-											player.sendMessage(ChatColor.RED + "Could not update target: you have run out of sign usage allowance for this sign "); 
+										catch (NullPointerException e) {
+											player.sendMessage(ChatColor.RED + "Could not update target: null pointer exception "); 
 											event.setCancelled(true); 
 										}
 									}
-									catch (NullPointerException e) {
-										player.sendMessage(ChatColor.RED + "Could not update target: null pointer exception "); 
+									else {
 										event.setCancelled(true); 
+										logger.messageSender(player, "nopermission", null); 
 									}
 								}
 								else {
@@ -191,47 +212,79 @@ public class MySignListener implements Listener {
 						}
 						else if (sign.getLine(1).equalsIgnoreCase("points")) {
 							if (player.hasPermission("pos.sign.points.use")) {
-								if (signId == null || signId.equalsIgnoreCase("") || player.hasPermission("pos.sign.limitexempt")) {
-									try {
-										int signPoints = Integer.parseInt(sign.getLine(2)); 
-										int playerPoints = plugin.yd.configuration.getInt("players." + spId + ".data.points"); 
-										playerPoints += signPoints; 
-										plugin.yd.configuration.set("players." + spId + ".data.points", playerPoints); 
-										player.sendMessage("You now have " + sign.getLine(2) + " more points "); 
-										plugin.saveFiles(); 
+								if (signId == null || signId.equalsIgnoreCase("")) {
+									if (player.hasPermission("pos.sign.noid")) {
+										try {
+											int signPoints = Integer.parseInt(sign.getLine(2)); 
+											int playerPoints = plugin.yd.configuration.getInt("players." + spId + ".data.points"); 
+											playerPoints += signPoints; 
+											plugin.yd.configuration.set("players." + spId + ".data.points", playerPoints); 
+											player.sendMessage("You now have " + sign.getLine(2) + " more points "); 
+											plugin.saveFiles(); 
+										}
+										catch (NumberFormatException e) {
+											player.sendMessage(ChatColor.RED + "The number of points to add must be an integer "); 
+											logger.warning("custom", "The number of points must be an integer even though it is not on a sign or a player "); 
+										}
 									}
-									catch (NumberFormatException e) {
-										player.sendMessage(ChatColor.RED + "The number of points to add must be an integer "); 
-										logger.warning("custom", "The number of points must be an integer even though it is not on a sign or a player "); 
+									else {
+										event.setCancelled(true); 
+										logger.messageSender(player, "nopermission", null); 
+									}
+								}
+								else if (player.hasPermission("pos.sign.limitexempt")) {
+									if (player.hasPermission("pos.sign.id.*") || player.hasPermission("pos.sign.id." + signId)) {
+										try {
+											int signPoints = Integer.parseInt(sign.getLine(2)); 
+											int playerPoints = plugin.yd.configuration.getInt("players." + spId + ".data.points"); 
+											playerPoints += signPoints; 
+											plugin.yd.configuration.set("players." + spId + ".data.points", playerPoints); 
+											player.sendMessage("You now have " + sign.getLine(2) + " more points "); 
+											plugin.saveFiles(); 
+										}
+										catch (NumberFormatException e) {
+											player.sendMessage(ChatColor.RED + "The number of points to add must be an integer "); 
+											logger.warning("custom", "The number of points must be an integer even though it is not on a sign or a player "); 
+										}
+									}
+									else {
+										event.setCancelled(true); 
+										logger.messageSender(player, "nopermission", null); 
 									}
 								}
 								else if(listedSignIds.contains(signId))  {
-									try {
-										int playerUsage = plugin.yd.configuration.getInt("players." + spId + ".data.signs." + signId); 
-										if (playerUsage < plugin.ys.configuration.getInt("signs." + signId + ".usage") || plugin.ys.configuration.getInt("signs." + signId + ".usage") == -1) {
-											try {
-												int signPoints = Integer.parseInt(sign.getLine(2)); 
-												int playerPoints = plugin.yd.configuration.getInt("players." + spId + ".data.points"); 
-												playerPoints += signPoints; 
-												plugin.yd.configuration.set("players." + spId + ".data.points", playerPoints); 
-												player.sendMessage("You now have " + sign.getLine(2) + " more points "); 
-												playerUsage += 1; 
-												plugin.yd.configuration.set("players." + spId + ".data.signs." + signId, playerUsage); 
-												plugin.saveFiles(); 
+									if (player.hasPermission("pos.sign.id.*") || player.hasPermission("pos.sign.id." + signId)) {
+										try {
+											int playerUsage = plugin.yd.configuration.getInt("players." + spId + ".data.signs." + signId); 
+											if (playerUsage < plugin.ys.configuration.getInt("signs." + signId + ".usage") || plugin.ys.configuration.getInt("signs." + signId + ".usage") == -1) {
+												try {
+													int signPoints = Integer.parseInt(sign.getLine(2)); 
+													int playerPoints = plugin.yd.configuration.getInt("players." + spId + ".data.points"); 
+													playerPoints += signPoints; 
+													plugin.yd.configuration.set("players." + spId + ".data.points", playerPoints); 
+													player.sendMessage("You now have " + sign.getLine(2) + " more points "); 
+													playerUsage += 1; 
+													plugin.yd.configuration.set("players." + spId + ".data.signs." + signId, playerUsage); 
+													plugin.saveFiles(); 
+												}
+												catch (NumberFormatException e) {
+													player.sendMessage(ChatColor.RED + "The number of points to add must be an integer "); 
+													logger.warning("custom", "The number of points must be an integer even though it is not on a sign or a player "); 
+												}
 											}
-											catch (NumberFormatException e) {
-												player.sendMessage(ChatColor.RED + "The number of points to add must be an integer "); 
-												logger.warning("custom", "The number of points must be an integer even though it is not on a sign or a player "); 
+											else {
+												player.sendMessage(ChatColor.RED + "Could not update points: you have run out of sign usage allowance for this sign "); 
+												event.setCancelled(true); 
 											}
 										}
-										else {
-											player.sendMessage(ChatColor.RED + "Could not update points: you have run out of sign usage allowance for this sign "); 
+										catch (NullPointerException e) {
+											player.sendMessage(ChatColor.RED + "Could not update points: null pointer exception "); 
 											event.setCancelled(true); 
 										}
 									}
-									catch (NullPointerException e) {
-										player.sendMessage(ChatColor.RED + "Could not update points: null pointer exception "); 
+									else {
 										event.setCancelled(true); 
+										logger.messageSender(player, "nopermission", null); 
 									}
 								}
 								else {
@@ -251,33 +304,58 @@ public class MySignListener implements Listener {
 								if (plugin.yc.configuration.contains("targets." + target)) {
 									List<String> signIds = new ArrayList<String>(); 
 									signIds.addAll(listedSignIds); 
-									if (signId == null || signId.equalsIgnoreCase("") || player.hasPermission("pos.sign.limitexempt")) {
-										plugin.yd.configuration.set("players." + spId + ".target", target); 
-										plugin.saveFiles(); 
-										YamlFiles.updatePlayerTargets(spId, plugin.yc, plugin.yd, plugin.ys, areSigns, signIds); 
-										player.sendMessage("Your target is now " + target + " "); 
-										plugin.saveFiles(); 
+									if (signId == null || signId.equalsIgnoreCase("")) {
+										if (player.hasPermission("pos.sign.noid")) {
+											plugin.yd.configuration.set("players." + spId + ".target", target); 
+											plugin.saveFiles(); 
+											YamlFiles.updatePlayerTargets(spId, plugin.yc, plugin.yd, plugin.ys, areSigns, signIds); 
+											player.sendMessage("Your target is now " + target + " "); 
+											plugin.saveFiles(); 
+										}
+										else {
+											event.setCancelled(true); 
+											logger.messageSender(player, "nopermission", null); 
+										}
+									}
+									else if (player.hasPermission("pos.sign.limitexempt")) {
+										if (player.hasPermission("pos.sign.id.*") || player.hasPermission("pos.sign.id." + signId)) {
+											plugin.yd.configuration.set("players." + spId + ".target", target); 
+											plugin.saveFiles(); 
+											YamlFiles.updatePlayerTargets(spId, plugin.yc, plugin.yd, plugin.ys, areSigns, signIds); 
+											player.sendMessage("Your target is now " + target + " "); 
+											plugin.saveFiles(); 
+										}
+										else {
+											event.setCancelled(true); 
+											logger.messageSender(player, "nopermission", null); 
+										}
 									}
 									else if(listedSignIds.contains(signId))  {
-										try {
-											int playerUsage = plugin.yd.configuration.getInt("players." + spId + ".data.signs." + signId); 
-											if (playerUsage < plugin.ys.configuration.getInt("signs." + signId + ".usage") || plugin.ys.configuration.getInt("signs." + signId + ".usage") == -1) {
-												plugin.yd.configuration.set("players." + spId + ".target", target); 
-												plugin.saveFiles(); 
-												YamlFiles.updatePlayerTargets(spId, plugin.yc, plugin.yd, plugin.ys, areSigns, signIds); 
-												player.sendMessage("Your target is now " + target + " "); 
-												playerUsage += 1; 
-												plugin.yd.configuration.set("players." + spId + ".data.signs." + signId, playerUsage); 
-												plugin.saveFiles(); 
+										if (player.hasPermission("pos.sign.id.*") || player.hasPermission("pos.sign.id." + signId)) {
+											try {
+												int playerUsage = plugin.yd.configuration.getInt("players." + spId + ".data.signs." + signId); 
+												if (playerUsage < plugin.ys.configuration.getInt("signs." + signId + ".usage") || plugin.ys.configuration.getInt("signs." + signId + ".usage") == -1) {
+													plugin.yd.configuration.set("players." + spId + ".target", target); 
+													plugin.saveFiles(); 
+													YamlFiles.updatePlayerTargets(spId, plugin.yc, plugin.yd, plugin.ys, areSigns, signIds); 
+													player.sendMessage("Your target is now " + target + " "); 
+													playerUsage += 1; 
+													plugin.yd.configuration.set("players." + spId + ".data.signs." + signId, playerUsage); 
+													plugin.saveFiles(); 
+												}
+												else {
+													player.sendMessage(ChatColor.RED + "Could not update target: you have run out of sign usage allowance for this sign "); 
+													event.setCancelled(true); 
+												}
 											}
-											else {
-												player.sendMessage(ChatColor.RED + "Could not update target: you have run out of sign usage allowance for this sign "); 
+											catch (NullPointerException e) {
+												player.sendMessage(ChatColor.RED + "Could not update target: null pointer exception "); 
 												event.setCancelled(true); 
 											}
 										}
-										catch (NullPointerException e) {
-											player.sendMessage(ChatColor.RED + "Could not update target: null pointer exception "); 
+										else {
 											event.setCancelled(true); 
+											logger.messageSender(player, "nopermission", null); 
 										}
 									}
 									else {
@@ -305,27 +383,49 @@ public class MySignListener implements Listener {
 								for (String i : playerAims) {
 									if (aim.equalsIgnoreCase(i)) {
 										changed = true; 
-										if (signId == null || signId.equalsIgnoreCase("") || player.hasPermission("pos.sign.limitexempt")) {
-											plugin.yd.configuration.set("players." + spId + ".aims." + aim, true); 
-											player.sendMessage("your aim " + aim + " is now completed "); 
+										if (signId == null || signId.equalsIgnoreCase("")) {
+											if (player.hasPermission("pos.sign.noid")) {
+												plugin.yd.configuration.set("players." + spId + ".aims." + aim, true); 
+												player.sendMessage("your aim " + aim + " is now completed "); 
+											}
+											else {
+												event.setCancelled(true); 
+												logger.messageSender(player, "nopermission", null); 
+											}
+										}
+										else if (player.hasPermission("pos.sign.limitexempt")) {
+											if (player.hasPermission("pos.sign.id.*") || player.hasPermission("pos.sign.id." + signId)) {
+												plugin.yd.configuration.set("players." + spId + ".aims." + aim, true); 
+												player.sendMessage("your aim " + aim + " is now completed "); 
+											}
+											else {
+												event.setCancelled(true); 
+												logger.messageSender(player, "nopermission", null); 
+											}
 										}
 										else if(listedSignIds.contains(signId))  {
-											try {
-												int playerUsage = plugin.yd.configuration.getInt("players." + spId + ".data.signs." + signId); 
-												if (playerUsage < plugin.ys.configuration.getInt("signs." + signId + ".usage") || plugin.ys.configuration.getInt("signs." + signId + ".usage") == -1) {
-													plugin.yd.configuration.set("players." + spId + ".aims." + aim, true); 
-													player.sendMessage("your aim " + aim + " is now completed "); 
-													playerUsage += 1; 
-													plugin.yd.configuration.set("players." + spId + ".data.signs." + signId, playerUsage); 
+											if (player.hasPermission("pos.sign.id.*") || player.hasPermission("pos.sign.id." + signId)) {
+												try {
+													int playerUsage = plugin.yd.configuration.getInt("players." + spId + ".data.signs." + signId); 
+													if (playerUsage < plugin.ys.configuration.getInt("signs." + signId + ".usage") || plugin.ys.configuration.getInt("signs." + signId + ".usage") == -1) {
+														plugin.yd.configuration.set("players." + spId + ".aims." + aim, true); 
+														player.sendMessage("your aim " + aim + " is now completed "); 
+														playerUsage += 1; 
+														plugin.yd.configuration.set("players." + spId + ".data.signs." + signId, playerUsage); 
+													}
+													else {
+														player.sendMessage(ChatColor.RED + "Could not update aim: you have run out of sign usage allowance for this sign "); 
+														event.setCancelled(true); 
+													}
 												}
-												else {
-													player.sendMessage(ChatColor.RED + "Could not update aim: you have run out of sign usage allowance for this sign "); 
+												catch (NullPointerException e) {
+													player.sendMessage(ChatColor.RED + "Could not update aim: null pointer exception "); 
 													event.setCancelled(true); 
 												}
 											}
-											catch (NullPointerException e) {
-												player.sendMessage(ChatColor.RED + "Could not update aim: null pointer exception "); 
+											else {
 												event.setCancelled(true); 
+												logger.messageSender(player, "nopermission", null); 
 											}
 										}
 										else {
@@ -357,27 +457,49 @@ public class MySignListener implements Listener {
 										for (String i : playerAims) {
 											if (aim.equalsIgnoreCase(i)) {
 												changed = true; 
-												if (signId == null || signId.equalsIgnoreCase("") || player.hasPermission("pos.sign.limitexempt")) {
-													plugin.yd.configuration.set("players." + spId + ".aims." + aim, true); 
-													player.sendMessage("your aim " + aim + " is now completed "); 
+												if (signId == null || signId.equalsIgnoreCase("")) {
+													if (player.hasPermission("pos.sign.noid")) {
+														plugin.yd.configuration.set("players." + spId + ".aims." + aim, true); 
+														player.sendMessage("your aim " + aim + " is now completed "); 
+													}
+													else {
+														event.setCancelled(true); 
+														logger.messageSender(player, "nopermission", null); 
+													}
+												}
+												else if (player.hasPermission("pos.sign.limitexempt")) {
+													if (player.hasPermission("pos.sign.id.*") || player.hasPermission("pos.sign.id." + signId)) {
+														plugin.yd.configuration.set("players." + spId + ".aims." + aim, true); 
+														player.sendMessage("your aim " + aim + " is now completed "); 
+													}
+													else {
+														event.setCancelled(true); 
+														logger.messageSender(player, "nopermission", null); 
+													}
 												}
 												else if(listedSignIds.contains(signId))  {
-													try {
-														int playerUsage = plugin.yd.configuration.getInt("players." + spId + ".data.signs." + signId); 
-														if (playerUsage < plugin.ys.configuration.getInt("signs." + signId + ".usage") || plugin.ys.configuration.getInt("signs." + signId + ".usage") == -1) {
-															plugin.yd.configuration.set("players." + spId + ".aims." + aim, true); 
-															player.sendMessage("your aim " + aim + " is now completed "); 
-															playerUsage += 1; 
-															plugin.yd.configuration.set("players." + spId + ".data.signs." + signId, playerUsage); 
+													if (player.hasPermission("pos.sign.id.*") || player.hasPermission("pos.sign.id." + signId)) {
+														try {
+															int playerUsage = plugin.yd.configuration.getInt("players." + spId + ".data.signs." + signId); 
+															if (playerUsage < plugin.ys.configuration.getInt("signs." + signId + ".usage") || plugin.ys.configuration.getInt("signs." + signId + ".usage") == -1) {
+																plugin.yd.configuration.set("players." + spId + ".aims." + aim, true); 
+																player.sendMessage("your aim " + aim + " is now completed "); 
+																playerUsage += 1; 
+																plugin.yd.configuration.set("players." + spId + ".data.signs." + signId, playerUsage); 
+															}
+															else {
+																player.sendMessage(ChatColor.RED + "Could not update aim: you have run out of sign usage allowance for this sign "); 
+																event.setCancelled(true); 
+															}
 														}
-														else {
-															player.sendMessage(ChatColor.RED + "Could not update aim: you have run out of sign usage allowance for this sign "); 
+														catch (NullPointerException e) {
+															player.sendMessage(ChatColor.RED + "Could not update aim: null pointer exception "); 
 															event.setCancelled(true); 
 														}
 													}
-													catch (NullPointerException e) {
-														player.sendMessage(ChatColor.RED + "Could not update aim: null pointer exception "); 
+													else {
 														event.setCancelled(true); 
+														logger.messageSender(player, "nopermission", null); 
 													}
 												}
 												else {

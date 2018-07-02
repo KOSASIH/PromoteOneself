@@ -5,7 +5,7 @@ The PromoteOneself plugin is a Minecraft Spigot server plugin. This plugin enabl
 This plugin is compatible with the 'Vault' plugin and the 'PlayerPoints' plugin. There are currently no known compatibility issues. 
 
 ## Versions: 
-The current plugin version is Development_11.0.1.12. Thie most recent 'released' version (in the 'release' section) (which is considered to be a pre-release version) is version Development_11.0.1.11. The most recently compiled .jar file can be found in the 'Jar' folder. When there is a full release, it will be found in both the 'Jar' folder and the 'releases' section. This plugin is designed to be run with Minecraft Spigot running versions between 1.7.x and 1.12.x. Most versions of Vault and PlayerPoints for these Spigot versions should work. Bugs found when running on the aforementioned Minecraft versions will be fixed. The plugin may still work with other versions but bugs will not necessarily be fixed. 
+The current plugin version is Development_11.0.2.0. Thie most recent 'released' version (in the 'release' section) (which is considered to be a pre-release version) is version Development_11.0.1.11. The most recently compiled .jar file can be found in the 'Jar' folder. When there is a full release, it will be found in both the 'Jar' folder and the 'releases' section. This plugin is designed to be run with Minecraft Spigot running versions between 1.7.x and 1.12.x. Most versions of Vault and PlayerPoints for these Spigot versions should work. Bugs found when running on the aforementioned Minecraft versions will be fixed. The plugin may still work with other versions but bugs will not necessarily be fixed. 
 
 ## License: 
 This plugin and its source code are released under a GNU GPL v3.0 license (see the LICENSE file for the full license). This plugin is copyright (c) aappleton3/aappleton8, 2018. 
@@ -31,7 +31,8 @@ Each aim can have one of any of the following types:
  - economy - The player needs a certain balance (this requires the 'Vault' plugin to be installed) 
  - group - The player needs to be in a certain permissions group (this requires the 'Vault' plugin to be installed)
  - pgroup - The player needs to have a certain permissions group as its primary permissions group (this requires the 'Vault' plugin to be installed)
- - permission - The player needs to have the permission to get to the next target (e.g. pos.promote.target1, where 'target1' is the name of a target defined in the config.yml file) 
+ - permission - The player needs to have the permission of the form pos.promote.<target-name> to get to the next target, where target-name is thr name of a target defined in the config.yml file   
+ - generalpermission - The player needs to have the specified permission (this requires the 'Vault' plugin to be installed) 
  - command - The player must enter a certain command with a certain set of arguments 
  - sign - The player must achieve the aim by clicking on a sign 
  
@@ -57,7 +58,7 @@ The */prom help &lt;command&gt; &lt;first argument&gt; [&lt;page&gt;]* command s
 The */prom help set &lt;second argument&gt; [&lt;page&gt;]* command shows more detailed information about the */posset set &lt;second argument&gt; &lt;all-remaining arguments&gt;* commands. \
 The */prom version* command shows the plugin version. \
 The */prom update [&lt;target&gt; [&lt;player&gt; [&lt;aim&gt;]]]* command checks a player's completion status for a target or an aim of a target. \
-The */prom check [[player|target|aim|sign|config] &lt;name|id&gt;]* command gives information about a player, target, aim, sign or config (not specifying which one defaults to finding a player). \
+The */prom check [[player|playeraims|playerall|playersigns|target|aim|aimfull|sign|config] &lt;name|id&gt;]* command gives information about a player, target, aim, sign or config file (not specifying which one defaults to finding a player). \
 The */prom password {get [&lt;player&gt;] &lt;aim&gt;}|{set [&lt;player&gt;] &lt;password&gt; &lt;aim&gt;}* command enables a player to get or set a player's password guess attempts. \
 The */prom list targets|aims|players|exempt|signs* command lists all the names of the specified object type. \
 The */posset exempt &lt;player&gt; true|temp|add|join* command sets the exemption status of a player (true: make exempt and delete data; temp: make exempt and keep data; add: lose exemption at next login; join: lose exemption now). \
@@ -117,6 +118,7 @@ All permissions for this plugin default to being ops only. Any permission ending
  - pos.check.others - Get the information of another player 
  - pos.check - Let a player view its own information 
  - pos.check.targets - Get the information of a target 
+ - pos.check.aims.full - Let a player check the information of an aim, including possibly sensitive data such as a password for a password type aim 
  - pos.check.aims - Let a player check the information of an aim 
  - pos.check.signs - Let a player check the maximum allowed usage of a sign 
  - pos.check.configs - Let a player check the saveable status of each config file (a config file is not saveable if there was an error loading it) 
@@ -171,6 +173,9 @@ All permissions for this plugin default to being ops only. Any permission ending
  - pos.promote.* - Let the player be promoted to any target (only required for targets with 'permission' type aims) 
  - pos.promote.&lt;target-name&gt; - Let the player be promoted to a specific target (only required for targets with 'permission' type aims) 
  - pos.sign.* - The root permission for handling signs 
+ - pos.sign.id.* - The root permission for all sign id permissions (players must have permission to use both the sign id and the type of sign before being able to use a sign with an id)
+ - pos.sign.id.&lt;sign-id&gt; - The permission to let a player use a sign with the specified sign id 
+ - pos.sign.noid - The permission that gives players permission to use signs with no ids (players need this permission and the permission to use a type of sign before being able to use that type of sign with no id)
  - pos.sign.update.* - The root permission for handling 'update' type signs 
  - pos.sign.update.use.add - Use an 'update' type sign to add yourself to the promotion tree (this has the pos.sign.update.use permission as a child permission) 
  - pos.sign.update.use - Use an 'update' type sign 
@@ -279,6 +284,9 @@ aims:
   aim20:
     type: sign
     achieve: none
+  aim21:
+    type: generalpermission
+    achieve: example.permission.here 
 ```
 Each section heading within the 'aims' section is the name of an aim. The two aim data fields are explained below: 
  - type - The type of the aim 

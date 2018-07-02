@@ -521,6 +521,7 @@ public class UpdateAims {
 	private Boolean checkPlayerAims(String aimType, String aim, Player player, String spId) {
 		Boolean changed = false; 
 		if (aimType.equalsIgnoreCase("none")) {
+			// No action required 
 		}
 		else if (aimType.equalsIgnoreCase("xp")) {
 			int aimGoal = plugin.yc.configuration.getInt("aims." + aim + ".achieve"); 
@@ -653,6 +654,14 @@ public class UpdateAims {
 					changed = true; 
 					plugin.yd.configuration.set("players." + spId + ".aims." + aim, changed); 
 				}
+			}
+		}
+		else if (aimType.equalsIgnoreCase("generalpermission")) {
+			String permission = plugin.yc.configuration.getString("aims." + aim + ".achieve"); 
+			Boolean hasPermission = props.getPlayerPermissions(permission, player); 
+			if (hasPermission == true) {
+				changed = true; 
+				plugin.yd.configuration.set("players." + spId + ".aims." + aim, changed); 
 			}
 		}
 		else if (aimType.equalsIgnoreCase("command")) {

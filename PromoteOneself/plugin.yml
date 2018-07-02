@@ -1,6 +1,6 @@
 name: PromoteOneself
 main: me.PromoteOneselfPackage.PromoteOneself.Classes.PromoteOneselfMainClass 
-version: Development_11.0.1.12
+version: Development_11.0.2.0
 description: A plugin which lets people achieve aims to work up through a server's ranking system 
 author: aappleton3 
 database: false
@@ -114,7 +114,7 @@ permissions:
     children: 
       pos.check.others: true
       pos.check.targets: true
-      pos.check.aims: true
+      pos.check.aims.full: true 
       pos.check.signs: true
       pos.check.configs: true
   pos.check.others:
@@ -128,6 +128,11 @@ permissions:
   pos.check.targets:
     description: Check a target 
     default: op
+  pos.check.aims.full: 
+    description: Check an aim including data such as the required password of a password type aim 
+    default: op
+    children:
+      pos.check.aims: true
   pos.check.aims:
     description: Check an aim 
     default: op
@@ -345,12 +350,20 @@ permissions:
     description: Let the player create, delete and use all signs 
     default: op
     children:
+      pos.sign.id.*: true
+      pos.sign.noid: true
       pos.sign.update.*: true
       pos.sign.points.*: true
       pos.sign.target.*: true
       pos.sign.sign.*: true
       pos.sign.aim.*: true
       pos.sign.limitexempt: true
+  pos.sign.id.*:
+    description: Let the player use any sign with an id 
+    default: op
+  pos.sign.noid:
+    description: Let the player use signs with no ids 
+    default: op
   pos.sign.update.*:
     description: Let the player create, delete and use update type signs 
     default: op 

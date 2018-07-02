@@ -66,10 +66,24 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 		catch (NullPointerException e) {
 			logger.info("custom", "No targets were loaded "); 
 		}
+		Set<String> signs = null; 
+		try {
+			signs = ys.configuration.getConfigurationSection("signs").getKeys(false); 
+		}
+		catch (NullPointerException e) {
+			logger.info("custom", "No signs were loaded "); 
+		}
 		if (targets != null && targets.isEmpty() == false) {
 			logger.info("custom", "Additional permissions for targets loaded "); 
 			for (String i : targets) {
 				p = new org.bukkit.permissions.Permission("pos.promote." + i); 
+				pm.addPermission(p); 
+			}
+		}
+		if (signs != null && signs.isEmpty() == false) {
+			logger.info("custom", "Additional permissions for signs loaded "); 
+			for (String i : signs) {
+				p = new org.bukkit.permissions.Permission("pos.signs.id." + i); 
 				pm.addPermission(p); 
 			}
 		}

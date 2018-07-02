@@ -76,6 +76,15 @@ public class GetPlayerProperties {
 			return false; 
 		}
 	}
+	public Boolean getPlayerPermissions(String permission, Player player) {
+		if (plugin.permsExist == true) {
+			return plugin.perms.has(player, permission); 
+		}
+		else {
+			logger.warning("custom", "There is an aim that needs players to have a certain general permission even though this plugin cannot detect vault "); 
+			return false; 
+		}
+	}
 	public Boolean getPlayerPoins(int points, Player player) {
 		if (plugin.playerPointsExists == true) {
 			Boolean hasPoints = null; 

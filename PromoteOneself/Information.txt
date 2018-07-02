@@ -1,4 +1,4 @@
-This is a general plugin information file that is shipped inside the exported .jar file of the plugin. More information can be found on this plugin's GitHub page. This file was last updated for plugin version Development_11.0.1.12. 
+This is a general plugin information file that is shipped inside the exported .jar file of the plugin. More information can be found on this plugin's GitHub page. This file was last updated for plugin version Development_11.0.2.0. 
 
 
 Commands: 
@@ -8,7 +8,7 @@ The */prom help <command> <first argument> [<page>]* command shows more detailed
 The */prom help set <second argument> [<page>]* command shows more detailed information about the */posset set <second argument> <all-remaining arguments>* commands. 
 The */prom version* command shows the plugin version. 
 The */prom update [<target> [<player> [<aim>]]]* command checks a player's completion status for a target or an aim of a target. 
-The */prom check [[player|target|aim|sign|config] <name|id>]* command gives information about a player, target or aim. 
+The */prom check [[player|playeraims|playerall|playersigns|target|aim|aimfull|sign|config] &lt;name|id&gt;]* command gives information about a player, target, aim, sign or config file (not specifying which one defaults to finding a player). 
 The */prom list targets|aims|players|exempt|signs* command lists all the names of the specified object type. 
 The */prom password {get [player] <aim>}|{set [player] <password> <aim>}* command enables a player to get or set a player's password guess attempts. 
 The */posset exempt <player> true|temp|add|join* command sets the exemption status of a player (true: make exempt and delete data; temp: make exempt and keep data; add: lose exemption at next login; join: lose exemption now). 
@@ -142,7 +142,7 @@ Permissions:
     children: 
       pos.check.others: true
       pos.check.targets: true
-      pos.check.aims: true
+      pos.check.aims.full: true 
       pos.check.signs: true
       pos.check.configs: true
   pos.check.others:
@@ -156,6 +156,11 @@ Permissions:
   pos.check.targets:
     description: Check a target 
     default: op
+  pos.check.aims.full: 
+    description: Check an aim including data such as the required password of a password type aim 
+    default: op
+    children:
+      pos.check.aims: true
   pos.check.aims:
     description: Check an aim 
     default: op
@@ -373,12 +378,20 @@ Permissions:
     description: Let the player create, delete and use all signs 
     default: op
     children:
+      pos.sign.id.*: true
+      pos.sign.noid: true
       pos.sign.update.*: true
       pos.sign.points.*: true
       pos.sign.target.*: true
       pos.sign.sign.*: true
       pos.sign.aim.*: true
       pos.sign.limitexempt: true
+  pos.sign.id.*:
+    description: Let the player use any sign with an id 
+    default: op
+  pos.sign.noid:
+    description: Let the player use signs with no ids 
+    default: op
   pos.sign.update.*:
     description: Let the player create, delete and use update type signs 
     default: op 
@@ -521,14 +534,12 @@ aim
 
 To do: 
 Type1 (must do): 
-Ensure compatibility with versions 1.7.x-1.12.x
 
 Type2 (should learn to do):  
 
 Type 3 (could think about doing): 
 
 Type4 (could do on a whim) 
-More comprehensive sign permissions - Permissions for id groups too or exempt from the limit of a certain id group 
 
 
 
