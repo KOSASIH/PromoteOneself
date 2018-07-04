@@ -478,6 +478,14 @@ public class UpdateAims {
 				logger.messageSender(sender, "nopermission", null); 
 			}
 		}
+		else if (args[1].equalsIgnoreCase("configs")) {
+			if (sender.hasPermission("pos.list.configs")) {
+				sender.sendMessage("The config files are: config.yml, players.yml and signs.yml"); 
+			}
+			else {
+				logger.messageSender(sender, "nopermission", null); 
+			}
+		}
 		else {
 			logger.messageSender(sender, "custom", "The object type requested is not valid; it should be one of players, exempt, signs, targets or aims"); 
 		}

@@ -5,7 +5,7 @@ The PromoteOneself plugin is a Minecraft Spigot server plugin. This plugin enabl
 This plugin is compatible with the 'Vault' plugin and the 'PlayerPoints' plugin. There are currently no known compatibility issues. 
 
 ## Versions: 
-The current plugin version is Development_11.0.2.0. Thie most recent 'released' version (in the 'release' section) (which is considered to be a pre-release version) is version Development_11.0.1.11. The most recently compiled .jar file can be found in the 'Jar' folder. When there is a full release, it will be found in both the 'Jar' folder and the 'releases' section. This plugin is designed to be run with Minecraft Spigot running versions between 1.7.x and 1.12.x. Most versions of Vault and PlayerPoints for these Spigot versions should work. Bugs found when running on the aforementioned Minecraft versions will be fixed. The plugin may still work with other versions but bugs will not necessarily be fixed. 
+The current plugin version is Development_11.0.2.2. Thie most recent 'released' version (in the 'release' section) (which is considered to be a pre-release version) is version Development_11.0.1.11. The most recently compiled .jar file can be found in the 'Jar' folder. When there is a full release, it will be found in both the 'Jar' folder and the 'releases' section. This plugin is designed to be run with Minecraft Spigot running versions between 1.7.x and 1.12.x. Most versions of Vault and PlayerPoints for these Spigot versions should work. Bugs found when running on the aforementioned Minecraft versions will be fixed. The plugin may still work with other versions but bugs will not necessarily be fixed. 
 
 ## License: 
 This plugin and its source code are released under a GNU GPL v3.0 license (see the LICENSE file for the full license). This plugin is copyright (c) aappleton3/aappleton8, 2018. 
@@ -128,6 +128,7 @@ All permissions for this plugin default to being ops only. Any permission ending
  - pos.list.players - Let a player list the name of every player 
  - pos.list.exempt - Let a player list the name of every exempt player
  - pos.list.signs - Let a player list the id of every sign 
+ - pos.list.configs - List all the config file names 
  - pos.exempt.* - The root permission for setting a player's exemption status 
  - pos.exempt.true - Make a player exempt 
  - pos.exempt.temp - Make a player exempt, whilst keeping its data in the promotion tree 
@@ -197,7 +198,8 @@ All permissions for this plugin default to being ops only. Any permission ending
  - pos.sign.aim.use - Use an 'aim' type sign 
  - pos.sign.aim.create - Create an 'aim' type sign 
  - pos.sign.aim.delete - Remove an 'aim' type sign 
- - pos.sign.limitexempt - Be exempt from sign usage limits 
+ - pos.sign.limitexempt.* - Be exempt from all sign usage limits 
+ - pos.sign.limitexempt.&lt;sign-id&gt; - Be exempt from the usage limit of the specified sign id 
 
 ## Config Files: 
 ### The Config Files: 

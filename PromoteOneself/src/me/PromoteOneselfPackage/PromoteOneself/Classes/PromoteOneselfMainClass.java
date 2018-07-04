@@ -1,5 +1,6 @@
 package me.PromoteOneselfPackage.PromoteOneself.Classes;
 
+import java.util.Collections;
 import java.util.Set;
 
 import org.bukkit.ChatColor;
@@ -38,6 +39,8 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 	public Boolean permsExist = false; 
 	public PlayerPoints playerPointsPlugin = null; 
 	public Boolean playerPointsExists = false; 
+	public Set<String> targetPermissionTargets = Collections.emptySet(); 
+	public Set<String> signPermissionSigns = Collections.emptySet(); 
 	
 	@Override 
 	public void onDisable() {
@@ -58,35 +61,21 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 	}
 	
 	private void registerExtraPermissions(PluginManager pm) {
-		org.bukkit.permissions.Permission p = null; 
-		Set<String> targets = null; 
+		Set<String> targets = Collections.emptySet(); 
+		Set<String> signs = Collections.emptySet(); 
 		try {
 			targets = yc.configuration.getConfigurationSection("targets").getKeys(false); 
 		}
 		catch (NullPointerException e) {
-			logger.info("custom", "No targets were loaded "); 
+			// No action required 
 		}
-		Set<String> signs = null; 
 		try {
 			signs = ys.configuration.getConfigurationSection("signs").getKeys(false); 
 		}
 		catch (NullPointerException e) {
-			logger.info("custom", "No signs were loaded "); 
+			// No action required 
 		}
-		if (targets != null && targets.isEmpty() == false) {
-			logger.info("custom", "Additional permissions for targets loaded "); 
-			for (String i : targets) {
-				p = new org.bukkit.permissions.Permission("pos.promote." + i); 
-				pm.addPermission(p); 
-			}
-		}
-		if (signs != null && signs.isEmpty() == false) {
-			logger.info("custom", "Additional permissions for signs loaded "); 
-			for (String i : signs) {
-				p = new org.bukkit.permissions.Permission("pos.signs.id." + i); 
-				pm.addPermission(p); 
-			}
-		}
+		YamlFiles.checkAdditionalPermissions(signs, targets, pm); 
 	}
 	
 	private void setupVault(PluginManager pm) {
@@ -97,9 +86,9 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 		}
 		else {
 			econExists = true; 
-			logger.info("custom", "Hooked in to vault for an economy "); 
 			RegisteredServiceProvider<Economy> rsp = sm.getRegistration(Economy.class); 
 			econ = rsp.getProvider(); 
+			logger.info("custom", "Hooked in to vault for an economy system "); 
 		}
 		if ((pm.getPlugin("Vault") == null) || (sm.getRegistration(net.milkbowl.vault.permission.Permission.class) == null) || (sm.getRegistration(net.milkbowl.vault.permission.Permission.class).getProvider() == null)) {
 			permsExist = false; 
@@ -107,9 +96,9 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 		}
 		else {
 			permsExist = true; 
-			logger.info("custom", "Hooked in to vault for a permissions "); 
 			RegisteredServiceProvider<net.milkbowl.vault.permission.Permission> rsp = sm.getRegistration(net.milkbowl.vault.permission.Permission.class); 
 			perms = rsp.getProvider(); 
+			logger.info("custom", "Hooked in to vault for a permissions system "); 
 		}
 	}
 	
@@ -121,8 +110,8 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 		}
 		else {
 			playerPointsExists = true; 
-			logger.info("custom", "Hooked in to PlayerPoints for players' points"); 
 			playerPointsPlugin = PlayerPoints.class.cast(playerPoints); 
+			logger.info("custom", "Hooked in to PlayerPoints for players' points"); 
 		}
 	}
 	

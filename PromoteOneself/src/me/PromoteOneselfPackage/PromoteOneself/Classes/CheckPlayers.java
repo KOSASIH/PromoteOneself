@@ -1204,7 +1204,7 @@ public class CheckPlayers {
 					// No action required 
 				}
 				if (signs.isEmpty() == false) {
-					sender.sendMessage("The amount of times " + UPN + " " + CVTH + " each sign are: "); 
+					sender.sendMessage("The amount of times " + UPN + " " + CVTH + " used each sign are: "); 
 					for (String i : signs) {
 						sender.sendMessage(i + ": " + plugin.yd.configuration.getString("players." + spId + ".data.signs." + i)); 
 					}

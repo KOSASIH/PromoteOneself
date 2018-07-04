@@ -1,6 +1,6 @@
 name: PromoteOneself
 main: me.PromoteOneselfPackage.PromoteOneself.Classes.PromoteOneselfMainClass 
-version: Development_11.0.2.0
+version: Development_11.0.2.2
 description: A plugin which lets people achieve aims to work up through a server's ranking system 
 author: aappleton3 
 database: false
@@ -151,6 +151,7 @@ permissions:
       pos.list.players: true
       pos.list.exempt: true
       pos.list.signs: true
+      pos.list.configs: true
   pos.list.targets:
     description: Can list the names of all targets 
     default: op
@@ -165,6 +166,9 @@ permissions:
     default: op
   pos.list.signs:
     description: Can list the ids of all signs
+    default: op
+  pos.list.configs:
+    description: Can list the names of all the config files 
     default: op
   pos.exempt.*:
     description: Set a player's exemption status 
@@ -357,7 +361,7 @@ permissions:
       pos.sign.target.*: true
       pos.sign.sign.*: true
       pos.sign.aim.*: true
-      pos.sign.limitexempt: true
+      pos.sign.limitexempt.*: true
   pos.sign.id.*:
     description: Let the player use any sign with an id 
     default: op
@@ -449,6 +453,6 @@ permissions:
   pos.sign.aim.delete:
     description: Let the player delete aim type signs 
     default: op
-  pos.sign.limitexempt:
-    description: Be exempt from sign usage limits 
+  pos.sign.limitexempt.*:
+    description: Be exempt from all sign usage limits 
     default: op 

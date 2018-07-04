@@ -165,7 +165,7 @@ public class MySignListener implements Listener {
 										logger.messageSender(player, "nopermission", null); 
 									}
 								}
-								else if (player.hasPermission("pos.sign.limitexempt")) {
+								else if (player.hasPermission("pos.sign.limitexempt.*") || player.hasPermission("pos.sign.limitexempt." + signId)) {
 									if (player.hasPermission("pos.sign.id.*") || player.hasPermission("pos.sign.id." + signId)) {
 										ua.updatePlayer(player, new String[] {"update", sign.getLine(2)}, true); 
 									}
@@ -232,7 +232,7 @@ public class MySignListener implements Listener {
 										logger.messageSender(player, "nopermission", null); 
 									}
 								}
-								else if (player.hasPermission("pos.sign.limitexempt")) {
+								else if (player.hasPermission("pos.sign.limitexempt.*") || player.hasPermission("pos.sign.limitexempt." + signId)) {
 									if (player.hasPermission("pos.sign.id.*") || player.hasPermission("pos.sign.id." + signId)) {
 										try {
 											int signPoints = Integer.parseInt(sign.getLine(2)); 
@@ -317,7 +317,7 @@ public class MySignListener implements Listener {
 											logger.messageSender(player, "nopermission", null); 
 										}
 									}
-									else if (player.hasPermission("pos.sign.limitexempt")) {
+									else if (player.hasPermission("pos.sign.limitexempt.*") || player.hasPermission("pos.sign.limitexempt." + signId)) {
 										if (player.hasPermission("pos.sign.id.*") || player.hasPermission("pos.sign.id." + signId)) {
 											plugin.yd.configuration.set("players." + spId + ".target", target); 
 											plugin.saveFiles(); 
@@ -393,7 +393,7 @@ public class MySignListener implements Listener {
 												logger.messageSender(player, "nopermission", null); 
 											}
 										}
-										else if (player.hasPermission("pos.sign.limitexempt")) {
+										else if (player.hasPermission("pos.sign.limitexempt.*") || player.hasPermission("pos.sign.limitexempt." + signId)) {
 											if (player.hasPermission("pos.sign.id.*") || player.hasPermission("pos.sign.id." + signId)) {
 												plugin.yd.configuration.set("players." + spId + ".aims." + aim, true); 
 												player.sendMessage("your aim " + aim + " is now completed "); 
@@ -467,7 +467,7 @@ public class MySignListener implements Listener {
 														logger.messageSender(player, "nopermission", null); 
 													}
 												}
-												else if (player.hasPermission("pos.sign.limitexempt")) {
+												else if (player.hasPermission("pos.sign.limitexempt.*") || player.hasPermission("pos.sign.limitexempt." + signId)) {
 													if (player.hasPermission("pos.sign.id.*") || player.hasPermission("pos.sign.id." + signId)) {
 														plugin.yd.configuration.set("players." + spId + ".aims." + aim, true); 
 														player.sendMessage("your aim " + aim + " is now completed "); 

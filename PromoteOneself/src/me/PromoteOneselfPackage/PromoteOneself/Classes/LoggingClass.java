@@ -54,7 +54,7 @@ public class LoggingClass {
 			logger.warning(nameFormat + "There is no information stored about " + message + " "); 
 		}
 		else if (type.equalsIgnoreCase("reload")) {
-			logger.warning(nameFormat + "An error occured whilst reloading the configuration files that prevented them from being reloaded properly " + message + " "); 
+			logger.warning(nameFormat + "An error occured whilst reloading the configuration files that prevented them being reloaded properly " + message + " "); 
 		}
 		else if (type.equalsIgnoreCase("missingkey")) {
 			logger.warning(nameFormat + "The following key is missing from the following config file: " + message); 

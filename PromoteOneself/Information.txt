@@ -1,4 +1,4 @@
-This is a general plugin information file that is shipped inside the exported .jar file of the plugin. More information can be found on this plugin's GitHub page. This file was last updated for plugin version Development_11.0.2.0. 
+This is a general plugin information file that is shipped inside the exported .jar file of the plugin. More information can be found on this plugin's GitHub page. This file was last updated for plugin version Development_11.0.2.2. 
 
 
 Commands: 
@@ -194,6 +194,9 @@ Permissions:
   pos.list.signs:
     description: Can list the ids of all signs
     default: op
+  pos.list.configs:
+    description: Can list the names of all the config files 
+    default: op
   pos.exempt.*:
     description: Set a player's exemption status 
     default: op 
@@ -385,7 +388,7 @@ Permissions:
       pos.sign.target.*: true
       pos.sign.sign.*: true
       pos.sign.aim.*: true
-      pos.sign.limitexempt: true
+      pos.sign.limitexempt.*: true
   pos.sign.id.*:
     description: Let the player use any sign with an id 
     default: op
@@ -477,9 +480,9 @@ Permissions:
   pos.sign.aim.delete:
     description: Let the player delete aim type signs 
     default: op
-  pos.sign.limitexempt:
-    description: Be exempt from sign usage limits 
-    default: op  
+  pos.sign.limitexempt.*:
+    description: Be exempt from all sign usage limits 
+    default: op 
 
 
 aim types: 

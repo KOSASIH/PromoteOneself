@@ -9,12 +9,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfigurationOptions;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.PluginManager;
 public class YamlFiles {
 	private static PromoteOneselfMainClass plugin; 
 	private static LoggingClass logger;  
@@ -46,14 +48,22 @@ public class YamlFiles {
 		loadErrorFree = loadErrorFree && players.checkConfiguration(); 
 		loadErrorFree = loadErrorFree && signs.checkConfiguration(); 
 		Boolean areSigns = true; 
+		Set<String> rawSignIds = Collections.emptySet(); 
+		Set<String> rawTargetNames = Collections.emptySet(); 
 		List<String> signIds = new ArrayList<String>(); 
 		try {
-			Set<String> rawSignIds = signs.configuration.getConfigurationSection("signs").getKeys(false); 
+			rawSignIds = signs.configuration.getConfigurationSection("signs").getKeys(false); 
 			signIds.addAll(rawSignIds); 
 		}
 		catch (NullPointerException e) {
 			areSigns = false; 
 			logger.warning("custom", "No sign ids were found in the 'signs.yml' file (this is not an error if this is supposed to be true) "); 
+		}
+		try {
+			rawTargetNames = configuration.configuration.getConfigurationSection("targets").getKeys(false); 
+		}
+		catch (NullPointerException e) {
+			logger.warning("custom", "No targets were found in the 'config.yml' file "); 
 		}
 		try {
 			Set<String> pcf = players.configuration.getConfigurationSection("players").getKeys(false); 
@@ -71,6 +81,7 @@ public class YamlFiles {
 			e.printStackTrace(); 
 		}
 		MyPlayerListener.updateCommandsList(); 
+		checkAdditionalPermissions(rawSignIds, rawTargetNames, plugin.getServer().getPluginManager()); 
 		alwaysSaveFiles = configuration.configuration.getBoolean("alwaysSaveFiles"); 
 		configuration.save(); 
 		players.save(); 
@@ -81,6 +92,46 @@ public class YamlFiles {
 		else {
 			logger.broadcastMessageBukkit(ChatColor.RED + plugin.getDescription().getName() + " configuration reloaded, but there were errors "); 
 			logger.warning("configparseerroranonymous", "");
+		}
+	}
+	public static void checkAdditionalPermissions(Set<String> signIds, Set<String> targetNames, PluginManager pm) {
+		if (targetNames != null && targetNames.isEmpty() == false) {
+			for (String i : plugin.targetPermissionTargets) {
+				if (targetNames.contains(i) == false) {
+					pm.removePermission("pos.promote." + i); 
+				}
+			}
+			for (String i : targetNames) {
+				if (plugin.targetPermissionTargets.contains(i) == false) {
+					pm.addPermission(new org.bukkit.permissions.Permission("pos.promote." + i)); 
+				}
+			}
+			plugin.targetPermissionTargets = targetNames; 
+			logger.info("custom", "Additional permissions for targets loaded of form pos.promote.<target>: " + plugin.targetPermissionTargets.toString()); 
+		}
+		else {
+			plugin.targetPermissionTargets = Collections.emptySet(); 
+			logger.info("custom", "No targets were loaded "); 
+		}
+		if (signIds != null && signIds.isEmpty() == false) {
+			for (String i : plugin.signPermissionSigns) {
+				if (signIds.contains(i) == false) {
+					pm.removePermission("pos.sign.id." + i); 
+					pm.removePermission("pos.sign.limitexempt." + i); 
+				}
+			}
+			for (String i : signIds) {
+				if (plugin.signPermissionSigns.contains(i) == false) {
+					pm.addPermission(new org.bukkit.permissions.Permission("pos.sign.id." + i)); 
+					pm.addPermission(new org.bukkit.permissions.Permission("pos.sign.limitexempt." + i)); 
+				}
+			}
+			plugin.signPermissionSigns = signIds; 
+			logger.info("custom", "Additional permissions for signs loaded of form pos.sign.id.<sign> and pos.sign.limitexempt.<sign>: " + plugin.signPermissionSigns.toString()); 
+		}
+		else {
+			plugin.signPermissionSigns = Collections.emptySet(); 
+			logger.info("custom", "No signs were loaded "); 
 		}
 	}
 	protected static void updatePlayerTargets(String i, YamlFiles configuration, YamlFiles players, YamlFiles signs, Boolean areSigns, List<String> Signs) {
