@@ -441,14 +441,19 @@ public class CheckPlayers {
 							}
 						}
 						else if (args[3].equalsIgnoreCase("points")) {
-							configPlace += ".data." + "points"; 
-							if (sender.hasPermission("pos.set.player.points")) {
-								int points = plugin.yc.configuration.getInt("defaultPoints"); 
-								plugin.yd.configuration.set(configPlace, points);
-								sender.sendMessage(args[2] + " now has " + Integer.toString(points) + " points "); 
+							if (args[4].equalsIgnoreCase("reset")) {
+								configPlace += ".data." + "points"; 
+								if (sender.hasPermission("pos.set.player.points")) {
+									int points = plugin.yc.configuration.getInt("defaultPoints"); 
+									plugin.yd.configuration.set(configPlace, points);
+									sender.sendMessage(args[2] + " now has " + Integer.toString(points) + " points "); 
+								}
+								else {
+									logger.messageSender(sender, "nopermission", null); 
+								}
 							}
 							else {
-								logger.messageSender(sender, "nopermission", null); 
+								logger.messageSender(sender, "custom", "The command '/posset set player <username> points' must be followed by 'reset', 'add <points>', 'set <points>' or 'remove <points>' "); 
 							}
 						}
 						else {

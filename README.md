@@ -2,10 +2,10 @@
 ## Description: 
 The PromoteOneself plugin is a Minecraft Spigot server plugin. This plugin enables server administrators to set a series of targets for player to achieve in order to gain rewards, such as rank-ups; the plugin is configured so that, when a player achieves a target, the plugin can run a set of commands as defined in the config.yml file. Targets are composed of aims; a player achieves a target upon completing all aims that are part of the target. As players achieve more targets, they work their way up the 'promotion tree' until they achieve the last target. 
 
-This plugin can use functionality provided by the 'Vault' plugin and the 'PlayerPoints' plugin, although they are not requirements to run the plugin. There are currently no known compatibility issues with any other plugin. 
+This plugin can use functionality provided by the 'Vault' plugin (https://www.spigotmc.org/resources/vault.34315/) and the 'PlayerPoints' plugin (https://dev.bukkit.org/projects/playerpoints). They are not requirements to run the PromoteOneself plugin, but they are required for some aim types (as specified in the 'Aims' section below). There are currently no known compatibility issues with any other plugin. 
 
 ## Versions: 
-The current plugin version is Development_11.0.2.3. Thie most recent 'released' version (in the 'release' section) (which is considered to be a pre-release version) is version Development_11.0.1.11. The most recently compiled .jar file can be found in the 'Jar' folder. When there is a full release, it will be found in both the 'Jar' folder and the 'releases' section. This plugin is designed to be run with Minecraft Spigot running versions between 1.7.x and 1.12.x. Most versions of Vault and PlayerPoints for these Spigot versions should work. Bugs found when running on the aforementioned Minecraft versions will be fixed. The plugin may still work with other versions but bugs will not necessarily be fixed. 
+The current plugin release version is 1.0.0.0; this is available in the 'releases' section. The most recently compiled .jar file that runs (which may be the same as the most recent release) can be found in the 'Jar' folder. This plugin is designed to be run with Minecraft Spigot running versions between 1.7.x and 1.12.x. Most versions of Vault and PlayerPoints for these Spigot versions should work. Bugs found when running on the aforementioned Minecraft versions will be fixed. The plugin may still work with other versions but bugs for these versions will not necessarily be fixed. 
 
 ## License: 
 This plugin and its source code are released under a GNU GPL v3.0 license (see the LICENSE file for the full license). This plugin is copyright (c) aappleton3/aappleton8, 2018. 
@@ -31,7 +31,7 @@ Each aim can have one of any of the following types:
  - economy - The player needs a certain balance (this requires the 'Vault' plugin to be installed) 
  - group - The player needs to be in a certain permissions group (this requires the 'Vault' plugin to be installed)
  - pgroup - The player needs to have a certain permissions group as its primary permissions group (this requires the 'Vault' plugin to be installed)
- - permission - The player needs to have the permission of the form pos.promote.<target-name> to get to the next target, where target-name is thr name of a target defined in the config.yml file   
+ - permission - The player needs to have the permission of the form pos.promote.&lt;target-name&gt; to get to the next target, where target-name is thr name of a target defined in the config.yml file   
  - generalpermission - The player needs to have the specified permission (this requires the 'Vault' plugin to be installed) 
  - command - The player must enter a certain command with a certain set of arguments 
  - sign - The player must achieve the aim by clicking on a sign 
@@ -40,12 +40,12 @@ Each of the above aim types can also be given to a player manually by a server a
 
 ## Commands: 
 This document uses the following syntax for commands: 
- - Text in angle brackets is to be replaced with another value e.g. *&lt;player&gt;* means a player' username
- - Text in square brackets is optional but, if used, must be used verbatim e.g. *[optional-argument]* means optional-argument 
+ - Text in angle brackets is to be replaced with another value e.g. *&lt;player&gt;* means a player's username
+ - Text in square brackets is optional but, if used, must be used verbatim e.g. *[optional-argument]* means 'optional-argument' 
  - Text in angle brackets in square brackets is optional and is to be replaced with another value e.g. *[&lt;player&gt;]* means an optional player's username 
  - The pipe symbol (|) represents 'or' e.g. *&lt;target&gt;|none* means either the name of a target of the word 'none' 
  - Curly braces are used to group multiple arguments around an 'or' e.g. *{get &lt;player&gt;}|{set &lt;player&gt; &lt;password&gt;}* means 'get player-username' or 'set player-username password' 
- - Plain text are mandatory arguments to be used verbatim e.g. *prom version* means prom version 
+ - Plain text words are mandatory arguments to be used verbatim e.g. *prom version* means 'prom version' 
 
 This plugin contains the following commands: 
  - /promoteoneself
@@ -89,7 +89,7 @@ The */posset set setting updateUsernames true|false* command sets whether the pl
 The */posset set setting defaultPoints &lt;integer&gt;* command sets the default number of points players should have. \
 The */posset set setting alwaysSaveFiles true|false* command sets whether configuration files the plugin couldn't load properly should be saved regardless (this may wipe the files). \
 The */posset set setting remindOnJoin true|false* command sets whether the plugin should send a reminder to players each time they join. \
-The */posset set sign <sign-id> usage <integer>* command sets the maximum usage allowed by a sign. 
+The */posset set sign &lt;sign-id&gt; usage &lt;integer&gt;* command sets the maximum usage allowed by a sign. 
 
 Where applicable, commands of the form */prom update &lt;arguments&gt;*, */posset player &lt;arguments&gt;*, */posset exempt &ltarguments&gt;* and */posset set player &lt;arguments&gt;* only work for players which are currently online. 
 
