@@ -58,7 +58,7 @@ public class CommandHelp {
 		}
 		else if (command.equalsIgnoreCase("prom") && firstArgument.equalsIgnoreCase("list")) {
 			helpCommandHeading(sender, command, firstArgument); 
-			sender.sendMessage(ChatColor.AQUA + "/prom list targets|aims|players|exempt|signs "); 
+			sender.sendMessage(ChatColor.AQUA + "/prom list targets|aims|players|exempt|signs|configs "); 
 			sender.sendMessage("This command lists the name/id of each target, aim, player, exempt player or sign "); 
 		}
 		else if (command.equalsIgnoreCase("prom") && firstArgument.equalsIgnoreCase("password")) {

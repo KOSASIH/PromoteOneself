@@ -487,7 +487,7 @@ public class UpdateAims {
 			}
 		}
 		else {
-			logger.messageSender(sender, "custom", "The object type requested is not valid; it should be one of players, exempt, signs, targets or aims"); 
+			logger.messageSender(sender, "custom", "The object type requested is not valid; it should be one of players, exempt, signs, configs, targets or aims"); 
 		}
 	}
 	private Boolean updatePlayerAims(String spId, Player player, Boolean aimSpecific, String[] args) {

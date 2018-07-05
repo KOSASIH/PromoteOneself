@@ -1127,7 +1127,7 @@ public class CheckPlayers {
 				}
 			}
 			else {
-				sender.sendMessage(ChatColor.RED + "The types of objects that you can check are: player, target, aim, sign and config"); 
+				sender.sendMessage(ChatColor.RED + "The types of objects that you can check are: player, playall, playeraims, playersigns target, aim, aimfull, sign and config"); 
 			}
 		}
 		else {

@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,6 +15,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
@@ -22,6 +24,8 @@ public class MySignListener implements Listener {
 	private static LoggingClass logger; 
 	private static UpdateAims ua; 
 	
+	private static final String firstLine = "[pos]"; 
+	
 	public MySignListener(PromoteOneselfMainClass instance, LoggingClass log, UpdateAims uainstance) {
 		plugin = instance; 
 		logger = log; 
@@ -29,9 +33,23 @@ public class MySignListener implements Listener {
 	}
 	
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.NORMAL) 
+	public void onBlockPlace(BlockPlaceEvent event) {
+		if ((event.getBlockAgainst().getType() == Material.SIGN) || (event.getBlockAgainst().getType() == Material.WALL_SIGN) || (event.getBlockAgainst().getType() == Material.SIGN_POST)) {
+			if (event.getBlockAgainst().getState() instanceof Sign) {
+				Sign sign = (Sign) event.getBlockAgainst().getState(); 
+				if (sign.getLine(0).equalsIgnoreCase(firstLine)) {
+					if (event.getPlayer().isSneaking() == false) {
+						event.setCancelled(true); 
+					}
+				}
+			}
+		}
+	}
+	
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.NORMAL) 
 	public void onSignChange(SignChangeEvent event) {
 		if (plugin.yc.configuration.getBoolean("allowSigns") == true) {
-			if (event.getLine(0).equalsIgnoreCase("[pos]")) {
+			if (event.getLine(0).equalsIgnoreCase(firstLine)) {
 				if (event.getLine(1).equalsIgnoreCase("update")) {
 					if (event.getPlayer().hasPermission("pos.sign.update.create")) {
 					}
@@ -84,7 +102,7 @@ public class MySignListener implements Listener {
 		if (plugin.yc.configuration.getBoolean("allowSigns") == true) {
 			if (event.getBlock() instanceof Sign) {
 				Sign sign = (Sign) event.getBlock(); 
-				if (sign.getLine(0).equalsIgnoreCase("[pos]")) {
+				if (sign.getLine(0).equalsIgnoreCase(firstLine)) {
 					if (sign.getLine(1).equalsIgnoreCase("update")) {
 						if (event.getPlayer().hasPermission("pos.sign.update.delete")) {
 						}
@@ -135,7 +153,7 @@ public class MySignListener implements Listener {
 			if (event.getClickedBlock().getState() instanceof Sign) {
 				Sign sign = (Sign) event.getClickedBlock().getState(); 
 				if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-					if (sign.getLine(0).equalsIgnoreCase("[pos]")) {
+					if (sign.getLine(0).equalsIgnoreCase(firstLine)) {
 						Player player = event.getPlayer(); 
 						UUID rpId = player.getUniqueId(); 
 						String spId = rpId.toString(); 
