@@ -298,6 +298,9 @@ public class YamlFiles {
 			} catch (IOException e) {
 				logger.exception("Unable to create a configuration file", e); 
 			} 
+			catch (NullPointerException e) {
+				logger.exception("Unable to create a configuration file", e); 
+			}
 			theConfiguration = loadAConfiguration(theOutFile); 
 			fileHeaders(theConfiguration); 
 		}
