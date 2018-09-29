@@ -63,8 +63,17 @@ public class MyPlayerListener implements Listener{
 			ua.addPlayer(defaultFirstTarget, spId, rpId, true); 
 		}
 		if ((exempt == false) && plugin.yc.configuration.getBoolean("remindOnJoin")) {
-			String target = plugin.yd.configuration.getString("players." + spId + ".target"); 
-			Bukkit.getPlayer(rpId).sendMessage(ChatColor.AQUA + plugin.logger.getName(true) + "Your current target (" + target + ") requires the aims: " + plugin.yc.configuration.getStringList("targets." + target + ".aims"));
+			if (plugin.yd.configuration.getBoolean("players." + spId + ".finished") == true) {
+				String target = plugin.yd.configuration.getString("players." + spId + ".target"); 
+				Bukkit.getPlayer(rpId).sendMessage(ChatColor.AQUA + plugin.logger.getName(true) + "Your current target (" + target + ") requires the aims: " + plugin.yc.configuration.getStringList("targets." + target + ".aims"));
+			}
+			else if (plugin.yd.configuration.getBoolean("players." + spId + ".finished") == false) {
+				Bukkit.getPlayer(rpId).sendMessage(ChatColor.GREEN + plugin.logger.getName(true) + "You have obtained the highest self-promotion possible. "); 
+			}
+			else {
+				plugin.logger.warning("badfinished", Bukkit.getPlayer(rpId).getName()); 
+				plugin.logger.messageSender(Bukkit.getPlayer(rpId), "badfinished", null); 
+			}
 		}
 	}
 	@EventHandler (ignoreCancelled = true, priority = EventPriority.MONITOR) 

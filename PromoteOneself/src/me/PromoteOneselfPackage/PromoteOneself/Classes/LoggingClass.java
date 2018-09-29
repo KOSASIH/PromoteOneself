@@ -65,6 +65,9 @@ public class LoggingClass {
 		else if (type.equalsIgnoreCase("configparseerroranonymous")) {
 			logger.warning(nameFormat + "A config file could not be loaded (it is probably incorrectly formatted). " + message); 
 		}
+		else if (type.equalsIgnoreCase("badfinished")) {
+			logger.warning(nameFormat + "The plugin could not determine the promotion tree completion status of " + message + " "); 
+		}
 		else {
 			unrecognisedLogType(type, "warning"); 
 		}
@@ -125,6 +128,9 @@ public class LoggingClass {
 		}
 		else if (type.equalsIgnoreCase("offlineplayer")) {
 			sender.sendMessage(ChatColor.RED + "The player could not be obtained; it is probably offline "); 
+		}
+		else if (type.equalsIgnoreCase("badfinished")) {
+			sender.sendMessage(ChatColor.RED + nameFormat + "The plugin cannot determine whether you have finished the promotion tree or not; you should contact a server operator about this "); 
 		}
 		else {
 			unrecognisedLogType(type, "a command sender message"); 
