@@ -1,6 +1,6 @@
 name: PromoteOneself
 main: me.PromoteOneselfPackage.PromoteOneself.Classes.PromoteOneselfMainClass 
-version: 1.0.0.2
+version: 1.0.0.3
 description: A plugin which lets people achieve aims to work up through a server's ranking system 
 author: aappleton3 
 database: false
@@ -9,6 +9,9 @@ commands:
   promoteoneself:
     description: Command to show the command for help 
     usage: /promoteoneself 
+  promote:
+    description: An alternative form of the command /prom update <default_next_target> [<player>] 
+    usage: /promote [<player>]
   prom: 
     description: Commands that update a player's status 
     usage: /prom <arguments> 

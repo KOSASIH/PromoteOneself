@@ -63,11 +63,11 @@ public class MyPlayerListener implements Listener{
 			ua.addPlayer(defaultFirstTarget, spId, rpId, true); 
 		}
 		if ((exempt == false) && plugin.yc.configuration.getBoolean("remindOnJoin")) {
-			if (plugin.yd.configuration.getBoolean("players." + spId + ".finished") == true) {
+			if (plugin.yd.configuration.getBoolean("players." + spId + ".finished") == false) {
 				String target = plugin.yd.configuration.getString("players." + spId + ".target"); 
 				Bukkit.getPlayer(rpId).sendMessage(ChatColor.AQUA + plugin.logger.getName(true) + "Your current target (" + target + ") requires the aims: " + plugin.yc.configuration.getStringList("targets." + target + ".aims"));
 			}
-			else if (plugin.yd.configuration.getBoolean("players." + spId + ".finished") == false) {
+			else if (plugin.yd.configuration.getBoolean("players." + spId + ".finished") == true) {
 				Bukkit.getPlayer(rpId).sendMessage(ChatColor.GREEN + plugin.logger.getName(true) + "You have obtained the highest self-promotion possible. "); 
 			}
 			else {

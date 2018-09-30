@@ -35,6 +35,7 @@ public class CommandHelp {
 			sender.sendMessage(ChatColor.AQUA + "/posset reload [argument]" + ChatColor.WHITE + " - Reload the plugin's configuration files "); 
 			sender.sendMessage(ChatColor.AQUA + "/posset player <arguments>" + ChatColor.WHITE + " - Reset, add or remove a player in, to or from the promotion tree "); 
 			sender.sendMessage(ChatColor.AQUA + "/posset set <arguments>" + ChatColor.WHITE + " - Set various values for players, aim, targets and settings "); 
+			sender.sendMessage(ChatColor.AQUA + "/promote [<player>]" + ChatColor.WHITE + " - An alias of " + ChatColor.AQUA + "/prom update <default_next_target> [<player>] ");
 		}
 	}
 	public void helpCommand(CommandSender sender, String command, String firstArgument) {

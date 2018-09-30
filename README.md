@@ -51,6 +51,7 @@ This plugin contains the following commands:
  - /promoteoneself
  - /prom &lt;arguments&gt; 
  - /posset &lt;arguments&gt; 
+ - /promote [&lt;player&gt;]
 
 The */promoteoneself* command shows the help page. \
 The */prom help [&lt;page&gt;]* command shows the top level help pages. \
@@ -89,7 +90,8 @@ The */posset set setting updateUsernames true|false* command sets whether the pl
 The */posset set setting defaultPoints &lt;integer&gt;* command sets the default number of points players should have. \
 The */posset set setting alwaysSaveFiles true|false* command sets whether configuration files the plugin couldn't load properly should be saved regardless (this may wipe the files). \
 The */posset set setting remindOnJoin true|false* command sets whether the plugin should send a reminder to players each time they join. \
-The */posset set sign &lt;sign-id&gt; usage &lt;integer&gt;* command sets the maximum usage allowed by a sign. 
+The */posset set sign &lt;sign-id&gt; usage &lt;integer&gt;* command sets the maximum usage allowed by a sign. \
+The */promote [&lt;player&gt;]* command is an alias of the */prom update &lt;player_default_next_target&gt; [&lt;player&gt;]* command. 
 
 Where applicable, commands of the form */prom update &lt;arguments&gt;*, */posset player &lt;arguments&gt;*, */posset exempt &ltarguments&gt;* and */posset set player &lt;arguments&gt;* only work for players which are currently online. 
 

@@ -726,15 +726,12 @@ public class UpdateAims {
 				player.sendMessage("Your target is now " + nextTarget); 
 			}
 			if (runTheCommands == false) {
-				//sender.sendMessage("runTheCommands == false"); 
 				// No action required 
 			}
 			else if (plugin.yc.configuration.getString("targets." + target + ".commands").equalsIgnoreCase("none")) {
-				//sender.sendMessage("As a string, no commands"); 
 				// No action required 
 			}
 			else if (plugin.yc.configuration.getStringList("targets." + target + ".commands").get(0).equalsIgnoreCase("none")) { 
-				//sender.sendMessage("As a list, no commands"); 
 				// No action required 
 			} 
 			else {
@@ -746,6 +743,26 @@ public class UpdateAims {
 		}
 		else {
 			sender.sendMessage(ChatColor.RED + "The specified target is not a valid target to progress to "); 
+		}
+	}
+	
+	public void promoteCommand(CommandSender sender, String playerName) {
+		@SuppressWarnings("deprecation")
+		Player player = Bukkit.getPlayer(playerName);  
+		if (player == null) {
+			logger.messageSender(sender, "offline", ", it could be offline "); 
+		}
+		else {
+			UUID rpId = player.getUniqueId(); 
+			String spId = rpId.toString();
+			if (plugin.yc.configuration.contains("players." + spId)) {
+				String nextTarget = plugin.yc.configuration.getString("targets." + plugin.yd.configuration.getString("players." + spId + ".target") + ".defaultNextTarget"); 
+				String[] args = { "update", nextTarget, playerName }; 
+				updatePlayer(sender, args); 
+			}
+			else {
+				logger.messageSender(sender, "noplayer", playerName); 
+			}
 		}
 	}
 }

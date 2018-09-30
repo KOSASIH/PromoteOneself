@@ -4,10 +4,10 @@ import java.util.Collections;
 import java.util.Set;
 
 import org.bukkit.ChatColor;
-//import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-//import org.bukkit.entity.Player;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -18,7 +18,7 @@ import net.milkbowl.vault.economy.Economy;
 
 import org.black_ixx.playerpoints.PlayerPoints; 
 
-public class PromoteOneselfMainClass extends JavaPlugin{ 
+public class PromoteOneselfMainClass extends JavaPlugin implements CommandExecutor { 
 	public static PromoteOneselfMainClass plugin; 
 	
 	public final LoggingClass logger = new LoggingClass(this, "Minecraft"); 
@@ -127,7 +127,24 @@ public class PromoteOneselfMainClass extends JavaPlugin{
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-		if (commandLabel.equalsIgnoreCase("promoteoneself")) {
+		if (commandLabel.equalsIgnoreCase("promote")) {
+			if (args.length == 0) {
+				if (sender instanceof Player) {
+					ua.promoteCommand(sender, ((Player)sender).getName());
+				}
+				else {
+					logger.messageSender(sender, "wrongarrangement", ""); 
+				}
+			}
+			else if (args.length == 1) {
+				ua.promoteCommand(sender, args[0]); 
+			}
+			else {
+				logger.messageSender(sender, "help", null); 
+				return false; 
+			}
+		}
+		else if (commandLabel.equalsIgnoreCase("promoteoneself")) {
 			ch.helpPages(sender); 
 		}
 		else if (commandLabel.equalsIgnoreCase("prom")) {
