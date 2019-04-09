@@ -67,6 +67,7 @@ public class GetPlayerProperties {
 			for (String i : playerGroups) {
 				if (i.equalsIgnoreCase(group)) {
 					inGroup = true; 
+					break; 
 				}
 			}
 			return inGroup; 
@@ -85,7 +86,7 @@ public class GetPlayerProperties {
 			return false; 
 		}
 	}
-	public Boolean getPlayerPoins(int points, Player player) {
+	public Boolean getPlayerPoints(int points, Player player) {
 		if (plugin.playerPointsExists == true) {
 			Boolean hasPoints = null; 
 			@SuppressWarnings("deprecation")
@@ -101,6 +102,23 @@ public class GetPlayerProperties {
 		else {
 			logger.warning("custom", "There is an aim that needs players to have a certain number of player points even though this plugin cannot detect PlayerPoints "); 
 			return false; 
+		}
+	}
+	
+	public Boolean getGroupPermissions(String permission, String group, String world) {
+		if (plugin.yc.configuration.getString("checkLowestRankThatCanManuallyApproveAims") == null) {
+			logger.warning("custom", "The 'checkLowestRankThatCanManuallyApproveAims' config field could not be found "); 
+			return true; 
+		}
+		else if ((plugin.permsExist == true) || (!(plugin.yc.configuration.getString("checkLowestRankThatCanManuallyApproveAims").equalsIgnoreCase("never")))) {
+			return plugin.perms.groupHas(world, group, permission); 
+		}
+		else if ((plugin.permsExist == false) && ((plugin.yc.configuration.getString("checkLowestRankThatCanManuallyApproveAims").equalsIgnoreCase("addwarn")) || (plugin.yc.configuration.getString("checkLowestRankThatCanManuallyApproveAims").equalsIgnoreCase("checkwarn")))) {
+			logger.warning("custom", "Vault cannot be found so the permission of the lowest group that can manually approve aims cannot be verified "); 
+			return false; 
+		}
+		else {
+			return true; 
 		}
 	}
 	

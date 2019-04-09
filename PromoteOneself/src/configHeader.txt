@@ -10,7 +10,7 @@ No aim or target can be called 'none'
 'permission' aim types must have the name of the target that the player needs the permission to achieve in their achieve field 
 There should never be more 'permission' type aims than targets 
  
-The aim types are: none, xp, xpl, item, itemid, password, points, playerpoints, kills, economy, group, pgroup, permission, command, sign 
+The aim types are: none, xp, xpl, item, itemid, password, points, playerpoints, kills, economy, group, pgroup, permission, generalpermission, command, sign 
  
 An example layout is given below: 
 
@@ -21,7 +21,9 @@ allowSigns: true
 resetPointsAfterEachPromotion: true
 updateUsernames: true 
 startInPromotionTree: true 
-lowestRankThatCanManuallyApproveAims: admin
+lowestRankThatCanManuallyApproveAims: 
+  world: admin
+checkLowestRankThatCanManuallyApproveAims: never
 defaultPoints: 0
 alwaysSaveFiles: false
 remindOnJoin: true

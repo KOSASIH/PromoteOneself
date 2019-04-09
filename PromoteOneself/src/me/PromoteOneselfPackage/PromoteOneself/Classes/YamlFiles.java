@@ -81,7 +81,9 @@ public class YamlFiles {
 			e.printStackTrace(); 
 		}
 		MyPlayerListener.updateCommandsList(); 
+		//MyPlayerListener.updateWatchedCommands(); 
 		checkAdditionalPermissions(rawSignIds, rawTargetNames, plugin.getServer().getPluginManager()); 
+		checkManualAimWorldNames(configuration); 
 		alwaysSaveFiles = configuration.configuration.getBoolean("alwaysSaveFiles"); 
 		configuration.save(); 
 		players.save(); 
@@ -92,6 +94,53 @@ public class YamlFiles {
 		else {
 			logger.broadcastMessageBukkit(ChatColor.RED + plugin.getDescription().getName() + " configuration reloaded, but there were errors "); 
 			logger.warning("configparseerroranonymous", "");
+		}
+	}
+	public static Boolean checkManualAimWorldNames(YamlFiles configuration) {
+		String checkManualAims = configuration.configuration.getString("checkLowestRankThatCanManuallyApproveAims"); 
+		String configPlace = "lowestRankThatCanManuallyApproveAims"; 
+		if (checkManualAims == null) {
+			logger.warning("custom", "The 'checkLowestRankThatCanManuallyApproveAims' config field could not be found "); 
+			return true; 
+		}
+		else if (checkManualAims.equalsIgnoreCase("never")) {
+			return false; 
+		}
+		else if (configuration.configuration.contains(configPlace) == false) {
+			configuration.configuration.set(configPlace, new ArrayList<String>());
+			logger.warning("custom", "The " + configPlace + " configuration section contains no worldName-groupName pairs "); 
+			return true; 
+		}
+		else if (plugin.permsExist == false) {
+			if ((checkManualAims.equalsIgnoreCase("addwarn")) || (checkManualAims.equalsIgnoreCase("checkwarn"))) {
+				logger.warning("custom", "The plugin cannot find Vault to verify the minimum ranks that have permission to approve aims manually "); 
+				return true; 
+			}
+			else {
+				return false; 
+			}
+		}
+		else {
+			List<String> worldNames = new ArrayList<String>(); 
+			worldNames.addAll(configuration.configuration.getConfigurationSection(configPlace).getKeys(false)); 
+			if (worldNames.isEmpty()) {
+				logger.warning("custom", "The " + configPlace + " configuration section contains no worldName-groupName pairs "); 
+				return true; 
+			}
+			Boolean errors = false; 
+			for (String i : worldNames) {
+				if (plugin.perms.groupHas(i, configuration.configuration.getString(configPlace + "." + i), "pos.set.player.aim.none")) {
+					// No action required 
+				}
+				else if ((checkManualAims.equalsIgnoreCase("check")) || (checkManualAims.equalsIgnoreCase("checkwarn"))) {
+					errors = true; 
+					logger.warning("custom", "The group " + configuration.configuration.getString(configPlace + "." + i) + " does not have the permission " + "pos.set.player.aim.none" + " even though it is in the " + configPlace + " configuration section for world " + i + " ");
+				}
+				else {
+					plugin.perms.groupAdd(i, configuration.configuration.getString(configPlace + "." + i), "pos.set.player.aim.none"); 
+				}
+			}
+			return errors; 
 		}
 	}
 	public static void checkAdditionalPermissions(Set<String> signIds, Set<String> targetNames, PluginManager pm) {
@@ -107,7 +156,7 @@ public class YamlFiles {
 				}
 			}
 			plugin.targetPermissionTargets = targetNames; 
-			logger.info("custom", "Additional permissions for targets loaded of form pos.promote.<target>: " + plugin.targetPermissionTargets.toString()); 
+			logger.info("custom", "Additional permissions for targets loaded of the form pos.promote.<target>: " + plugin.targetPermissionTargets.toString()); 
 		}
 		else {
 			plugin.targetPermissionTargets = Collections.emptySet(); 
@@ -127,7 +176,7 @@ public class YamlFiles {
 				}
 			}
 			plugin.signPermissionSigns = signIds; 
-			logger.info("custom", "Additional permissions for signs loaded of form pos.sign.id.<sign> and pos.sign.limitexempt.<sign>: " + plugin.signPermissionSigns.toString()); 
+			logger.info("custom", "Additional permissions for signs loaded of the forms pos.sign.id.<sign> and pos.sign.limitexempt.<sign>: " + plugin.signPermissionSigns.toString()); 
 		}
 		else {
 			plugin.signPermissionSigns = Collections.emptySet(); 

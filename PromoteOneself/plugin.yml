@@ -1,6 +1,6 @@
 name: PromoteOneself
 main: me.PromoteOneselfPackage.PromoteOneself.Classes.PromoteOneselfMainClass 
-version: 1.0.0.3
+version: 1.0.0.5
 description: A plugin which lets people achieve aims to work up through a server's ranking system 
 author: aappleton3 
 database: false
@@ -225,6 +225,7 @@ permissions:
       pos.set.aim.*: true
       pos.set.setting.*: true
       pos.set.sign.*: true 
+      pos.set.command.*: true
   pos.set.player.*:
     description: Set all settable information about any player 
     default: op
@@ -300,6 +301,7 @@ permissions:
     children: 
       pos.set.setting.defaulttarget: true
       pos.set.setting.lowestrankthatcanmanuallyapproveaims: true
+      pos.set.setting.checklowestrankthatcanmanuallyapproveaims: true
       pos.set.setting.startinpromotiontree: true
       pos.set.setting.updateusernames: true
       pos.set.setting.detectkills: true
@@ -313,7 +315,10 @@ permissions:
     description: Set the default starting target 
     default: op
   pos.set.setting.lowestrankthatcanmanuallyapproveaims:
-    description: Tell the plugin which rank has the pos.set.player.aim permission 
+    description: Tell the plugin which rank has the pos.set.player.aim.none permission 
+    default: op
+  pos.set.setting.checklowestrankthatcanmanuallyapproveaims:
+    description: Set whether the plugin should enforce that the ranks listed in the lowestRankThatCanManuallyApproveAims config field actually have the required permission 
     default: op
   pos.set.setting.startinpromotiontree:
     description: Set whether or not all players should automatically start inside the promotion tree 
@@ -350,6 +355,22 @@ permissions:
   pos.set.sign.usage:
     description: Set the usage limit for a sign id group 
     default: op 
+  pos.set.command.*:
+    description: Change the values of command type aims 
+    default: op
+    children:
+      pos.set.command.update: true
+      pos.set.command.type: true
+      pos.set.command.achieve: true
+  pos.set.command.update:
+    description: Update the list of watched commands 
+    default: op
+  pos.set.command.type:
+    description: Set the type of the aim to command 
+    default: op
+  pos.set.command.achieve:
+    description: Set the achieve field of a command type aim 
+    default: op
   pos.promote.*:
     description: Let the player be promoted to any group (only required for permission type aims) 
     default: op

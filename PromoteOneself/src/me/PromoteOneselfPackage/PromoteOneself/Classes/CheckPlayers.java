@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -678,7 +679,46 @@ public class CheckPlayers {
 			}
 		}
 		else if (args[1].equalsIgnoreCase("setting")) {
-			if (args.length == 4) {
+			if (args.length == 5) {
+				if (args[2].equalsIgnoreCase("lowestRankThatCanManuallyApproveAims")) {
+					if (sender.hasPermission("pos.set.setting.lowestrankthatcanmanuallyapproveaims")) {
+						String worldName = args[3]; 
+						Boolean worldExists = false; 
+						for (World i : Bukkit.getServer().getWorlds()) {
+							if (i.getName().equalsIgnoreCase(args[3])) {
+								worldExists = true; 
+								worldName = i.getName(); 
+								break; 
+							}
+						}
+						if (worldExists == true) {
+							configPlace = "lowestRankThatCanManuallyApproveAims"; 
+							if (plugin.yc.configuration.contains(configPlace) == false) {
+								plugin.yc.configuration.set(configPlace, new ArrayList<String>());
+							}
+							configPlace += "." + worldName; 
+							if (pp.getGroupPermissions("pos.set.player.aim.none", args[4], worldName)) {
+								plugin.yc.configuration.set(configPlace, args[4]); 
+								sender.sendMessage(args[2] + " has been set to " + args[4] + " for world " + args[3] + " "); 
+							}
+							else {
+								sender.sendMessage(ChatColor.RED + "The specified group " + args[4] + " does not have the permission " + "pos.set.player.aim.none" + " "); 
+							}
+						}
+						else {
+							logger.messageSender(sender, "custom", "The specified world name does not exist "); 
+						}
+					}
+					else {
+						logger.messageSender(sender, "nopermission", null); 
+					}
+				}
+				else {
+					logger.messageSender(sender, "help", null); 
+					sender.sendMessage(ChatColor.RED + "For the 'setting' setting type, only the non-list type config fields may be altered "); 
+				}
+			}
+			else if (args.length == 4) {
 				if (args[2].equalsIgnoreCase("detectKills")) {
 					if (sender.hasPermission("pos.set.setting.detectkills")) {
 						configPlace = "detectKills"; 
@@ -746,16 +786,6 @@ public class CheckPlayers {
 						else {
 							sender.sendMessage(ChatColor.RED + "There is no target with the name " + args[3] + " "); 
 						}
-					}
-					else {
-						logger.messageSender(sender, "nopermission", null); 
-					}
-				}
-				else if (args[2].equalsIgnoreCase("lowestRankThatCanManuallyApproveAims")) {
-					if (sender.hasPermission("pos.set.setting.lowestrankthatcanmanuallyapproveaims")) {
-						configPlace = "lowestRankThatCanManuallyApproveAims"; 
-						plugin.yc.configuration.set(configPlace, args[3]); 
-						sender.sendMessage(args[2] + " has been set to " + args[3] + " "); 
 					}
 					else {
 						logger.messageSender(sender, "nopermission", null); 
@@ -881,9 +911,24 @@ public class CheckPlayers {
 						logger.messageSender(sender, "nopermission", null); 
 					}
 				}
+				else if (args[2].equalsIgnoreCase("checkLowestRankThatCanManuallyApproveAims")) {
+					if (sender.hasPermission("pos.set.setting.checkLowestRankThatCanManuallyApproveAims")) {
+						configPlace = "checkLowestRankThatCanManuallyApproveAims"; 
+						if ((args[3].equalsIgnoreCase("add")) || (args[3].equalsIgnoreCase("check")) || (args[3].equalsIgnoreCase("never")) || (args[3].equalsIgnoreCase("addwarn")) || (args[3].equalsIgnoreCase("checkwarn"))) {
+							plugin.yc.configuration.set(configPlace, args[3].toLowerCase());
+							sender.sendMessage(args[2] + " has been set to " + args[3] + " "); 
+						}
+						else {
+							sender.sendMessage(ChatColor.RED + "The setting " + args[2] + " must be one of 'add', 'check', 'never', 'addwarn' or 'checkwarn' "); 
+						}
+					}
+					else {
+						logger.messageSender(sender, "nopermission", null); 
+					}
+				}
 				else {
 					logger.messageSender(sender, "help", null); 
-					sender.sendMessage(ChatColor.RED + "For the 'setting' setting type, only the single level non-list type config fields may be altered "); 
+					sender.sendMessage(ChatColor.RED + "For the 'setting' setting type, only the non-list type config fields may be altered "); 
 				}
 			}
 			else {
@@ -925,6 +970,68 @@ public class CheckPlayers {
 			else {
 				logger.messageSender(sender, "help", null); 
 				sender.sendMessage(ChatColor.RED + "For signs, only the 'usage' limit can be changed "); 
+			}
+		}
+		else if (args[1].equalsIgnoreCase("command")) {
+			if (args[2].equalsIgnoreCase("update")) {
+				if (args.length == 3) {
+					if (sender.hasPermission("pos.set.command.update")) {
+						MyPlayerListener.updateWatchedCommands();
+					}
+					else {
+						logger.messageSender(sender, "nopermission", null); 
+					}
+				}
+				else {
+					sender.sendMessage(ChatColor.RED + "The '/posset set command update' command takes 3 arguments; " + Integer.toString(args.length) + " were given "); 
+				}
+			}
+			else if (args[2].equalsIgnoreCase("type")) {
+				if (args.length == 4) {
+					if (sender.hasPermission("pos.set.command.type")) {
+						if (plugin.yc.configuration.contains("aims." + args[3] + ".type")) {
+							plugin.yc.configuration.set("aims." + args[3] + ".type", "command"); 
+							sender.sendMessage(ChatColor.GREEN + "The type of aim " + args[3] + " has been changed to 'command' "); 
+						}
+						else {
+							logger.messageSender(sender, "noaim", null);
+						}
+					}
+					else {
+						logger.messageSender(sender, "nopermission", null); 
+					}
+				}
+				else {
+					sender.sendMessage(ChatColor.RED + "The '/posset set command type <aim>' command takes 4 arguments; " + Integer.toString(args.length) + " were given "); 
+				}
+			}
+			else if (args[2].equalsIgnoreCase("achieve")) {
+				if (args.length >= 5) {
+					if (sender.hasPermission("pos.set.command.achieve")) {
+						if (plugin.yc.configuration.contains("aims." + args[3] + ".achieve")) {
+							String command = ""; 
+							for (int i = 4; i < args.length; i++) {
+								command += args[i] + " "; 
+							}
+							command = command.trim(); 
+							plugin.yc.configuration.set("aims." + args[3] + ".achieve", command); 
+							sender.sendMessage(ChatColor.GREEN + "The 'achieve' paramater of aim " + args[3] + " has been updated to: " + command + " "); 
+						}
+						else {
+							logger.messageSender(sender, "noaim", null);
+						}
+					}
+					else {
+						logger.messageSender(sender, "noaim", null);
+					}
+				}
+				else {
+					sender.sendMessage(ChatColor.RED + "The '/posset set command achieve <aim> <command> command takes at least 5 arguments; " + Integer.toString(args.length) + " were given "); 
+				}
+			}
+			else {
+				logger.messageSender(sender, "help", null); 
+				sender.sendMessage(ChatColor.RED + "You can change the 'type' and 'achieve' parameters of 'command' type aims or automatically update the list of watched commands "); 
 			}
 		}
 		else {
@@ -1071,14 +1178,23 @@ public class CheckPlayers {
 							sender.sendMessage("This aim requires a player to click on a certain sign"); 
 						}
 						else if (rawAimType.equalsIgnoreCase("none")) {
-							String rank = plugin.yc.configuration.getString("lowestRankThatCanManuallyApproveAims").toLowerCase(); 
-							if (rank.startsWith("a") || rank.startsWith("e") || rank.startsWith("o") || rank.startsWith("i") || rank.startsWith("u")) {
-								rank = "n " + rank; 
+							List<String> worldNames = new ArrayList<String>(); 
+							worldNames.addAll(plugin.yc.configuration.getConfigurationSection("lowestRankThatCanManuallyApproveAims").getKeys(false)); 
+							if ((worldNames.size() == 0) || (worldNames.isEmpty() == true)) {
+								logger.warning("custom", "The config section '" + "lowestRankThatCanManuallyApproveAims" + "' is empty "); 
+								sender.sendMessage(ChatColor.RED + "This aim has an invalid aim condition "); 
+							}
+							else if (worldNames.size() == 1) {
+								processRankName(sender, plugin.yc.configuration.getString("lowestRankThatCanManuallyApproveAims." + worldNames.get(0)), worldNames.get(0), false); 
 							}
 							else {
-								rank = " " + rank; 
+								String defaultWorld = worldNames.contains("world") ? "world" : worldNames.get(0); 
+								sender.sendMessage("The aim must be approves by someone of the following rank for each of the following worlds "); 
+								sender.sendMessage("The default world is " + defaultWorld + " "); 
+								for (String i : worldNames) {
+									processRankName(sender, plugin.yc.configuration.getString("lowestRankThatCanManuallyApproveAims." + i), i, true); 
+								}
 							}
-							sender.sendMessage("This aim must be approved by a" + rank + " of the server "); 
 						}
 						else {
 							sender.sendMessage(ChatColor.RED + "The aim type is unrecognised"); 
@@ -1138,6 +1254,20 @@ public class CheckPlayers {
 		else {
 			logger.messageSender(sender, "argserror", null); 
 			logger.warning("updatePlayerError", null); 
+		}
+	}
+	private void processRankName(CommandSender sender, String rank, String worldName, Boolean multiple) {
+		if (rank.startsWith("a") || rank.startsWith("e") || rank.startsWith("o") || rank.startsWith("i") || rank.startsWith("u")) {
+			rank = "n " + rank; 
+		}
+		else {
+			rank = " " + rank; 
+		}
+		if (multiple == true) {
+			sender.sendMessage(worldName + ": " + rank); 
+		}
+		else {
+			sender.sendMessage("This aim must be approved by a" + rank + " of the server for all worlds "); 
 		}
 	}
 	private void getPlayerStatus(CommandSender sender, UUID rpId, String UPN, String informationToGet) {

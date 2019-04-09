@@ -1,7 +1,9 @@
 package me.PromoteOneselfPackage.PromoteOneself.Classes;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -30,6 +32,20 @@ public class MyPlayerListener implements Listener{
 		}
 		plugin.logger.info("custom", "Commands being watched: " + commands.toString()); 
 	}
+	public static void updateWatchedCommands() {
+		Set<String> aims = plugin.yc.configuration.getConfigurationSection("aims").getKeys(false); 
+		Set<String> commandAims = new HashSet<String>(); 
+		for (String i : aims) {
+			if (plugin.yc.configuration.getString("aims." + i + ".type").equalsIgnoreCase("command")) {
+				commandAims.add(plugin.yc.configuration.getString("aims." + i + ".achieve")); 
+			}
+		}
+		List<String> commandsList = new ArrayList<String>(commandAims); 
+		plugin.yc.configuration.set("commands", commandsList); 
+		plugin.yc.save(); 
+		updateCommandsList(); 
+	}
+	
 	@EventHandler (ignoreCancelled = true, priority = EventPriority.MONITOR) 
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		UUID rpId = event.getPlayer().getUniqueId(); 

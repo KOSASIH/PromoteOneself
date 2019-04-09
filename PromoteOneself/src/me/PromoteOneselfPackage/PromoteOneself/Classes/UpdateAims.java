@@ -617,7 +617,7 @@ public class UpdateAims {
 		}
 		else if (aimType.equalsIgnoreCase("playerpoints")) {
 			int aimPoins = plugin.yc.configuration.getInt("aims." + aim + ".achieve"); 
-			Boolean hasPoints = props.getPlayerPoins(aimPoins, player); 
+			Boolean hasPoints = props.getPlayerPoints(aimPoins, player); 
 			if (hasPoints == true) {
 				changed  = true; 
 				plugin.yd.configuration.set("players." + spId + ".aims." + aim, changed); 

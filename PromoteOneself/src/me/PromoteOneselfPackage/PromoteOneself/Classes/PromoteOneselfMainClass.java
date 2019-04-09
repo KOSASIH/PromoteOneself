@@ -58,6 +58,7 @@ public class PromoteOneselfMainClass extends JavaPlugin implements CommandExecut
 		setupVault(pm); 
 		setupPlayerPoints(pm); 
 		YamlFiles.alwaysSaveFiles = yc.configuration.getBoolean("alwaysSaveFiles"); 
+		YamlFiles.checkManualAimWorldNames(yc); 
 	}
 	
 	private void registerExtraPermissions(PluginManager pm) {
@@ -242,8 +243,17 @@ public class PromoteOneselfMainClass extends JavaPlugin implements CommandExecut
 				return false; 
 			}
 			else if (args[0].equalsIgnoreCase("set")) {
-				if (args.length == 4 || args.length == 5 || args.length == 6) {
+				if ((args.length == 4) || (args.length == 5) || (args.length == 6)) {
 					cp.setObjects(sender, args); 
+				}
+				else if (args.length >= 3) {
+					if (args[1].equalsIgnoreCase("command")) {
+						cp.setObjects(sender, args);
+					}
+					else {
+						logger.messageSender(sender, "help", null); 
+						return false; 
+					}
 				}
 				else {
 					logger.messageSender(sender, "help", null); 

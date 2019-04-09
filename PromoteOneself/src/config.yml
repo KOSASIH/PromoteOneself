@@ -4,7 +4,9 @@ allowSigns: true
 resetPointsAfterEachPromotion: true
 updateUsernames: true 
 startInPromotionTree: true 
-lowestRankThatCanManuallyApproveAims: admin
+lowestRankThatCanManuallyApproveAims: 
+  world: admin
+checkLowestRankThatCanManuallyApproveAims: never
 defaultPoints: 0
 commands: []
 defaultTarget: target1 

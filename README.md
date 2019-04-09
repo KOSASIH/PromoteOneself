@@ -5,7 +5,7 @@ The PromoteOneself plugin is a Minecraft Spigot server plugin. This plugin enabl
 This plugin can use functionality provided by the 'Vault' plugin (https://www.spigotmc.org/resources/vault.34315/) and the 'PlayerPoints' plugin (https://dev.bukkit.org/projects/playerpoints). They are not requirements to run the PromoteOneself plugin, but they are required for some aim types (as specified in the 'Aims' section below). There are currently no known compatibility issues with any other plugins. 
 
 ## Versions: 
-The current plugin release version is 1.0.0.2; this is available in the 'releases' section. The most recently compiled .jar file that runs (which may be the same as the most recent release) can be found in the 'Jar' folder. This plugin is designed to be run with Minecraft Spigot running versions between 1.7.x and 1.13.x. Most versions of Vault and PlayerPoints for the corresponding Spigot versions should work. Bugs found when running on the aforementioned Minecraft versions will be fixed. The plugin may still work with other versions but bugs for these versions will not necessarily be fixed.  
+The current plugin release version is 1.0.0.5; this is available in the 'releases' section. The most recently compiled .jar file that runs (which may be the same as the most recent release) can be found in the 'Jar' folder. This plugin is designed to be run with Minecraft Spigot running versions between 1.7.x and 1.13.x. Most versions of Vault and PlayerPoints for the corresponding Spigot versions should work. Bugs found when running on the aforementioned Minecraft versions will be fixed. The plugin may still work with other versions but bugs for these versions will not necessarily be fixed.  
 
 ## License: 
 This plugin and its source code are released under a GNU GPL v3.0 license (see the LICENSE file for the full license). This plugin is copyright (c) aappleton3/aappleton8, 2018. 
@@ -31,7 +31,7 @@ Each aim can have one of any of the following types:
  - economy - The player needs a certain balance (this requires the 'Vault' plugin to be installed) 
  - group - The player needs to be in a certain permissions group (this requires the 'Vault' plugin to be installed)
  - pgroup - The player needs to have a certain permissions group as its primary permissions group (this requires the 'Vault' plugin to be installed)
- - permission - The player needs to have the permission of the form pos.promote.&lt;target-name&gt; to get to the next target, where target-name is thr name of a target defined in the config.yml file   
+ - permission - The player needs to have the permission of the form pos.promote.&lt;target-name&gt; to get to the next target, where target-name is the name of a target defined in the config.yml file   
  - generalpermission - The player needs to have the specified permission (this requires the 'Vault' plugin to be installed) 
  - command - The player must enter a certain command with a certain set of arguments 
  - sign - The player must achieve the aim by clicking on a sign 
@@ -66,7 +66,7 @@ The */posset exempt &lt;player&gt; true|temp|add|join* command sets the exemptio
 The */posset save* command saves the config files. \
 The */posset reload [check|nocheck]* command reloads the configuration files (adding nothing or 'check' makes it checks each players' aims with the aims each target specifies the player should have; specifying 'nocheck' makes it jut reload the files). \
 The */posset player add|reset|delete [&lt;player&gt;]* command provides the ability to add or remove a player to/from the promotion tree or to reset a player in the promotion tree. \
-The */posset set player &lt;player&gt; aims &lt;aim&gt; true|false* command sets a player's aim completetion status. \
+The */posset set player &lt;player&gt; aims &lt;aim&gt; true|false* command sets a player's aim completion status. \
 The */posset set player &lt;player&gt; password &lt;aim&gt; &lt;password&gt;* command sets a player's password guess for an aim. \
 The */posset set player &lt;player&gt; points {set|add|remove &lt;amount&gt;}|reset* command changes the amount of points a player has. \
 The */posset set player &lt;player&gt; sign &lt;sign-id&gt; &lt;player-usage&gt;* command sets a player's recorded sign usage. \
@@ -83,7 +83,8 @@ The */posset set setting detectKills true|false* command sets whether the plugin
 The */posset set setting watchCommands true|false* command sets whether the plugin should listen for player commands for 'command' type aims or not. \
 The */posset set setting allowSigns true|false* command sets whether the plugin should allow the use of signs or not. \
 The */posset set setting defaultTarget &lt;target&gt;* command sets the default first target when a player first joins the promotion tree. \
-The */posset set setting lowestRankThatCanManuallyApproveAims &lt;rank&gt;* command sets the informational value in the config file used in error messages stating the lowest required rank that can manually approve aims. \
+The */posset set setting lowestRankThatCanManuallyApproveAims &lt;world&gt; &lt;rank&gt;* command sets the informational value in the config file used in error messages stating the lowest required rank that can manually approve aims. \
+The *posset set setting checkLowestRankThatCanManuallyApproveAims add|check|never|addwarn|checkwarn* command sets whether the plugin checks if the value listed in the 'lowestRankThatCanManuallyApproveAims' fields actually has the 'pos.set.player.aim.none' permission 
 The */posset set setting startInPromotionTree true|false* command sets whether players should automatically start in the promotion tree or not. \
 The */posset set setting resetPointsAfterEachPromotion true|false* command sets whether a player's points should be reset after each promotion or not. \
 The */posset set setting updateUsernames true|false* command sets whether the plugin should update the username recorded for the player in the config files each time the player logs in or not. \
@@ -91,9 +92,12 @@ The */posset set setting defaultPoints &lt;integer&gt;* command sets the default
 The */posset set setting alwaysSaveFiles true|false* command sets whether configuration files the plugin couldn't load properly should be saved regardless (this may wipe the files). \
 The */posset set setting remindOnJoin true|false* command sets whether the plugin should send a reminder to players each time they join. \
 The */posset set sign &lt;sign-id&gt; usage &lt;integer&gt;* command sets the maximum usage allowed by a sign. \
+The */posset set command update* command automatically updates the list of watched commands. \
+The */posset set command type &lt;aim&gt;* command sets the type of the aim to 'command'. \
+The */posset set command achieve &lt;aim&gt; &lt;command&gt;* command sets the command of a 'command' type aim. \
 The */promote [&lt;player&gt;]* command is an alias of the */prom update &lt;player_default_next_target&gt; [&lt;player&gt;]* command. 
 
-Where applicable, commands of the form */prom update &lt;arguments&gt;*, */posset player &lt;arguments&gt;*, */posset exempt &ltarguments&gt;* and */posset set player &lt;arguments&gt;* only work for players which are currently online. 
+Where applicable, commands of the form */prom update &lt;arguments&gt;*, */posset player &lt;arguments&gt;*, */posset exempt &lt;arguments&gt;* and */posset set player &lt;arguments&gt;* only work for players which are currently online. 
 
 ## Permissions: 
 All permissions for this plugin default to being ops only. Any permission ending '.others' to refer to other players has, as a child permission, the permission referring to the player entering the command. This plugin has the following permissions: 
@@ -162,6 +166,7 @@ All permissions for this plugin default to being ops only. Any permission ending
  - pos.set.setting.* - The root permission for setting configurable plugin values 
  - pos.set.setting.defaulttarget - Set the default starting target 
  - pos.set.setting.lowestrankthatcanmanuallyapproveaims - Set the name of the lowest rank that can manually approve aims (the rank with the pos.set.player.aim permission) 
+ - pos.set.setting.checklowestrankthatcanmanuallyapproveaims - Set whether the plugin ensures the groups listed in the lowestrankthatcanmanuallyapproveaims fields actually have the permission 
  - pos.set.setting.startinpromotiontree - Set whether players should start in the promotion tree or not 
  - pos.set.setting.updateusernames - Set whether the plugin should update player's recorded usernames when they login or not 
  - pos.set.setting.detectkills - Set whether the plugin should listen to player deaths for 'kills' type aims or not 
@@ -173,6 +178,10 @@ All permissions for this plugin default to being ops only. Any permission ending
  - pos.set.setting.remindonjoin - Set if the plugin should send a reminder to players when they join 
  - pos.set.sign.* - The root permission for setting configurable sign information 
  - pos.set.sign.usage - Set the maximum number of times a player can use a sign 
+ - pos.set.command.* - The root permission for updating command type aims 
+ - pos.set.command.update - Automatically update the list of watched commands 
+ - pos.set.command.type - Set the type of an aim to 'command' 
+ - pos.set.command.achieve - Set the 'achieve' field of a 'command' type aim 
  - pos.promote.* - Let the player be promoted to any target (only required for targets with 'permission' type aims) 
  - pos.promote.&lt;target-name&gt; - Let the player be promoted to a specific target (only required for targets with 'permission' type aims) 
  - pos.sign.* - The root permission for handling signs 
@@ -218,7 +227,8 @@ The config.yml file defines aims and targets, as well as the following plugin se
  - resetPointsAfterEachPromotion - Whether the plugin should automatically reset the player's point count for point type aims after each promotion or not (this has no effect on the points system of the 'PlayerPoints plugin') (true: the points total is reset; false: the points total is carried on after each target is completed) 
  - updateUsernames - Whether the plugin should update the usernames listed under UUIDs or not (true: usernames are updated; false: usernames are not updated) 
  - startInPromotionTree - Whether players should start off with a target or not (true: players start off with a target; false: players start off with no target) 
- - lowestRankThatCanManuallyApproveAims - This is a string that is used only in plugin player messages that states the name of the lowest rank that server operators have decided can approve aims manually 
+ - lowestRankThatCanManuallyApproveAims - This is a configuration section that is used only in plugin player messages that state the names of the lowest ranks that server operators have decided can approve aims manually for each world; each world name is a key within the section and the name of the lowest rank is the value of the key; world 'world' will be used as the default value for all unspecified worlds, unless it is not present in which case it will be the first value in the list
+ - checkLowestRankThatCanManuallyApproveAims - Whether the plugin should ensure that the groups listed in the 'lowestRankThatCanManuallyApproveAims' fields actually have the permission (add: if Vault is installed the permission is added to the specified groups otherwise nothing happens; check: if Vault is installed the plugin shows a warning message if the groups do not have the permission otherwise nothing happens; never: nothing happens; addwarn: if Vault is installed the permission is added to the specified groups otherwise a warning is shown; checkwarn: if Vault is installed the plugin shows a warning message if the groups do not have the permission otherwise a warning is shown)
  - defaultPoints - The integer number of points that players start off with (this has nothing to do with 'PlayerPoints' plugin points) 
  - commands - This is a list of commands with arguments that the plugin will watch for when dealing with 'command' type aims 
  - defaultTarget - This is the default target that players start on when they first join the promotion tree 

@@ -109,9 +109,9 @@ public class CommandHelp {
 		}
 		else if (command.equalsIgnoreCase("posset") && firstArgument.equalsIgnoreCase("set")) {
 			helpCommandHeading(sender, command, firstArgument); 
-			sender.sendMessage(ChatColor.AQUA + "/posset set player|target|aim|setting|sign <name|id> [setting] [sub-setting] <value> "); 
+			sender.sendMessage(ChatColor.AQUA + "/posset set player|target|aim|setting|sign|command <name|id> [setting] [sub-setting] [value] "); 
 			sender.sendMessage("Set various properties for the plugin "); 
-			sender.sendMessage(ChatColor.AQUA + "/prom help set <player|target|aim|setting|sign>" + ChatColor.WHITE + " - " + ChatColor.AQUA + "gives you more help with the /posset set command "); 
+			sender.sendMessage(ChatColor.AQUA + "/prom help set <player|target|aim|setting|sign|command>" + ChatColor.WHITE + " - " + ChatColor.AQUA + "gives you more help with the /posset set command "); 
 		}
 		else if (command.equalsIgnoreCase("set") && firstArgument.equalsIgnoreCase("player"))  {
 			if (page == 1) {
@@ -138,6 +138,7 @@ public class CommandHelp {
 		else if (command.equalsIgnoreCase("set")  && firstArgument.equalsIgnoreCase("aim")) {
 			helpCommandHeading(sender, command, firstArgument); 
 			sender.sendMessage(ChatColor.RED + "Aims of type 'command' cannot be altered with this command "); 
+			sender.sendMessage(ChatColor.RED + "Aims of type 'command' must be altered with the '/posset set command <arguments> command "); 
 			sender.sendMessage(ChatColor.AQUA + "/posset set aim <aim> type <aim-type>" + ChatColor.WHITE + " - set the type of an aim "); 
 			sender.sendMessage(ChatColor.AQUA + "/posset set aim <aim> achieve <aim-goal>" + ChatColor.WHITE + " - set the goal of an aim "); 
 		}
@@ -148,11 +149,12 @@ public class CommandHelp {
 				sender.sendMessage(ChatColor.AQUA + "/posset set setting watchCommands true|false" + ChatColor.WHITE + " - set whether the plugin should detect players executing commands which might be aim goals or not "); 
 				sender.sendMessage(ChatColor.AQUA + "/posset set setting allowSigns true|false" + ChatColor.WHITE + " - set whether the plugin should use signs or not "); 
 				sender.sendMessage(ChatColor.AQUA + "/posset set setting defaultTarget <target>" + ChatColor.WHITE + " - set the default first target when a player first joins the promotion tree "); 
-				sender.sendMessage(ChatColor.AQUA + "/posset set setting lowestRankThatCanManuallyApproveAims <rank>" + ChatColor.WHITE + " - set the lowest rank that can manually approve aims (informational only: not a critical value) "); 
-				sender.sendMessage(ChatColor.AQUA + "/posset set setting startInPromotionTree true|false" + ChatColor.WHITE + " - set whether a player hsould automatically be added to the promotion tree on its first join or not "); 
+				sender.sendMessage(ChatColor.AQUA + "/posset set setting lowestRankThatCanManuallyApproveAims <world> <rank>" + ChatColor.WHITE + " - set the lowest rank that can manually approve aims in each world (informational only: not a critical value) "); 
+				sender.sendMessage(ChatColor.AQUA + "/posset set setting checkLowestRankThatCanManuallyApproveAims add|check|never|addwarn|checkwarn" + ChatColor.WHITE + " - set whether the plugin enforces that the groups listed in the 'lowestRankThatCanManuallyApproveAims' actually have the required permission ");
 			}
 			else {
 				helpCommandHeading(sender, command, firstArgument, 2, 2); 
+				sender.sendMessage(ChatColor.AQUA + "/posset set setting startInPromotionTree true|false" + ChatColor.WHITE + " - set whether a player hsould automatically be added to the promotion tree on its first join or not "); 
 				sender.sendMessage(ChatColor.AQUA + "/posset set setting resetPointsAfterEachPromotion true|false" + ChatColor.WHITE + " - set whether a player's points should return to 0 after each promotion it gets or not "); 
 				sender.sendMessage(ChatColor.AQUA + "/posset set setting updateUsernames true|false" + ChatColor.WHITE + " - set whether the plugin should automatically update a player's recorded username after each login or not "); 
 				sender.sendMessage(ChatColor.AQUA + "/posset set setting defaultPoints <integer>" + ChatColor.WHITE + " - set the default amount of points each player gets "); 
@@ -163,6 +165,12 @@ public class CommandHelp {
 		else if (command.equalsIgnoreCase("set") && firstArgument.equalsIgnoreCase("sign")) {
 			helpCommandHeading(sender, command, firstArgument); 
 			sender.sendMessage(ChatColor.AQUA + "/posset set sign <sign-id> usage <integer>" + ChatColor.WHITE + " - set the maximum number of times a player can use a sign with the given sign id "); 
+		}
+		else if (command.equalsIgnoreCase("set") && firstArgument.equalsIgnoreCase("command")) {
+			helpCommandHeading(sender, command, firstArgument); 
+			sender.sendMessage(ChatColor.AQUA + "/posset set command update" + ChatColor.WHITE + " - automatically update the list of watched commands "); 
+			sender.sendMessage(ChatColor.AQUA + "/posset set command type <aim>" + ChatColor.WHITE + " - set the type of an aim to 'command' "); 
+			sender.sendMessage(ChatColor.AQUA + "/posset set command achieve <aim> <command>" + ChatColor.WHITE + " - update the command of a 'command' type aim "); 
 		}
 		else {
 			sender.sendMessage(ChatColor.RED + "That is not a recognised command; for help enter the command " + ChatColor.AQUA + "/prom help"); 
