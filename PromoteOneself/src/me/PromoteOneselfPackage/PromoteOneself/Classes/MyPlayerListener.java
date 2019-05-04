@@ -79,7 +79,10 @@ public class MyPlayerListener implements Listener{
 			ua.addPlayer(defaultFirstTarget, spId, rpId, true); 
 		}
 		if ((exempt == false) && plugin.yc.configuration.getBoolean("remindOnJoin")) {
-			if (plugin.yd.configuration.getBoolean("players." + spId + ".finished") == false) {
+			if (plugin.yd.configuration.contains("players." + spId) == false) {
+				Bukkit.getPlayer(rpId).sendMessage(ChatColor.AQUA + plugin.logger.getName(true) + "You are not in the promotion tree "); 
+			}
+			else if (plugin.yd.configuration.getBoolean("players." + spId + ".finished") == false) {
 				String target = plugin.yd.configuration.getString("players." + spId + ".target"); 
 				Bukkit.getPlayer(rpId).sendMessage(ChatColor.AQUA + plugin.logger.getName(true) + "Your current target (" + target + ") requires the aims: " + plugin.yc.configuration.getStringList("targets." + target + ".aims"));
 			}
@@ -95,19 +98,21 @@ public class MyPlayerListener implements Listener{
 	@EventHandler (ignoreCancelled = true, priority = EventPriority.MONITOR) 
 	public void onPlayerDeath(PlayerDeathEvent event) {
 		if (plugin.yc.configuration.getBoolean("detectKills") == true) {
-			try {
-				UUID rpId = event.getEntity().getKiller().getUniqueId(); 
-				String spId = rpId.toString(); 
-				if ((plugin.yd.configuration.contains("players." + spId)) && (event.getEntity().getKiller() instanceof Player)) {
-					int kills = plugin.yd.configuration.getInt("players." + spId + ".data.kills"); 
-					kills += 1; 
-					plugin.yd.configuration.set("players." + spId + ".data.kills", kills); 
-					plugin.saveFiles(); 
+			if (event.getEntity().getKiller() instanceof Player) {
+				try {
+					UUID rpId = event.getEntity().getKiller().getUniqueId(); 
+					String spId = rpId.toString(); 
+					if (plugin.yd.configuration.contains("players." + spId)) {
+						int kills = plugin.yd.configuration.getInt("players." + spId + ".data.kills"); 
+						kills += 1; 
+						plugin.yd.configuration.set("players." + spId + ".data.kills", kills); 
+						plugin.saveFiles(); 
+					}
 				}
-			}
-			catch (Exception e) {
-				plugin.logger.warning("custom", "Player death error: " + e.toString()); 
-				plugin.logger.exception("death of player error: ", e); 
+				catch (Exception e) {
+					plugin.logger.warning("custom", "Player death error: " + e.toString()); 
+					plugin.logger.exception("death of player error: ", e); 
+				}
 			}
 		}
 	}
