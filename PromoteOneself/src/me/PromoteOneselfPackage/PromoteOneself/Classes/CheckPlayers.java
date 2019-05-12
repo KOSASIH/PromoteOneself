@@ -1179,7 +1179,12 @@ public class CheckPlayers {
 						}
 						else if (rawAimType.equalsIgnoreCase("none")) {
 							List<String> worldNames = new ArrayList<String>(); 
-							worldNames.addAll(plugin.yc.configuration.getConfigurationSection("lowestRankThatCanManuallyApproveAims").getKeys(false)); 
+							try {
+								worldNames.addAll(plugin.yc.configuration.getConfigurationSection("lowestRankThatCanManuallyApproveAims").getKeys(false)); 
+							}
+							catch (NullPointerException e) {
+								logger.warning("missingkey", "any sub-key from the 'lowestrankthatcanmanuallyapproveaims' field in the 'config.yml' file. "); 
+							}
 							if ((worldNames.size() == 0) || (worldNames.isEmpty() == true)) {
 								logger.warning("custom", "The config section '" + "lowestRankThatCanManuallyApproveAims" + "' is empty "); 
 								sender.sendMessage(ChatColor.RED + "This aim has an invalid aim condition "); 
