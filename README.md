@@ -234,6 +234,23 @@ The config.yml file defines aims and targets, as well as the following plugin se
  - defaultTarget - This is the default target that players start on when they first join the promotion tree 
  - alwaysSaveFiles - This turns on or off the saving of files that are suspected to be malformed when the game loads (saving these files may wipe their contents and this option doesn;t effect every in-game command: if a file is suspected to be malformed, the server should be stopped and the file should be backed up and fixed) 
  - remindOnJoin - This sets whether the plugin will send a reminder message to each player when it joins or not 
+ An example of the above config settings is given below. 
+ ```yaml
+ detectKills: true
+watchCommands: true
+allowSigns: true
+resetPointsAfterEachPromotion: true
+updateUsernames: true 
+startInPromotionTree: true 
+lowestRankThatCanManuallyApproveAims: 
+  world: admin
+checkLowestRankThatCanManuallyApproveAims: never
+defaultPoints: 0
+commands: []
+defaultTarget: target1 
+alwaysSaveFiles: false
+remindOnJoin: true
+```
 
 Aims are defined in this file in the section called 'aims'. An example 'aims' section is shown below: 
 ```yaml
